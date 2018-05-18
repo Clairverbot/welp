@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUp_Year">
+
+<ImageButton
+    android:id="@+id/ib_Back"
+    android:layout_width="@dimen/EvenBiggerPadding"
+    android:layout_height="@dimen/EvenBiggerPadding"
+    android:background="@color/color_YouCantSeeME"
+    android:src="@drawable/back_arrow_white"
+    android:scaleType="fitCenter"
+    android:layout_margin="@dimen/EvenBiggerPadding"/>
+
+    <Button
+        android:id="@+id/btn_Next"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/EvenBiggerPadding"
+        android:background="@color/color_YouCantSeeME"
+        android:text="Next"
+        android:textColor="@color/veriWhite" />
+    <TextView
+        android:id="@+id/tv_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ib_Back"
+        android:layout_margin="@dimen/EvenBiggerPadding"
+        android:text="@string/sign_up_year_Title"
+        android:textStyle="bold"/>
+
+    <Spinner
+        android:id="@+id/sp_YearOfStudy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_Title"
+        android:layout_margin="@dimen/EvenBiggerPadding"
+        ></Spinner>
+</RelativeLayout>

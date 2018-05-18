@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Welp</string>
+    <string name="home_posted">Posted:</string>
+    <string name="home_bookmark">Add To</string>
+    <string name="SignUpSubject_Title">Choose the subjects you want to study</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="credits">Credits</string>
+    <string name="sign_up_year_Title">Pick Your Year of Study</string>
+    <string name="signUp_Title">What do you want to be known as</string>
+    <string name="SignUpUsername">Username</string>
+    <string name="SignUpEmail">Email</string>
+    <string name="SignUpPassword">Password</string>
+    <string name="SignUp_confirm_password">Confirm Password</string>
+    <string name="login_signUpBtn"> Sign Up Here!</string>
+    <string name="SignUpRegister">Register</string>
+
+</resources>

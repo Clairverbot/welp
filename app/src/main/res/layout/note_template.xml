@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:id="@+id/llNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="#EFF2F7"
+        android:elevation="5dp"
+        android:orientation="vertical">
+
+        <GridLayout
+            android:id="@+id/llNoteTopBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivUserImg"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:src="@drawable/dummyimg" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dummy Username" />
+
+                <TextView
+                    android:id="@+id/tvPostTimeDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_posted"
+                    android:textColor="@color/text_color_whenInDoubtUseThis" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnFolllowStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_column="3"
+                android:background="@color/color_YouCantSeeME"
+                android:text="Followed"
+                android:textColor="@color/text_color_whenInDoubtUseThis" />
+        </GridLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/llNoteTopBar"
+            android:background="@color/text_color_whenInDoubtUseThis" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/BiggerPadding"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvNoteTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Some Note"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvNoteDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Some very very meaningful and insightful description"
+                android:textColor="@color/text_anotherSimilarColor" />
+            <!--TODO: put a recycler view of buttons here-->
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/Padding"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_subject"
+                android:layout_width="@dimen/tagsBtnWidth"
+                android:layout_height="@dimen/tagsBtnHeight"
+                android:layout_margin="@dimen/Padding"
+                android:background="@color/btn_color_PakatanHarapan"
+                android:text="E-Math"
+                android:textColor="@color/veriWhite"
+                android:textSize="@dimen/tagsFontSize"
+                />
+
+            <Button
+                android:id="@+id/btn_year"
+                android:layout_width="@dimen/tagsBtnWidth"
+                android:layout_height="@dimen/tagsBtnHeight"
+                android:layout_margin="@dimen/Padding"
+                android:background="@color/text_color_whenInDoubtUseThis"
+                android:text="Sec 3"
+                android:textColor="@color/veriWhite"
+                android:textSize="@dimen/tagsFontSize" />
+
+            <Button
+                android:id="@+id/btn_category"
+                android:layout_width="@dimen/tagsBtnWidth"
+                android:layout_height="@dimen/tagsBtnHeight"
+                android:layout_margin="@dimen/Padding"
+                android:background="@color/text_color_whenInDoubtUseThis"
+                android:text="Practice"
+                android:textColor="@color/veriWhite"
+                android:textSize="@dimen/tagsFontSize" />
+
+            <Button
+                android:id="@+id/btn_summarry"
+                android:layout_width="@dimen/tagsBtnWidth"
+                android:layout_height="@dimen/tagsBtnHeight"
+                android:layout_margin="@dimen/Padding"
+                android:background="@color/text_color_whenInDoubtUseThis"
+                android:text="Sec3 E-Math"
+                android:textColor="@color/veriWhite"
+                android:textSize="@dimen/tagsFontSize" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/llNoteTopBar"
+            android:background="@color/text_color_whenInDoubtUseThis" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/Padding"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/BiggerPadding">
+
+                <ImageButton
+                    android:id="@+id/ib_Upvote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:background="@color/color_YouCantSeeME"
+                    android:maxWidth="21dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/post_upvote" />
+
+                <TextView
+                    android:id="@+id/tv_Upvote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/BiggerPadding"
+                    android:text="1.2k" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/BiggerPadding">
+
+                <ImageButton
+                    android:id="@+id/ib_Downvote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:background="@color/color_YouCantSeeME"
+                    android:maxWidth="21dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/post_downvote" />
+
+                <TextView
+                    android:id="@+id/tv_Downvote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/BiggerPadding"
+                    android:text="12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/BiggerPadding">
+
+                <ImageButton
+                    android:id="@+id/ib_Bookmark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/BiggerPadding"
+                    android:adjustViewBounds="true"
+                    android:background="@color/color_YouCantSeeME"
+                    android:maxWidth="21dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/post_notebook" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/home_bookmark" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/BiggerPadding">
+
+                <ImageButton
+                    android:id="@+id/ib_Comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:background="@color/color_YouCantSeeME"
+                    android:maxWidth="21dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/post_comments" />
+
+                <TextView
+                    android:id="@+id/tv_Comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/BiggerPadding"
+                    android:text="12" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
