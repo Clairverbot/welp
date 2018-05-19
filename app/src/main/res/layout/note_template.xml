@@ -8,9 +8,9 @@
         android:id="@+id/llNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:background="#EFF2F7"
         android:elevation="5dp"
+        android:layout_marginBottom="@dimen/Padding"
         android:orientation="vertical">
 
         <GridLayout

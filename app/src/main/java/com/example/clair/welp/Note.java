@@ -1,18 +1,19 @@
 package com.example.clair.welp;
 
-import java.util.Date;
 //TODO: add dimen resources
 public class Note {
-    private String Username,NoteTitle,NoteDescription,ResourceURL;
-    private Date DatePosted,Deleted  ;
+    private String Email,Username,UserIMG,NoteTitle,NoteDescription,ResourceURL;
+    private String DatePosted,Deleted  ;
     private String[] Tags;
     private int Upvote,Downvote;
     private String[][] Comments;
 
     public Note(){}
 
-    public Note(String username, String noteTitle, String noteDescription, String resourceURL, Date datePosted, Date deleted, String[] tags, String[][] comments, int upvote, int downvote) {
+    public Note(String email,String username, String userIMG, String noteTitle, String noteDescription, String resourceURL, String datePosted, String deleted, String[] tags, String[][] comments, int upvote, int downvote) {
+        Email=email;
         Username = username;
+        UserIMG=userIMG;
         NoteTitle = noteTitle;
         NoteDescription = noteDescription;
         ResourceURL = resourceURL;
@@ -25,6 +26,22 @@ public class Note {
     }
 
     //region properties
+
+    public String getUserIMG() {
+        return UserIMG;
+    }
+
+    public void setUserIMG(String userIMG) {
+        UserIMG = userIMG;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
 
     public String getUsername() {
         return Username;
@@ -58,19 +75,19 @@ public class Note {
         ResourceURL = resourceURL;
     }
 
-    public Date getDatePosted() {
+    public String getDatePosted() {
         return DatePosted;
     }
 
-    public void setDatePosted(Date datePosted) {
+    public void setDatePosted(String datePosted) {
         DatePosted = datePosted;
     }
 
-    public Date getDeleted() {
+    public String getDeleted() {
         return Deleted;
     }
 
-    public void setDeleted(Date deleted) {
+    public void setDeleted(String deleted) {
         Deleted = deleted;
     }
 
@@ -107,4 +124,6 @@ public class Note {
     }
 
     //endregion
+
+
 }

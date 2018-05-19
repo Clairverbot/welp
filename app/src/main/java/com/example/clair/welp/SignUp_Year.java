@@ -63,12 +63,13 @@ public void onItemSelected(AdapterView<?> parent, View view, int position, long 
         @Override
         public void onClick(View view) {
             if(view.getId()==btnNext.getId()){
-                //todo: test this!
                 String y=spYrOfStudy.getSelectedItem().toString();
                 Intent intent=new Intent(SignUp_Year.this,SignUpSubject.class);
                 intent.putExtra("yrOfStud",y);
                 startActivity(intent);
-
+            }
+            else if (view.getId()==ibBack.getId()){
+                onBackPressed();
             }
         }
     };

@@ -20,13 +20,15 @@ import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
+//TODO: ONE OF THeSe DAYS MAKE ZOOKEPER DU
 public class Firestore {
     public Firestore(){}
-/*
-    CollectionReference collectionref = FirebaseFirestore.getInstance().collection("collection");
+
+  /*  CollectionReference collectionref = FirebaseFirestore.getInstance().collection("Notes");
     FirebaseFirestore db=FirebaseFirestore.getInstance();
     List<Note> notes;
-    Map<String,Object> tasks=new HashMap<>();
+    Map<String,Object> notas=new HashMap<>();
+    MagicalNames magicalNames=new MagicalNames();
 
     public Firestore(MainActivity r){
         final MainActivity reference = r;
@@ -40,7 +42,7 @@ public class Firestore {
 
                         if(task.isSuccessful()) {
                             for (DocumentSnapshot document : task.getResult()) {
-                                String taskName = document.getString(ToDoListContract.ToDoEntry.COLUMN_NAME_TASKNAME);
+                                String taskName = document.getString(magicalNames.getNotes_Column_Email());
                                 String dueDate = document.getString(ToDoListContract.ToDoEntry.COLUMN_NAME_DUEDATE);
                                 String status = document.getString(ToDoListContract.ToDoEntry.COLUMN_NAME_STATUS);
 

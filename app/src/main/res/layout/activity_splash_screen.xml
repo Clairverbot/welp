@@ -16,6 +16,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="253dp"
-        android:text="We Help You Study"
-        android:textSize="@dimen/BiggerPadding" />
+        android:text="@string/splash_Tagline"
+        android:textSize="20sp" />
 </RelativeLayout>

@@ -13,5 +13,6 @@
     <string name="SignUp_confirm_password">Confirm Password</string>
     <string name="login_signUpBtn"> Sign Up Here!</string>
     <string name="SignUpRegister">Register</string>
+    <string name="splash_Tagline">We Help You Study</string>
 
 </resources>
