@@ -30,7 +30,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             tvNoteDesc = v.findViewById(R.id.tvNoteDesc);
             tv_Upvote = v.findViewById(R.id.tv_Upvote);
             tv_Downvote = v.findViewById(R.id.tv_Downvote);
-
         }
     }
     public NoteAdapter(Context context){
@@ -55,8 +54,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         String downvote=n.getDownvote()+"";
         holder.tv_Upvote.setText((upvote));
         holder.tv_Downvote.setText(downvote);
-
-
     }
 
     @Override
@@ -74,6 +71,5 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             addItem(note);
         }
     }
-
 }
 

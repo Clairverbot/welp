@@ -2,6 +2,7 @@ package com.example.clair.welp;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SplashScreen extends FragmentActivity {
+
+    MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +32,11 @@ public class SplashScreen extends FragmentActivity {
         Thread splashThread= new Thread(){
             public void run(){
                 try {
-                    sleep(6000);
+                    sleep(500);
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.theme);
+
+                    mediaPlayer.start();
+                    sleep(4000);
                 }  catch(InterruptedException e) {
                     e.printStackTrace();
                 } finally
