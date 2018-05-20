@@ -21,7 +21,6 @@ import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
-//TODO: ONE OF THeSe DAYS MAKE ZOOKEPER DU
 public class Firestore {
     public Firestore() {
     }

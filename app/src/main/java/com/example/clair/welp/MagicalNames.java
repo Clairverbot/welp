@@ -19,8 +19,6 @@ public class MagicalNames {
     private String Notes_Column_CommentUsername="CommentUsername";
     private String Notes_Column_Comment="Comment";
 
-
-
     public String getNotes_Column_Email() {
         return Notes_Column_Email;
     }

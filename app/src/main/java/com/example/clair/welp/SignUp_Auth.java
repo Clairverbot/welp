@@ -28,6 +28,8 @@ public class SignUp_Auth extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up__auth);
+
+        //region widgets and listeners
         etUsername=findViewById(R.id.et_Username);
         etEmail=findViewById(R.id.et_Email);
         etPassword=findViewById(R.id.et_Password);
@@ -38,6 +40,7 @@ public class SignUp_Auth extends AppCompatActivity {
 
         btnRegister.setOnClickListener(mListener);
         ibBack.setOnClickListener(mListener);
+        //endregion
 
         auth= FirebaseAuth.getInstance();
     }
@@ -45,11 +48,14 @@ public class SignUp_Auth extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             if(view.getId()==btnRegister.getId()){
-                //Todo: handle sign up code
-                if(etPassword.getText().toString().equals(etConfirmPassword.getText().toString()))
-                signUpUser(etUsername.getText().toString(),etEmail.getText().toString(),etPassword.getText().toString());
-                else{
-                    snackbar= Snackbar.make(activity_sign_up_auth,"Password does not match",Snackbar.LENGTH_SHORT);
+                try {
+                    if (etPassword.getText().toString().equals(etConfirmPassword.getText().toString()))
+                        signUpUser(etUsername.getText().toString(), etEmail.getText().toString(), etPassword.getText().toString());
+                    else {
+                        throw new Exception("Password does not match");
+                    }
+                }catch (Exception e){
+                    snackbar=Snackbar.make(activity_sign_up_auth,e.getMessage(),Snackbar.LENGTH_SHORT);
                     snackbar.show();
                 }
             }

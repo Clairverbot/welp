@@ -2,7 +2,6 @@ package com.example.clair.welp;
 
 import java.util.Date;
 
-//TODO: add dimen resources
 public class Note {
     private String Email,Username,UserIMG,NoteTitle,NoteDescription,ResourceURL;
     private Date DatePosted,Deleted  ;

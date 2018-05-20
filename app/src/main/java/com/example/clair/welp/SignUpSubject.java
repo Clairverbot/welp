@@ -86,7 +86,6 @@ public class SignUpSubject extends AppCompatActivity {
         });
         gvSubjects.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            //todo: figure out how todo
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 gvSubjects.setSelection(i);
                 long selectedItem = gvSubjects.getSelectedItemId();

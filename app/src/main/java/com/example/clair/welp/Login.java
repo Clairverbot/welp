@@ -25,13 +25,14 @@ public class Login extends AppCompatActivity {
     EditText etPassword;
     RelativeLayout activity_login;
     private FirebaseAuth fFirebaseAuth;
+    Snackbar snackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //region declare widgets
+        //region declare widgets and set listeners
         btnLogin=findViewById(R.id.btnLogin);
         btnSignUp=findViewById(R.id.btn_SignUp);
         etEmail=findViewById(R.id.et_Email);
@@ -42,22 +43,28 @@ public class Login extends AppCompatActivity {
         btnSignUp.setOnClickListener(mListener);
         //endregion
 
-        //region Firebase auth stuff
         fFirebaseAuth= FirebaseAuth.getInstance();
-        //endregion
     }
     private View.OnClickListener mListener=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if(view.getId()==btnLogin.getId()){
-            loginUser(etEmail.getText().toString(),etPassword.getText().toString());}
+                try{
+                    loginUser(etEmail.getText().toString(),etPassword.getText().toString());}
+                catch (Exception e){
+                    snackbar=Snackbar.make(activity_login,e.getMessage(),Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+                }
+            }
             else if (view.getId()==btnSignUp.getId()){
-            startActivity(new Intent(Login.this,SignUp_Year.class));
+                startActivity(new Intent(Login.this,SignUp_Year.class));
             }
 
     }
     };
 
+
+    //login with firebase
     private void loginUser(String email, final String password){
         fFirebaseAuth.signInWithEmailAndPassword(email,password)
                 .addOnFailureListener(new OnFailureListener() {
@@ -66,7 +73,7 @@ public class Login extends AppCompatActivity {
                         if (e instanceof FirebaseAuthException) {
                             ((FirebaseAuthException) e).getErrorCode();
                             Log.d("error",e.getMessage());
-                            Snackbar snackbar=Snackbar.make(activity_login,e.getMessage(),Snackbar.LENGTH_SHORT);
+                            snackbar=Snackbar.make(activity_login,e.getMessage(),Snackbar.LENGTH_SHORT);
                             snackbar.setActionTextColor(getResources().getColor(R.color.text_color_whenInDoubtUseThis));
                             snackbar.show();
                         }
@@ -78,12 +85,12 @@ public class Login extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(!task.isSuccessful()){
                             if(password.length()<6){
-                                Snackbar snackbar= Snackbar.make(activity_login,"Password length must be over 6",Snackbar.LENGTH_SHORT);
+                                snackbar= Snackbar.make(activity_login,"Password length must be over 6",Snackbar.LENGTH_SHORT);
                                 snackbar.setActionTextColor(getResources().getColor(R.color.text_color_whenInDoubtUseThis));
                                 snackbar.show();
                             }
                             else {
-                                Snackbar snackbar=Snackbar.make(activity_login,"Invalid Email or Password",Snackbar.LENGTH_SHORT);
+                                snackbar=Snackbar.make(activity_login,"Invalid Email or Password",Snackbar.LENGTH_SHORT);
                                 snackbar.show();
                             }
                         }
@@ -94,6 +101,8 @@ public class Login extends AppCompatActivity {
                 });
     }
 
+
+    //todo: find a better way to do this
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(Intent.ACTION_MAIN);

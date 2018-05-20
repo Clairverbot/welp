@@ -15,7 +15,7 @@
         android:layout_height="129dp"
         android:layout_marginTop="70dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/logo" />
+        android:src="@drawable/logobig" />
 
     <View
         android:id="@+id/someView"

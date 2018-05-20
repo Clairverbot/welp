@@ -40,16 +40,12 @@ public class MainActivity extends AppCompatActivity {
     //region firebase auth stuff
     private FirebaseAuth fFirebaseAuth;
     private FirebaseAuth.AuthStateListener fAuthStateListener;
-    public static final String ANONYMOUS = "anonymous";
-    private String Username;
-    public static final int RC_SIGN_IN=1;
     //endregion
 
     //region recycler view stuf
     RecyclerView rvNote;
     NoteAdapter nAdapter;
     RecyclerView.LayoutManager rLayoutManager;
-    List<Note> myDataset;
     Note n=new Note();
     //endregion
     @Override
@@ -57,11 +53,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //make actionBar logo as welp logo, todo :find better way to do this
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         //region auth
-        Username=ANONYMOUS;
         fFirebaseAuth=FirebaseAuth.getInstance();
         fAuthStateListener=new FirebaseAuth.AuthStateListener() {
             @Override
@@ -85,17 +82,16 @@ public class MainActivity extends AppCompatActivity {
         };
         //endregion
 
-        //region database
         fFirebaseDatabase=FirebaseDatabase.getInstance();
-        //endregion
 
+        //region recyclerView adapter
         rvNote=findViewById(R.id.rvNote);
         rLayoutManager=new LinearLayoutManager(this);
         rvNote.setLayoutManager(rLayoutManager);
         nAdapter=new NoteAdapter(this);
         //nAdapter.addAllItems(FakeDataGenerator());
         rvNote.setAdapter(nAdapter);
-
+        //endregion
     }
 
     @Override
@@ -119,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
         fFirebaseAuth.addAuthStateListener(fAuthStateListener);
     }
 
+
+    //region menu on top
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
@@ -136,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
+//endregion
 
     //add sample data, yay firebase is a lie
     /*jk we changed to firebase c:

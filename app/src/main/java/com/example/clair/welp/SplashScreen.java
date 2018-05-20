@@ -34,9 +34,8 @@ public class SplashScreen extends FragmentActivity {
                 try {
                     sleep(500);
                     mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.theme);
-
                     mediaPlayer.start();
-                    sleep(4000);
+                    sleep(3000);
                 }  catch(InterruptedException e) {
                     e.printStackTrace();
                 } finally
