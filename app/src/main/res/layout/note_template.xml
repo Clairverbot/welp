@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/Padding"
             android:layout_marginBottom="@dimen/Padding"
-            android:layout_marginLeft="10dp"
+
             android:orientation="horizontal"
             >
 

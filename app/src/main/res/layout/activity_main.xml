@@ -5,13 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvNote"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:scrollbars="vertical">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="455dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/btmNav"
@@ -19,6 +25,45 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimaryDark">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/tab_home"
+        android:background="@color/color_YouCantSeeME"
+        android:padding="@dimen/BiggerPadding"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tab_noti"
+            android:background="@color/color_YouCantSeeME"
+            android:padding="@dimen/BiggerPadding"
+            android:layout_weight="1"/>
 
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/upload"
+                android:background="@color/color_YouCantSeeME"
+                android:padding="@dimen/BiggerPadding"
+                android:layout_weight="1"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tabs_discussion"
+                android:background="@color/color_YouCantSeeME"
+                android:padding="@dimen/BiggerPadding"
+                android:layout_weight="1"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tab_profile"
+                android:background="@color/color_YouCantSeeME"
+                android:padding="@dimen/BiggerPadding"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
     </android.support.design.widget.BottomNavigationView>
 </RelativeLayout>

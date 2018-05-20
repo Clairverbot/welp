@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         rvNote.setAdapter(nAdapter);
 
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -148,7 +150,5 @@ public class MainActivity extends AppCompatActivity {
         nAdapter.deleteEverything();
         nAdapter.addAllItems(n);
     }
-
-
 }
 
