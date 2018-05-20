@@ -1,16 +1,18 @@
 package com.example.clair.welp;
 
+import java.util.Date;
+
 //TODO: add dimen resources
 public class Note {
     private String Email,Username,UserIMG,NoteTitle,NoteDescription,ResourceURL;
-    private String DatePosted,Deleted  ;
+    private Date DatePosted,Deleted  ;
     private String[] Tags;
     private int Upvote,Downvote;
     private String[][] Comments;
 
     public Note(){}
 
-    public Note(String email,String username, String userIMG, String noteTitle, String noteDescription, String resourceURL, String datePosted, String deleted, String[] tags, String[][] comments, int upvote, int downvote) {
+    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL, Date datePosted, Date deleted, String[] tags, String[][] comments, int upvote, int downvote) {
         Email=email;
         Username = username;
         UserIMG=userIMG;
@@ -75,19 +77,19 @@ public class Note {
         ResourceURL = resourceURL;
     }
 
-    public String getDatePosted() {
+    public Date getDatePosted() {
         return DatePosted;
     }
 
-    public void setDatePosted(String datePosted) {
+    public void setDatePosted(Date datePosted) {
         DatePosted = datePosted;
     }
 
-    public String getDeleted() {
+    public Date getDeleted() {
         return Deleted;
     }
 
-    public void setDeleted(String deleted) {
+    public void setDeleted(Date deleted) {
         Deleted = deleted;
     }
 

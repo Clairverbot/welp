@@ -29,16 +29,16 @@ import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    //region firebase instance variables
+    //region firebase databse stuf
     private FirebaseDatabase fFirebaseDatabase;
     private DatabaseReference fDatabaseReference;
     private ChildEventListener fChildEventListener;
-    private FirebaseAuth fFirebaseAuth;
-    private FirebaseAuth.AuthStateListener fAuthStateListener;
-
+    Firestore f;
     //endregion
 
     //region firebase auth stuff
+    private FirebaseAuth fFirebaseAuth;
+    private FirebaseAuth.AuthStateListener fAuthStateListener;
     public static final String ANONYMOUS = "anonymous";
     private String Username;
     public static final int RC_SIGN_IN=1;
@@ -62,11 +62,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user=firebaseAuth.getCurrentUser();
-                if(user!=null){
-                    //user is signed in
-                }
-                else{
-                    //fiyahbase ui, dun need liao :(
+                if(user==null){
+                    //fiyahbase ui, for ref.
                     /*startActivityForResult(
                             AuthUI.getInstance()
                             .createSignInIntentBuilder()
@@ -91,10 +88,31 @@ public class MainActivity extends AppCompatActivity {
         rLayoutManager=new LinearLayoutManager(this);
         rvNote.setLayoutManager(rLayoutManager);
         nAdapter=new NoteAdapter(this);
-        nAdapter.addAllItems(FakeDataGenerator());
+        //nAdapter.addAllItems(FakeDataGenerator());
         rvNote.setAdapter(nAdapter);
 
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        MainActivity r=this;
+        f=new Firestore(r);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(fAuthStateListener!=null){
+            fFirebaseAuth.removeAuthStateListener(fAuthStateListener);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fFirebaseAuth.addAuthStateListener(fAuthStateListener);
+    }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
@@ -113,21 +131,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if(fAuthStateListener!=null){
-            fFirebaseAuth.removeAuthStateListener(fAuthStateListener);
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        fFirebaseAuth.addAuthStateListener(fAuthStateListener);
-    }
 
     //add sample data, yay firebase is a lie
+    /*jk we changed to firebase c:
     public static List<Note> FakeDataGenerator(){
         String[]fakeTags={"E-Math","Sec 4","Practice","E-Math Sec 4"};
         Note n=new Note("welperman@gmail.com","Welpermen","R.drawable.dummyImg","E-Math 'O-Level' Practice Paper 2018","very useful practice paper cos it's practice paper and practice paper are all useful","shdakdhksahdkshfjskdfhsdkjfkhsfhsdfignoreme","05/12/2017,12:01PM",null,fakeTags,null,100,1);
@@ -136,7 +142,13 @@ public class MainActivity extends AppCompatActivity {
         Note[] notes={n,nn,nnn};
         return Arrays.asList(notes);
 
+    }*/
+
+    public void UpdateList(List<Note> n){
+        nAdapter.deleteEverything();
+        nAdapter.addAllItems(n);
     }
+
 
 }
 

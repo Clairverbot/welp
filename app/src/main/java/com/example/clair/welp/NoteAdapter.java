@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.example.clair.welp.MainActivity.FakeDataGenerator;
+//import static com.example.clair.welp.MainActivity.FakeDataGenerator;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     public List<Note> mDataset;
@@ -47,7 +47,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull NoteAdapter.ViewHolder holder, int position) {
         final Note n=mDataset.get(position);
         holder.tvUsername.setText(n.getUsername());
-        holder.tvPostTimeDetail.setText(n.getDatePosted());
+        holder.tvPostTimeDetail.setText(n.getDatePosted().toString());
         holder.tvNoteTitle.setText(n.getNoteTitle());
         holder.tvNoteDesc.setText(n.getNoteDescription());
         String upvote= n.getUpvote()+"";
@@ -70,6 +70,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         for (Note note : notesList) {
             addItem(note);
         }
+    }
+    public void deleteEverything(){
+        if(mDataset!=null)  mDataset.clear();
     }
 }
 
