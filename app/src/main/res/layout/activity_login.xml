@@ -6,34 +6,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Login"
+
     >
 
     <ImageView
         android:id="@+id/ivlogo"
-        android:layout_width="214dp"
-        android:layout_height="109dp"
-        android:layout_marginTop="74dp"
+        android:layout_width="260dp"
+        android:layout_height="129dp"
+        android:layout_marginTop="135dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/logo" />
 
     <View
         android:id="@+id/someView"
         android:layout_width="match_parent"
-        android:layout_height="275dp"
+        android:layout_height="305dp"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary" />
 
     <LinearLayout
         android:id="@+id/llinputBox"
         android:layout_width="match_parent"
-        android:layout_height="215dp"
+        android:layout_height="230dp"
         android:layout_below="@id/ivlogo"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:background="@color/veriWhite"
         android:orientation="vertical"
         android:paddingBottom="50dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
         android:paddingTop="50dp"
         android:layout_alignLeft="@id/btnLogin"
         android:layout_alignRight="@id/btnLogin">
@@ -44,10 +45,12 @@
             android:layout_height="wrap_content"
             android:background="@color/color_YouCantSeeME"
             android:hint="@string/SignUpEmail"
-            android:textColor="@color/colorPrimary"
-            android:textColorHint="@color/text_color_ItsNotTheSame"
             android:maxLines="1"
-            />
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/text_color_ItsNotTheSame" />
 
         <View
             android:layout_width="match_parent"
@@ -64,6 +67,9 @@
             android:hint="@string/SignUpPassword"
             android:inputType="textPassword"
             android:maxLines="1"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
             android:textColor="@color/colorPrimary"
             android:textColorHint="@color/text_color_ItsNotTheSame" />
 
@@ -77,10 +83,10 @@
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="310dp"
-        android:layout_height="68dp"
+        android:layout_height="66dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="84dp"
+        android:layout_marginBottom="80dp"
         android:background="@color/background_material_dark"
         android:text="Login"
         android:textAllCaps="false"
@@ -93,12 +99,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnLogin"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="-84dp">
+        android:layout_marginTop="-64dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Haven't Sign Up Yet?  "
+            android:text="Haven't Signed Up Yet?  "
             android:textColor="@color/veriWhite"
             android:textSize="14sp" />
 
@@ -108,6 +114,7 @@
             android:layout_height="wrap_content"
             android:background="@color/color_YouCantSeeME"
             android:text="@string/login_signUpBtn"
-            android:textColor="@color/btn_color_PakatanHarapan" />
+            android:textColor="@color/btn_color_OtherBlue" />
+
     </LinearLayout>
 </RelativeLayout>

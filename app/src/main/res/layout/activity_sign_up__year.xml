@@ -20,7 +20,9 @@
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/EvenBiggerPadding"
+        android:layout_marginTop="@dimen/EvenBiggerPadding"
+        android:layout_marginRight="10dp"
+        android:textSize="17dp"
         android:background="@color/color_YouCantSeeME"
         android:text="Next"
         android:textColor="@color/veriWhite" />
@@ -29,15 +31,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ib_Back"
-        android:layout_margin="@dimen/EvenBiggerPadding"
         android:text="@string/sign_up_year_Title"
+        android:layout_margin="50dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="15dp"
         android:textStyle="bold"/>
 
     <Spinner
         android:id="@+id/sp_YearOfStudy"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_below="@+id/tv_Title"
-        android:layout_margin="@dimen/EvenBiggerPadding"
+        android:layout_marginTop="@dimen/EvenBiggerPadding"
+        android:layout_marginBottom="@dimen/EvenBiggerPadding"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
         ></Spinner>
 </RelativeLayout>

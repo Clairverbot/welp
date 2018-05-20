@@ -14,4 +14,6 @@
     <color name="veriWhite">#FFFFFF</color>
     <color name="notThatWhite">#F9FAFC</color>
     <color name="selectSubClicked">#E5E9F2</color>
+    <color name="btn_color_OtherBlue">#66CBE2</color>
+    <color name="post_Grey">#BBCBD5</color>
 </resources>
