@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
+import android.support.constraint.ConstraintLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,7 +21,7 @@ public class SignUp_Auth extends AppCompatActivity {
     EditText etUsername,etEmail,etPassword,etConfirmPassword;
     Button btnRegister;
     ImageButton ibBack;
-    RelativeLayout activity_sign_up_auth;
+    ConstraintLayout activity_sign_up_auth;
     private FirebaseAuth auth;
     Snackbar snackbar;
     @Override

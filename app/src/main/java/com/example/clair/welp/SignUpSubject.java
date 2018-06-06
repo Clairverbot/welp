@@ -21,7 +21,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.support.constraint.ConstraintLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -180,7 +180,7 @@ public class SignUpSubject extends AppCompatActivity {
                 selectedItem = gvSubjects.getCheckedItemIds();
                 for (long id:
                      selectedItem) {
-                    RelativeLayout test=gvSubjects.findViewById((int)id);
+                    ConstraintLayout test=gvSubjects.findViewById((int)id);
                     subject.add(test.findViewById(R.id.tv_subjects).getContext().toString());
                 }
                 Intent intent=new Intent(SignUpSubject.this,SignUp_Auth.class);

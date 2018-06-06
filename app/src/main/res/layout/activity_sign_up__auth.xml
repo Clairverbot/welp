@@ -1,89 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_sign_up_auth"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUp_Auth"
-    android:id="@+id/activity_sign_up_auth">
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    tools:context=".SignUp_Auth">
 
     <ImageButton
         android:id="@+id/ib_Back"
         android:layout_width="@dimen/EvenBiggerPadding"
         android:layout_height="@dimen/EvenBiggerPadding"
+        android:layout_margin="@dimen/EvenBiggerPadding"
         android:background="@color/color_YouCantSeeME"
         android:src="@drawable/back_arrow_white"
-        android:scaleType="fitCenter"
-        android:layout_margin="@dimen/EvenBiggerPadding"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/emptyView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/color_YouCantSeeME"
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.9999999" />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ib_Back"
+        android:id="@+id/tv_Title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:text="@string/signUp_Title"
-        android:layout_margin="50dp"
         android:textColor="@color/colorPrimary"
         android:textSize="15dp"
         android:textStyle="bold"
-        />
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emptyView"
+        app:layout_constraintWidth_percent="0.85" />
+
     <LinearLayout
+
         android:id="@+id/llSignUpInput"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_centerVertical="true"
         android:layout_marginTop="@dimen/EvenBiggerPadding"
-        android:layout_marginBottom="@dimen/EvenBiggerPadding"
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="45dp"
-        >
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_Title"
+        app:layout_constraintWidth_percent="0.85">
+
         <EditText
             android:id="@+id/et_Username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:hint="@string/SignUpUsername"
             android:maxLines="1"
-            android:layout_marginTop="10dp"
-            android:padding="@dimen/BiggerPadding"/>
+            android:padding="@dimen/BiggerPadding" />
+
         <EditText
             android:id="@+id/et_Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:hint="@string/SignUpEmail"
             android:maxLines="1"
-            android:layout_marginTop="10dp"
-            android:padding="@dimen/BiggerPadding"/>
+            android:padding="@dimen/BiggerPadding" />
 
         <EditText
             android:id="@+id/et_Password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:hint="@string/SignUpPassword"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:layout_marginTop="10dp"
             android:padding="@dimen/BiggerPadding" />
 
         <EditText
             android:id="@+id/et_CfmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:hint="@string/SignUp_confirm_password"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:layout_marginTop="10dp"
             android:padding="@dimen/BiggerPadding" />
+
+
     </LinearLayout>
+
+    <View
+        android:id="@+id/emptyView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/color_YouCantSeeME"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintWidth_percent="0.9999999" />
 
     <Button
         android:id="@+id/btnRegister"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_below="@+id/llSignUpInput"
-        android:layout_centerHorizontal="true"
-        android:text="@string/SignUpRegister"
-        android:layout_marginTop="70dp"
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="45dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@color/colorPrimary"
-        />
-</RelativeLayout>
+        android:text="@string/SignUpRegister"
+        app:layout_constraintBottom_toTopOf="@+id/emptyView2"
+        app:layout_constraintHeight_percent="0.09"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintWidth_percent="0.9" />
+
+
+</android.support.constraint.ConstraintLayout>

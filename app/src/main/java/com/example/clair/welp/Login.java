@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.support.constraint.ConstraintLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,7 +23,7 @@ public class Login extends AppCompatActivity {
     Button btnSignUp;
     EditText etEmail;
     EditText etPassword;
-    RelativeLayout activity_login;
+    ConstraintLayout activity_login;
     private FirebaseAuth fFirebaseAuth;
     Snackbar snackbar;
 

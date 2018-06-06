@@ -1,50 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     tools:context=".SignUp_Year">
 
-<ImageButton
-    android:id="@+id/ib_Back"
-    android:layout_width="@dimen/EvenBiggerPadding"
-    android:layout_height="@dimen/EvenBiggerPadding"
-    android:background="@color/color_YouCantSeeME"
-    android:src="@drawable/back_arrow_white"
-    android:scaleType="fitCenter"
-    android:layout_margin="@dimen/EvenBiggerPadding"/>
+    <ImageButton
+        android:id="@+id/ib_Back"
+        android:layout_width="@dimen/EvenBiggerPadding"
+        android:layout_height="@dimen/EvenBiggerPadding"
+        android:layout_margin="@dimen/EvenBiggerPadding"
+        android:background="@color/color_YouCantSeeME"
+        android:src="@drawable/back_arrow_white"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <Button
         android:id="@+id/btn_Next"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
-        android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/EvenBiggerPadding"
-        android:layout_marginRight="10dp"
-        android:textSize="17dp"
         android:background="@color/color_YouCantSeeME"
         android:text="Next"
-        android:textColor="@color/veriWhite" />
+        android:textColor="@color/veriWhite"
+        android:textSize="17dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <TextView
+        android:layout_height="0dp"
+        android:layout_width="0dp"
         android:id="@+id/tv_Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ib_Back"
         android:text="@string/sign_up_year_Title"
-        android:layout_margin="50dp"
         android:textColor="@color/colorPrimary"
         android:textSize="15dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        app:layout_constraintWidth_percent="0.85"
+        app:layout_constraintHeight_percent="0.1"
+        android:layout_margin="60dp"
+        app:layout_constraintTop_toBottomOf="@+id/ib_Back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <Spinner
+        android:layout_height="0dp"
+        android:layout_width="0dp"
         android:id="@+id/sp_YearOfStudy"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@+id/tv_Title"
-        android:layout_marginTop="@dimen/EvenBiggerPadding"
-        android:layout_marginBottom="@dimen/EvenBiggerPadding"
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="45dp"
-        ></Spinner>
-</RelativeLayout>
+        app:layout_constraintWidth_percent="0.85"
+        app:layout_constraintHeight_percent="0.09"
+        app:layout_constraintTop_toBottomOf="@+id/tv_Title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+</android.support.constraint.ConstraintLayout>

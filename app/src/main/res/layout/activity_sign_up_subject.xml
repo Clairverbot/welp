@@ -1,54 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     tools:context=".SignUpSubject">
 
     <ImageButton
         android:id="@+id/ib_Back"
         android:layout_width="@dimen/EvenBiggerPadding"
         android:layout_height="@dimen/EvenBiggerPadding"
+        android:layout_margin="@dimen/EvenBiggerPadding"
         android:background="@color/color_YouCantSeeME"
         android:src="@drawable/back_arrow_white"
-        android:scaleType="fitCenter"
-        android:layout_margin="@dimen/EvenBiggerPadding"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_Next"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
-        android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/EvenBiggerPadding"
-        android:layout_marginRight="10dp"
-        android:textSize="17dp"
         android:background="@color/color_YouCantSeeME"
+        android:enabled="false"
         android:text="Next"
         android:textColor="@color/veriWhite"
-        android:enabled="false"/>
-<TextView
-    android:id="@+id/tvChooseSubs"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+        android:textSize="17dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    android:text="@string/SignUpSubject_Title"
-    android:layout_above="@+id/gvSubjects"
-    android:layout_alignLeft="@+id/gvSubjects"
-    android:textColor="@color/colorPrimary"
-    android:textStyle="bold"/>
+
+    <View
+        android:id="@+id/emptyView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/color_YouCantSeeME"
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.9999999" />
+
+    <TextView
+        android:id="@+id/tvChooseSubs"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emptyView"
+        android:layout_alignLeft="@+id/gvSubjects"
+        android:text="@string/SignUpSubject_Title"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
 
     <GridView
         android:id="@+id/gvSubjects"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_margin="@dimen/BiggerPadding"
+        android:animateLayoutChanges="true"
+        android:clickable="true"
         android:horizontalSpacing="@dimen/Padding"
         android:numColumns="3"
         android:stretchMode="columnWidth"
         android:verticalSpacing="@dimen/Padding"
-        android:layout_centerInParent="true"
-        android:clickable="true"
-        android:animateLayoutChanges="true"
-        />
-</RelativeLayout>
+        app:layout_constraintTop_toBottomOf="@+id/tvChooseSubs"/>
+</android.support.constraint.ConstraintLayout>
