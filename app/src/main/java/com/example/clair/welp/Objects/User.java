@@ -1,19 +1,22 @@
 package com.example.clair.welp.Objects;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 public class User {
+    public User(){}
     private String Email, YearOfStudy,Username;
-    private ArrayList Subjects;
+    private Date RegisterDate;
+    private Tag tag;
 
-    public User(String email, String yearOfStudy, String username, ArrayList subjects) {
+    public User(String email, String yearOfStudy, String username, Date registerDate, Tag tag) {
         Email = email;
         YearOfStudy = yearOfStudy;
         Username = username;
-        Subjects = subjects;
+        RegisterDate = registerDate;
+        this.tag = tag;
     }
 
+    //region properties
     public String getEmail() {
         return Email;
     }
@@ -38,11 +41,20 @@ public class User {
         Username = username;
     }
 
-    public ArrayList getSubjects() {
-        return Subjects;
+    public Date getRegisterDate() {
+        return RegisterDate;
     }
 
-    public void setSubjects(ArrayList subjects) {
-        Subjects = subjects;
+    public void setRegisterDate(Date registerDate) {
+        RegisterDate = registerDate;
     }
+
+    public Tag getTag() {
+        return tag;
+    }
+
+    public void setTag(Tag tag) {
+        this.tag = tag;
+    }
+    //endregion
 }

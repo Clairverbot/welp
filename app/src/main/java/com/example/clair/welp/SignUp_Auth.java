@@ -12,14 +12,10 @@ import android.widget.ImageButton;
 import android.support.constraint.ConstraintLayout;
 import android.widget.Toast;
 
-import com.example.clair.welp.Firebase.UserFirestore;
-import com.example.clair.welp.Objects.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.ArrayList;
 
 public class SignUp_Auth extends AppCompatActivity {
     EditText etUsername,etEmail,etPassword,etConfirmPassword;
@@ -28,10 +24,6 @@ public class SignUp_Auth extends AppCompatActivity {
     ConstraintLayout activity_sign_up_auth;
     private FirebaseAuth auth;
     Snackbar snackbar;
-
-    String yrOfStudy;
-    ArrayList subjects;
-    UserFirestore userFirestore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,10 +43,6 @@ public class SignUp_Auth extends AppCompatActivity {
         //endregion
 
         auth= FirebaseAuth.getInstance();
-
-        userFirestore=new UserFirestore();
-        yrOfStudy=getIntent().getExtras().getString("yrOfStud");
-        subjects=getIntent().getExtras().getStringArrayList("subjects");
     }
     private View.OnClickListener mListener=new View.OnClickListener(){
         @Override
@@ -88,8 +76,6 @@ public class SignUp_Auth extends AppCompatActivity {
                         }
                         else{
                             //todo: put user obj in firebase
-                            User u=new User(etEmail.getText().toString(),yrOfStudy,etUsername.getText().toString(),subjects);
-                            userFirestore.add(u);
                             startActivity(new Intent(SignUp_Auth.this,MainActivity.class));
                         }
                     }
