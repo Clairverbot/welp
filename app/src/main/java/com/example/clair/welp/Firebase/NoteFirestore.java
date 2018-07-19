@@ -1,8 +1,9 @@
-package com.example.clair.welp;
+package com.example.clair.welp.Firebase;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.clair.welp.MainActivity;
 import com.example.clair.welp.Objects.Note;
 import com.firebase.client.annotations.NotNull;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,8 +23,8 @@ import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
-public class Firestore {
-    public Firestore() {
+public class NoteFirestore {
+    public NoteFirestore() {
     }
 
     CollectionReference collectionref = FirebaseFirestore.getInstance().collection("Notes");
@@ -32,7 +33,7 @@ public class Firestore {
     Map<String, Object> notas = new HashMap<>();
     MagicalNames magicalNames = new MagicalNames();
 
-    public Firestore(MainActivity r) {
+    public NoteFirestore(MainActivity r) {
         final MainActivity reference = r;
 
         collectionref.get().

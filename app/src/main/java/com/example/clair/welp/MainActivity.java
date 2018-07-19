@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.example.clair.welp.Firebase.NoteFirestore;
 import com.example.clair.welp.Objects.Note;
 import com.example.clair.welp.HelperClasses.*;
 import com.firebase.ui.auth.AuthUI;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase fFirebaseDatabase;
     private DatabaseReference fDatabaseReference;
     private ChildEventListener fChildEventListener;
-    Firestore f;
+    NoteFirestore f;
     //endregion
 
     //region firebase auth stuff
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         MainActivity r=this;
-        f=new Firestore(r);
+        f=new NoteFirestore(r);
     }
 
     @Override

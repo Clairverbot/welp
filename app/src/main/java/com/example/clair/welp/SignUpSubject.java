@@ -15,6 +15,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.support.constraint.ConstraintLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.clair.welp.Objects.Tag;
@@ -72,7 +73,7 @@ public class SignUpSubject extends AppCompatActivity {
                 } else {
                     selected = false;
                     selectedItem = null;
-                    view.setBackgroundColor(getResources().getColor(R.color.veriWhite));
+                    view.setBackgroundColor(getResources().getColor(R.color.notThatWhite));
                     btnNext.setEnabled(false);
                 }
             }
@@ -83,7 +84,7 @@ public class SignUpSubject extends AppCompatActivity {
                 gvSubjects.setSelection(i);
                 long selectedItem = gvSubjects.getSelectedItemId();
                 //RelativeLayout test=gvSubjects.findViewById((int)selectedItem);
-                subject.add(gvSubjects.findViewById(R.id.tv_subjects).getContext().toString());
+                subject.add(Subjects.get(i));
                 Log.d("test2",""+gvSubjects.findViewById(R.id.tv_subjects));
 
             }
@@ -178,7 +179,7 @@ public class SignUpSubject extends AppCompatActivity {
                 }
                 Intent intent=new Intent(SignUpSubject.this,SignUp_Auth.class);
                 intent.putExtra("yrOfStud",yrOfStudy);
-                intent.putExtra("subjec",(ArrayList)subject);
+                intent.putExtra("subjects",(ArrayList)subject);
                 startActivity(intent);
             }
             else if (view.getId()==ibBack.getId()){
