@@ -9,8 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import com.example.clair.welp.Objects.Note;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 //import static com.example.clair.welp.MainActivity.FakeDataGenerator;

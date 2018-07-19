@@ -2,19 +2,12 @@ package com.example.clair.welp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -24,11 +17,11 @@ import android.widget.ImageView;
 import android.support.constraint.ConstraintLayout;
 import android.widget.TextView;
 
+import com.example.clair.welp.Objects.Tag;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.security.auth.Subject;
 
 public class SignUpSubject extends AppCompatActivity {
     GridView gvSubjects;

@@ -1,23 +1,18 @@
 package com.example.clair.welp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.clair.welp.Objects.Note;
+import com.example.clair.welp.HelperClasses.*;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,8 +20,6 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView.LayoutManager rLayoutManager;
     Note n=new Note();
     //endregion
+
+    BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +79,28 @@ public class MainActivity extends AppCompatActivity {
 
         fFirebaseDatabase=FirebaseDatabase.getInstance();
 
+        //region bottom nav
+        bottomNavigationView=findViewById(R.id.bottomNav);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_home:
+                        break;
+                    case R.id.action_chat:
+                        break;
+                    case R.id.action_upload:
+                        break;
+                    case R.id.action_noti:
+                        break;
+                    case R.id.action_profile:
+                        break;
+                }
+                return true;
+            }
+        });
+        //endregion
         //region recyclerView adapter
         rvNote=findViewById(R.id.rvNote);
         rLayoutManager=new LinearLayoutManager(this);
@@ -134,6 +151,8 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 //endregion
 
     //add sample data, yay firebase is a lie

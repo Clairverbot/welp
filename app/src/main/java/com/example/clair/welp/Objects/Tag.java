@@ -1,6 +1,8 @@
-package com.example.clair.welp;
+package com.example.clair.welp.Objects;
 
 import android.media.Image;
+
+import com.example.clair.welp.R;
 
 public class Tag {
     private String[] YearsOfStudy=new String[]{"Secondary 1","Secondary 2","Secondary 3","Secondary 4","JC 1","JC 2","JC 3"};

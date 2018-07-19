@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,61 +9,23 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvNote"
         android:layout_width="match_parent"
-        android:layout_height="455dp"
-        android:layout_marginBottom="2dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="2dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="8dp"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+        android:scrollbars="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"></android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/btmNav"
+        android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimaryDark">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/tab_home"
-        android:background="@color/color_YouCantSeeME"
-        android:padding="@dimen/BiggerPadding"/>
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/tab_noti"
-            android:background="@color/color_YouCantSeeME"
-            android:padding="@dimen/BiggerPadding"
-            android:layout_weight="1"/>
+        android:background="@color/colorPrimaryDark"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_nav_items">
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/upload"
-                android:background="@color/color_YouCantSeeME"
-                android:padding="@dimen/BiggerPadding"
-                android:layout_weight="1"/>
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/tabs_discussion"
-                android:background="@color/color_YouCantSeeME"
-                android:padding="@dimen/BiggerPadding"
-                android:layout_weight="1"/>
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/tab_profile"
-                android:background="@color/color_YouCantSeeME"
-                android:padding="@dimen/BiggerPadding"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
     </android.support.design.widget.BottomNavigationView>
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.example.clair.welp;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.clair.welp.Objects.Note;
 import com.firebase.client.annotations.NotNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
