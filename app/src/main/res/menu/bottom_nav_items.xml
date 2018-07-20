@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <item
     android:id="@+id/action_home"
     android:title="Home"
@@ -15,8 +16,8 @@
     <item
         android:id="@+id/action_upload"
         android:icon="@drawable/upload"
-        android:title="Upload"
-        app:showAsAction="always|withText"
+        android:title=""
+        android:enabled="false"
         />
     <item
         android:id="@+id/action_noti"

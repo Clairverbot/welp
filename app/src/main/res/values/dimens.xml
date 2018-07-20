@@ -5,7 +5,11 @@
     <dimen name="tagsBtnWidth">75dp</dimen>
     <dimen name="Padding">5dp</dimen>
     <dimen name="BiggerPadding">12dp</dimen>
+    <dimen name="SlightlyBiggerPadding">18dp</dimen>
     <dimen name="EvenBiggerPadding">25dp</dimen>
+    <dimen name="fab">40dp</dimen>
+    <dimen name="fabCenter">60dp</dimen>
+    <dimen name="fabMargin">50dp</dimen>
     <dimen name="subject_columwidth">162dp</dimen>
     <dimen name="subjects_img">70dp</dimen>
 </resources>

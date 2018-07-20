@@ -3,6 +3,7 @@ package com.example.clair.welp;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.clair.welp.Firebase.MagicalNames;
 import com.example.clair.welp.Objects.Note;
 import com.firebase.client.annotations.NotNull;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -14,6 +15,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -31,9 +33,15 @@ public class Firestore {
     List<Note> notes;
     Map<String, Object> notas = new HashMap<>();
     MagicalNames magicalNames = new MagicalNames();
+    String email, username,userIMG,noteTitle,noteDescription,resourceURL;
+    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+    String datePosted,deleted;
+    List<String>tags;
+    int upvote,downvote;
 
     public Firestore(MainActivity r) {
         final MainActivity reference = r;
+
 
         collectionref.get().
                 addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -43,30 +51,51 @@ public class Firestore {
                         notes = new ArrayList<>();
 
                         if (task.isSuccessful()) {
-                            for (DocumentSnapshot document : task.getResult()) {
-                                String email = document.getString(magicalNames.getNotes_Column_Email());
-                                String username = document.getString(magicalNames.getNotes_Column_Username());
-                                String userIMG = document.getString(magicalNames.getNotes_Column_UserIMG());
-                                String noteTitle = document.getString(magicalNames.getNotes_Column_NoteTitle());
-                                String noteDescription = document.getString(magicalNames.getNotes_Column_NoteDescription());
-                                String resourceURL = document.getString(magicalNames.getNotes_Column_ResourceURL());
-                                Date datePosted = document.getDate(magicalNames.getNotes_Column_DatePosted());
-                                Date deleted = document.getDate(magicalNames.getNotes_Column_Deleted());
-                                //String[] tags = {document.getString(magicalNames.getNotes_Column_Tags())};
-                                //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
-                                int upvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Upvote()).toString());
-                                int downvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Downvote()).toString());
+                            for (final DocumentSnapshot document : task.getResult()) {
+                                email = document.getString(magicalNames.getNotes_Column_Email());
+                                getUserInfo(email,reference);
+                                userIMG = document.getString(magicalNames.getNotes_Column_UserIMG());
+                                noteTitle = document.getString(magicalNames.getNotes_Column_NoteTitle());
+                                noteDescription = document.getString(magicalNames.getNotes_Column_NoteDescription());
+                                resourceURL = document.getString(magicalNames.getNotes_Column_ResourceURL());
+                                Date DatePosted=document.getDate(magicalNames.getNotes_Column_DatePosted());
+                                datePosted=DatePosted!=null?sdf.format(DatePosted):null;
+                                Date Deleted=document.getDate(magicalNames.getNotes_Column_Deleted());
+                                deleted =Deleted!=null?sdf.format(Deleted):null;
 
-                            Note n=new Note(email,username,userIMG,noteTitle,noteDescription,resourceURL,datePosted,deleted,null,null,upvote,downvote);
-                            notes.add(n);
+                                tags = (List<String>)document.get(magicalNames.getNotes_Column_Tags());
+                                //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
+                                upvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Upvote()).toString());
+                                downvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Downvote()).toString());
+
+
                             }
-                            reference.UpdateList(notes);
+
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
 
+
+    }
+    public void getUserInfo(String Email,MainActivity reference){
+        final MainActivity ref=reference;
+        db.collection("Users").document(Email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    username = task.getResult().getString(magicalNames.getNotes_Column_Username());
+                }
+                else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+
+                Note n=new Note(email,username,userIMG,noteTitle,noteDescription,resourceURL,datePosted,deleted,tags,upvote,downvote,null);
+                notes.add(n);
+                ref.UpdateList(notes);
+            }
+        });
     }
 
     public void add(Note n) {

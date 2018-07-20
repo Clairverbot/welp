@@ -1,4 +1,4 @@
-package com.example.clair.welp;
+package com.example.clair.welp.Firebase;
 
 import java.util.Date;
 
@@ -69,6 +69,30 @@ public class MagicalNames {
 
     public String getNotes_Column_Comment() {
         return Notes_Column_Comment;
+    }
+    //endregion
+
+
+    //region User
+    private String Users_Column_Email="Email";
+    private String Users_Column_Subjects="Subjects";
+    private String Users_Column_Username="Username";
+    private String Users_Column_YearOfStudy="YearOfStudy";
+
+    public String getUsers_Column_Email() {
+        return Users_Column_Email;
+    }
+
+    public String getUsers_Column_Subjects() {
+        return Users_Column_Subjects;
+    }
+
+    public String getUsers_Column_Username() {
+        return Users_Column_Username;
+    }
+
+    public String getUsers_Column_YearOfStudy() {
+        return Users_Column_YearOfStudy;
     }
     //endregion
 }
