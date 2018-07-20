@@ -13,36 +13,42 @@
         <activity
             android:name=".MainActivity"
             android:label=""
-            android:theme="@style/AppTheme" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".SplashScreen"
             android:noHistory="true"
             android:theme="@style/SplashTheme">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".Login"
-            android:theme="@style/LoginSignUp"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:theme="@style/LoginSignUp" />
         <activity
             android:name=".SignUp_Year"
             android:theme="@style/LoginSignUp" />
         <activity
             android:name=".SignUpSubject"
             android:theme="@style/LoginSignUp" />
-        <activity android:name=".SignUp_Auth"
-            android:theme="@style/LoginSignUp"
-            android:noHistory="true"></activity>
+        <activity
+            android:name=".SignUp_Auth"
+            android:noHistory="true"
+            android:theme="@style/LoginSignUp" />
+        <activity android:name=".AddPostDetail"
+            android:label="Add Post Details"
+            ></activity>
     </application>
 
 </manifest>

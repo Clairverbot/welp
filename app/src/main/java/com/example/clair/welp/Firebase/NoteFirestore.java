@@ -1,11 +1,14 @@
-package com.example.clair.welp;
+package com.example.clair.welp.Firebase;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.clair.welp.Firebase.MagicalNames;
+import com.example.clair.welp.MainActivity;
 import com.example.clair.welp.Objects.Note;
 import com.firebase.client.annotations.NotNull;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -14,7 +17,14 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,8 +34,8 @@ import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
-public class Firestore {
-    public Firestore() {
+public class NoteFirestore {
+    public NoteFirestore() {
     }
 
     CollectionReference collectionref = FirebaseFirestore.getInstance().collection("Notes");
@@ -39,7 +49,7 @@ public class Firestore {
     List<String>tags;
     int upvote,downvote;
 
-    public Firestore(MainActivity r) {
+    public NoteFirestore(MainActivity r) {
         final MainActivity reference = r;
 
 
@@ -53,8 +63,6 @@ public class Firestore {
                         if (task.isSuccessful()) {
                             for (final DocumentSnapshot document : task.getResult()) {
                                 email = document.getString(magicalNames.getNotes_Column_Email());
-                                getUserInfo(email,reference);
-                                userIMG = document.getString(magicalNames.getNotes_Column_UserIMG());
                                 noteTitle = document.getString(magicalNames.getNotes_Column_NoteTitle());
                                 noteDescription = document.getString(magicalNames.getNotes_Column_NoteDescription());
                                 resourceURL = document.getString(magicalNames.getNotes_Column_ResourceURL());
@@ -68,6 +76,8 @@ public class Firestore {
                                 upvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Upvote()).toString());
                                 downvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Downvote()).toString());
 
+                                getUserInfo(email,noteTitle,noteDescription,resourceURL,datePosted,deleted,tags,upvote,downvote,reference);
+
 
                             }
 
@@ -79,7 +89,7 @@ public class Firestore {
 
 
     }
-    public void getUserInfo(String Email,MainActivity reference){
+    public void getUserInfo(final String Email,final String noteTitle,final String noteDescription,final String resourceURL,final String datePosted,final String deleted,final List<String> tags,final int upvote,final int downvote,MainActivity reference){
         final MainActivity ref=reference;
         db.collection("Users").document(Email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -99,18 +109,58 @@ public class Firestore {
     }
 
     public void add(Note n) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+
+        StorageReference storageRef = storage.getReference();
+
+        Uri file=Uri.fromFile(new File(n.getResourceURL()));
+        final Uri[] downloadUri = new Uri[1];
+        StorageReference fileRef=storageRef.child(n.getResourceURL());
+
+        UploadTask uploadTask=fileRef.putFile(file);
+
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+        final StorageReference ref = storageRef.child(n.getResourceURL());
+        uploadTask = ref.putFile(file);
+
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                // Continue with the task to get the download URL
+                return ref.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    downloadUri[0] = task.getResult();
+                } else {
+                    // Handle failures
+                    // ...
+                }
+            }
+        });
         notas.put(magicalNames.getNotes_Column_Email(),n.getEmail());
-        notas.put(magicalNames.getNotes_Column_Username(),n.getUsername());
-        notas.put(magicalNames.getNotes_Column_UserIMG(),n.getUserIMG());
         notas.put(magicalNames.getNotes_Column_NoteTitle(),n.getNoteTitle());
         notas.put(magicalNames.getNotes_Column_NoteDescription(),n.getNoteDescription());
-        notas.put(magicalNames.getNotes_Column_ResourceURL(),n.getResourceURL());
+        notas.put(magicalNames.getNotes_Column_ResourceURL(),downloadUri[0]);
         notas.put(magicalNames.getNotes_Column_DatePosted(),n.getDatePosted());
-        notas.put(magicalNames.getNotes_Column_Deleted(),n.getDeleted());
         notas.put(magicalNames.getNotes_Column_Tags(),n.getTags());
-        notas.put(magicalNames.getNotes_Column_Comment(),n.getComments());
-        notas.put(magicalNames.getNotes_Column_Upvote(),n.getUpvote());
-        notas.put(magicalNames.getNotes_Column_Downvote(),n.getDownvote());
 
         collectionref.document().set(notas).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

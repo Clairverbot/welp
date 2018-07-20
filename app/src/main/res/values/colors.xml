@@ -3,7 +3,7 @@
     <color name="colorPrimary">#343f4b</color>
     <color name="colorPrimaryDark">#171c21</color>
     <color name="colorAccent">#bbcbd5</color>
-    <color name="background_material_dark">#4ab5c7</color>
+    <color name="the4ab5c7">#4ab5c7</color>
     <color name="foreground_material_dark">#000000</color>
     <color name="text_color_primary">#FFFFFF</color>
     <color name="text_color_whenInDoubtUseThis">#BBCBD5</color>
@@ -16,4 +16,5 @@
     <color name="selectSubClicked">#E5E9F2</color>
     <color name="btn_color_OtherBlue">#66CBE2</color>
     <color name="post_Grey">#BBCBD5</color>
+    <color name="nicebg">#F8F9FB</color>
 </resources>

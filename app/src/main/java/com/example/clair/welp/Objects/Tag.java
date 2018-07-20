@@ -9,12 +9,15 @@ public class Tag {
     //Todo: add img icons to Subjects arr
     private String[] Subjects=new String[]{"English","Chinese","Math","Geography","History","Physics","Chemistry","Biology","A-Math"};
     private Integer[] img=new Integer[]{R.drawable.english,R.drawable.chinese,R.drawable.math,R.drawable.geography,R.drawable.history,R.drawable.physics,R.drawable.chemistry,R.drawable.biology,R.drawable.amath};
-    private String YearOfStudy, Subject;
+    private String YearOfStudy, Subject,Type,Summary;
 
     public Tag(){}
-    public Tag(String yearOfStudy, String subject) {
+
+    public Tag(String yearOfStudy, String subject, String type, String summary) {
         YearOfStudy = yearOfStudy;
         Subject = subject;
+        Type = type;
+        Summary = summary;
     }
 
     //region properties
@@ -56,6 +59,22 @@ public class Tag {
 
     public void setImg(Integer[] img) {
         this.img = img;
+    }
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
+    }
+
+    public String getSummary() {
+        return Summary;
+    }
+
+    public void setSummary(String summary) {
+        Summary = summary;
     }
     //endregion
 }

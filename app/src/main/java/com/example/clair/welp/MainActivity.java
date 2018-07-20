@@ -1,6 +1,5 @@
 package com.example.clair.welp;
 
-import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.content.Intent;
@@ -11,14 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 
+import com.example.clair.welp.Firebase.NoteFirestore;
 import com.example.clair.welp.Objects.Note;
 import com.example.clair.welp.OtherStuff.*;
 import com.firebase.ui.auth.AuthUI;
@@ -28,6 +26,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.File;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseDatabase fFirebaseDatabase;
     private DatabaseReference fDatabaseReference;
     private ChildEventListener fChildEventListener;
-    Firestore f;
+    NoteFirestore f;
     //endregion
 
     //region firebase auth stuff
@@ -150,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onStart() {
         super.onStart();
         MainActivity r=this;
-        f=new Firestore(r);
+        f=new NoteFirestore(r);
     }
 
     @Override
@@ -233,55 +232,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         Intent i;
+        int requestCode=0;
         if(isFabOpen){
+            i = new Intent(Intent.ACTION_GET_CONTENT);
             switch (v.getId()){
                 case R.id.fabImg:
-                    //todo: image selector
-                    i = new Intent(Intent.ACTION_GET_CONTENT);
                     i.setType("image/*");
-                    i.addCategory(Intent.CATEGORY_OPENABLE);
-
-                    try {
-                        startActivityForResult(
-                                Intent.createChooser(i, "Select note"),
-                                0);
-                    } catch (android.content.ActivityNotFoundException ex) {
-                        // Potentially direct the user to the Market with a Dialog
-
-                    }
+                    requestCode=0;
                     break;
                 case R.id.fabPdf:
-                    //todo: pdf selector
-                    i = new Intent(Intent.ACTION_GET_CONTENT);
                     i.setType("application/pdf");
-                    i.addCategory(Intent.CATEGORY_OPENABLE);
-
-                    try {
-                        startActivityForResult(
-                                Intent.createChooser(i, "Select note"),
-                                0);
-                    } catch (android.content.ActivityNotFoundException ex) {
-                        // Potentially direct the user to the Market with a Dialog
-
-                    }
+                    requestCode=1;
                     break;
                 case R.id.fabVid:
-                    //todo: video selector;
-                    i = new Intent(Intent.ACTION_GET_CONTENT);
                     i.setType("video/*");
-                    i.addCategory(Intent.CATEGORY_OPENABLE);
-
-                    try {
-                        startActivityForResult(
-                                Intent.createChooser(i, "Select note"),
-                                0);
-                    } catch (android.content.ActivityNotFoundException ex) {
-                        // Potentially direct the user to the Market with a Dialog
-
-                    }
+                    requestCode=2;
                     break;
+            }
+            i.addCategory(Intent.CATEGORY_OPENABLE);
+
+            try {
+                startActivityForResult(
+                        Intent.createChooser(i, "Select note"),
+                        requestCode);
+            } catch (android.content.ActivityNotFoundException ex) {
+                // Potentially direct the user to the Market with a Dialog
+
             }
         }
     }
-}
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+            case 0:
+            case 1:
+                case 2:
+                if(resultCode==RESULT_OK){
+                    File file=new File(data.getData().toString());
+                    String path=file.getAbsolutePath();
+                    Log.d("PATH:",path);
+                    Intent i=new Intent(MainActivity.this,AddPostDetail.class);
+                    i.putExtra("path",path);
+                    i.putExtra("email",fFirebaseAuth.getCurrentUser().getEmail());
+                    startActivity(i);
+                }
+                break;
+        }
+    }
+    }
 
