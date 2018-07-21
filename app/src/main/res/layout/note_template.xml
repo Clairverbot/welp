@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp">
+    android:layout_marginBottom="16dp"
+    android:elevation="@dimen/cardview_default_elevation">
 
     <LinearLayout
         android:id="@+id/llNote"
@@ -76,7 +77,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="0.3dp"
             android:layout_below="@+id/llNoteTopBar"
             android:background="@color/post_Grey" />
 
@@ -171,7 +172,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="0.3dp"
             android:layout_below="@+id/llNoteTopBar"
             android:layout_marginTop="@dimen/Padding"
             android:background="@color/post_Grey" />

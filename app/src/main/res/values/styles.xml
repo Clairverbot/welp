@@ -20,4 +20,9 @@
     <style name="Text" parent="android:Widget.TextView">
         <item name="android:fontFamily">Futura Md BT</item>
     </style>
+
+    <style name="Profile" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg1</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
 </resources>

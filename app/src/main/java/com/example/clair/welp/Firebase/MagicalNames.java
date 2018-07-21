@@ -77,6 +77,7 @@ public class MagicalNames {
     private String Users_Column_Subjects="Subjects";
     private String Users_Column_Username="Username";
     private String Users_Column_YearOfStudy="YearOfStudy";
+    private String Users_Column_ProfileDescription="ProfileDescription";
 
     public String getUsers_Column_Email() {
         return Users_Column_Email;
@@ -88,6 +89,10 @@ public class MagicalNames {
 
     public String getUsers_Column_Username() {
         return Users_Column_Username;
+    }
+
+    public String getUsers_Column_ProfileDescription() {
+        return Users_Column_ProfileDescription;
     }
 
     public String getUsers_Column_YearOfStudy() {

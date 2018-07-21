@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_noti:
                         break;
                     case R.id.action_profile:
+                        startActivity(new Intent(MainActivity.this,ProfileActivity.class));
                         break;
                 }
                 return true;

@@ -35,6 +35,10 @@
         <activity android:name=".SignUp_Auth"
             android:theme="@style/LoginSignUp"
             android:noHistory="true"></activity>
+
+        <activity android:name=".ProfileActivity"
+            android:theme="@style/Profile"
+            android:noHistory="true"></activity>
     </application>
 
 </manifest>

@@ -38,7 +38,7 @@ public class UserFirestore {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NotNull Exception e) {
-                        Log.w(TAG, "Eroor adding document", e);
+                        Log.w(TAG, "Error adding document", e);
                     }
                 });
     }

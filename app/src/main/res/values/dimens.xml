@@ -8,4 +8,5 @@
     <dimen name="EvenBiggerPadding">25dp</dimen>
     <dimen name="subject_columwidth">162dp</dimen>
     <dimen name="subjects_img">70dp</dimen>
+    <dimen name="detail_backdrop_height">80dp</dimen>
 </resources>

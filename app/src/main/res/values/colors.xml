@@ -16,4 +16,6 @@
     <color name="selectSubClicked">#E5E9F2</color>
     <color name="btn_color_OtherBlue">#66CBE2</color>
     <color name="post_Grey">#BBCBD5</color>
+    <color name="profile_LightBlue">#03A9F4</color>
+    <color name="profile_DarkBlue">#0288D1</color>
 </resources>

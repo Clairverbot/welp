@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_margin="4dp"
+    android:background="@color/veriWhite">
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="8dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
+        <ImageView
+            android:id="@+id/ivNotebookImg"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+
+            android:src="@drawable/notebook"
+            />
+        <TextView
+            android:id="@+id/tvRecipeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/ivNotebookImg"
+            android:text="Fake Notebook"
+            android:textStyle="bold"
+            android:scrollHorizontally="false"
+            android:textSize="20sp"
+            android:layout_marginHorizontal="16dp"
+            android:maxWidth="220dp"
+            android:textColor="#1F2D3D"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/post_Grey"/>
+</LinearLayout>
