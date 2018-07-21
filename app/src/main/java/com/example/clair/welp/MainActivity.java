@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.clair.welp.Firebase.NoteFirestore;
 import com.example.clair.welp.Objects.Note;
@@ -150,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onStart() {
         super.onStart();
         MainActivity r=this;
+        //ProgressBar spinner = (ProgressBar) findViewById(R.id.progressBar);
         f=new NoteFirestore(r);
     }
 

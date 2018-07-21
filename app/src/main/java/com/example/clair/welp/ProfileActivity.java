@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.clair.welp.Firebase.MagicalNames;
-import com.example.clair.welp.HelperClasses.BottomNavigationViewHelper;
+import com.example.clair.welp.OtherStuff.BottomNavigationViewHelper;
 import com.example.clair.welp.Objects.Note;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,6 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
     public static final String EXTRA_NAME = "cheese_name";
 
     private FirebaseAuth mFirebaseAuth;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth.AuthStateListener fAuthStateListener;
     MagicalNames magicalNames = new MagicalNames();
 
@@ -82,37 +83,30 @@ public class ProfileActivity extends AppCompatActivity {
         if (mFirebaseUser.getEmail() != null){
             String userEmail = mFirebaseUser.getEmail();
 
-            CollectionReference collectionrefcurrentuser = FirebaseFirestore.getInstance().collection("Users");
 
-            collectionrefcurrentuser.whereEqualTo("Email", userEmail).get().
-                    addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                              @Override
-                                              public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            db.collection("Users").document(userEmail).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        String username = task.getResult().getString(magicalNames.getUsers_Column_Username());
+                        String desc = task.getResult().getString(magicalNames.getUsers_Column_ProfileDescription());
+                        if(desc != null){
+                            TextView tvDesc = (TextView)findViewById(R.id.profile_desc);
+                            tvDesc.setText(desc);
+                        }
 
-                                                  if (task.isSuccessful()) {
-                                                      for (DocumentSnapshot document : task.getResult()) {
-
-                                                          String username = document.getString(magicalNames.getUsers_Column_Username());
-                                                          if(document.getString(magicalNames.getUsers_Column_ProfileDescription()) != null){
-                                                              TextView tvDesc = (TextView)findViewById(R.id.profile_desc);
-                                                              String desc = document.getString(magicalNames.getUsers_Column_ProfileDescription());
-                                                              tvDesc.setText(desc);
-                                                          }
-
-
-                                                          TextView tvUsername = (TextView)findViewById(R.id.profile_username);
-
-                                                          tvUsername.setText(username);
-
-                                                          collapsingToolbar.setTitle(username);
-                                                      }
+                        TextView tvUsername = (TextView)findViewById(R.id.profile_username);
+                        tvUsername.setText(username);
+                        collapsingToolbar.setTitle(username);
+                    }
+                    else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                    }
 
 
-                                                  } else {
-                                                      Log.d(TAG, "Error getting documents: ", task.getException());
-                                                  }
-                                              }
-                    });
+                }
+            });
+
 
 
         } else{
