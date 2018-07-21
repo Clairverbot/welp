@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class MagicalNames {
     //store all names that need to use more then once
-    //region Note
+    //region Note Fiyahbase
     private String Notes_Column_Email="Email";
     private String Notes_Column_Username="Username";
     private String Notes_Column_UserIMG="UserIMG";
@@ -71,6 +71,7 @@ public class MagicalNames {
         return Notes_Column_Comment;
     }
     //endregion
+
 
     //region User
     private String Users_Column_Email="Email";

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class User {
+    public User(){}
     private String Email, YearOfStudy,Username;
     private ArrayList Subjects;
 

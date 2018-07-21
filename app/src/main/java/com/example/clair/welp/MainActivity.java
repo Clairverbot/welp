@@ -1,19 +1,24 @@
 package com.example.clair.welp;
 
+import android.animation.ObjectAnimator;
+import android.animation.TimeInterpolator;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.clair.welp.Firebase.NoteFirestore;
 import com.example.clair.welp.Objects.Note;
-import com.example.clair.welp.HelperClasses.*;
+import com.example.clair.welp.OtherStuff.*;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,9 +26,10 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.File;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     //region firebase databse stuf
     private FirebaseDatabase fFirebaseDatabase;
     private DatabaseReference fDatabaseReference;
@@ -44,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     //endregion
 
     BottomNavigationView bottomNavigationView;
+    boolean isFabOpen=false;
+    FloatingActionButton fab,fabPdf,fabImg,fabVid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +89,29 @@ public class MainActivity extends AppCompatActivity {
         fFirebaseDatabase=FirebaseDatabase.getInstance();
 
         //region bottom nav
+        fab = findViewById(R.id.fabUpload);
+        fabPdf = findViewById(R.id.fabPdf);
+        fabImg = findViewById(R.id.fabImg);
+        fabVid = findViewById(R.id.fabVid);
+        fabPdf.setOnClickListener(this);
+        fabImg.setOnClickListener(this);
+        fabVid.setOnClickListener(this);
+
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //todo: make upload
+                if(!isFabOpen){
+                    showFabMenu();
+                }
+                else {
+                    closeFabMenu();
+                }
+            }
+        });
+
+
         bottomNavigationView=findViewById(R.id.bottomNav);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -103,6 +134,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //endregion
+
+
         //region recyclerView adapter
         rvNote=findViewById(R.id.rvNote);
         rLayoutManager=new LinearLayoutManager(this);
@@ -157,21 +190,96 @@ public class MainActivity extends AppCompatActivity {
 
 //endregion
 
-    //add sample data, yay firebase is a lie
-    /*jk we changed to firebase c:
-    public static List<Note> FakeDataGenerator(){
-        String[]fakeTags={"E-Math","Sec 4","Practice","E-Math Sec 4"};
-        Note n=new Note("welperman@gmail.com","Welpermen","R.drawable.dummyImg","E-Math 'O-Level' Practice Paper 2018","very useful practice paper cos it's practice paper and practice paper are all useful","shdakdhksahdkshfjskdfhsdkjfkhsfhsdfignoreme","05/12/2017,12:01PM",null,fakeTags,null,100,1);
-        Note nn=new Note("welperman@gmail.com","Welpermen","R.drawable.dummyImg","E-Math 'O-Level' Practice Paper 2018","very useful practice paper cos it's practice paper and practice paper are all useful","shdakdhksahdkshfjskdfhsdkjfkhsfhsdfignoreme","05/12/2017,12:01PM",null,fakeTags,null,100,1);
-        Note nnn=new Note("welperman@gmail.com","Welpermen","R.drawable.dummyImg","E-Math 'O-Level' Practice Paper 2018","very useful practice paper cos it's practice paper and practice paper are all useful","shdakdhksahdkshfjskdfhsdkjfkhsfhsdfignoreme","05/12/2017,12:01PM",null,fakeTags,null,100,1);
-        Note[] notes={n,nn,nnn};
-        return Arrays.asList(notes);
-
-    }*/
 
     public void UpdateList(List<Note> n){
         nAdapter.deleteEverything();
         nAdapter.addAllItems(n);
     }
-}
+
+
+
+    public void gooeyFab(){
+        ObjectAnimator anim = ObjectAnimator.ofFloat(fab, "scaleY", R.animator.gooey_path_anim);
+        anim.setDuration(2000);                  // Duration in milliseconds
+        anim.setInterpolator(new TimeInterpolator() {
+            @Override
+            public float getInterpolation(float input) {
+                return 0;
+            }
+        });  // E.g. Linear, Accelerate, Decelerate
+        anim.start();
+    }
+    private void showFabMenu(){
+        isFabOpen=true;
+        gooeyFab();
+        fabPdf.animate().translationY(-getResources().getDimension(R.dimen.fab));
+        fabPdf.animate().translationX(-getResources().getDimension(R.dimen.fabMargin));
+        fabImg.animate().translationY(-getResources().getDimension(R.dimen.fabCenter));
+        fabVid.animate().translationY(-getResources().getDimension(R.dimen.fab));
+        fabVid.animate().translationX(getResources().getDimension(R.dimen.fabMargin));
+
+    }
+
+    private void closeFabMenu(){
+        isFabOpen=false;
+        fabPdf.animate().translationY(0);
+        fabPdf.animate().translationX(0);
+        fabImg.animate().translationY(0);
+        fabImg.animate().translationX(0);
+        fabVid.animate().translationY(0);
+        fabVid.animate().translationX(0);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent i;
+        int requestCode=0;
+        if(isFabOpen){
+            i = new Intent(Intent.ACTION_GET_CONTENT);
+            switch (v.getId()){
+                case R.id.fabImg:
+                    i.setType("image/*");
+                    requestCode=0;
+                    break;
+                case R.id.fabPdf:
+                    i.setType("application/pdf");
+                    requestCode=1;
+                    break;
+                case R.id.fabVid:
+                    i.setType("video/*");
+                    requestCode=2;
+                    break;
+            }
+            i.addCategory(Intent.CATEGORY_OPENABLE);
+
+            try {
+                startActivityForResult(
+                        Intent.createChooser(i, "Select note"),
+                        requestCode);
+            } catch (android.content.ActivityNotFoundException ex) {
+                // Potentially direct the user to the Market with a Dialog
+
+            }
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+            case 0:
+            case 1:
+                case 2:
+                if(resultCode==RESULT_OK){
+                    File file=new File(data.getData().toString());
+                    String path=file.getAbsolutePath();
+                    Log.d("PATH:",path);
+                    Intent i=new Intent(MainActivity.this,AddPostDetail.class);
+                    i.putExtra("path",path);
+                    i.putExtra("email",fFirebaseAuth.getCurrentUser().getEmail());
+                    startActivity(i);
+                }
+                break;
+        }
+    }
+    }
 

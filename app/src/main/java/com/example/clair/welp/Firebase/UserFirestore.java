@@ -23,12 +23,11 @@ public class UserFirestore {
     MagicalNames magicalNames = new MagicalNames();
 
     public void add(User user){
-        userMap.put(magicalNames.getUsers_Column_Email(), user.getEmail());
         userMap.put(magicalNames.getUsers_Column_Subjects(),user.getSubjects());
         userMap.put(magicalNames.getUsers_Column_Username(),user.getUsername());
         userMap.put(magicalNames.getUsers_Column_YearOfStudy(),user.getYearOfStudy());
 
-        collectionReference.document().set(userMap)
+        collectionReference.document(user.getEmail()).set(userMap)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

@@ -1,32 +1,32 @@
 package com.example.clair.welp.Objects;
 
-import java.util.Date;
+
+import java.util.List;
 
 public class Note {
-    private String Email,Username,UserIMG,NoteTitle,NoteDescription,ResourceURL;
-    private Date DatePosted,Deleted  ;
-    private String[] Tags;
+    private String Email,Username,UserIMG,NoteTitle,NoteDescription,ResourceURL,DatePosted,Deleted  ;
+    private List<String> Tags;
     private int Upvote,Downvote;
     private String[][] Comments;
 
     public Note(){}
 
-    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL, Date datePosted, Date deleted, String[] tags, String[][] comments, int upvote, int downvote) {
-        Email=email;
+    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, List<String> tags, int upvote, int downvote, String[][] comments) {
+        Email = email;
         Username = username;
-        UserIMG=userIMG;
+        UserIMG = userIMG;
         NoteTitle = noteTitle;
         NoteDescription = noteDescription;
         ResourceURL = resourceURL;
         DatePosted = datePosted;
         Deleted = deleted;
         Tags = tags;
-        Comments = comments;
         Upvote = upvote;
         Downvote = downvote;
+        Comments = comments;
     }
 
-    //region properties
+//region properties
 
     public String getUserIMG() {
         return UserIMG;
@@ -76,27 +76,27 @@ public class Note {
         ResourceURL = resourceURL;
     }
 
-    public Date getDatePosted() {
+    public String getDatePosted() {
         return DatePosted;
     }
 
-    public void setDatePosted(Date datePosted) {
+    public void setDatePosted(String datePosted) {
         DatePosted = datePosted;
     }
 
-    public Date getDeleted() {
+    public String getDeleted() {
         return Deleted;
     }
 
-    public void setDeleted(Date deleted) {
+    public void setDeleted(String deleted) {
         Deleted = deleted;
     }
 
-    public String[] getTags() {
+    public List<String> getTags() {
         return Tags;
     }
 
-    public void setTags(String[] tags) {
+    public void setTags(List<String> tags) {
         Tags = tags;
     }
 
