@@ -9,7 +9,7 @@
         android:id="@+id/rvNote"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="4dp"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginTop="8dp"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbars="vertical"

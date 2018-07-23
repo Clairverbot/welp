@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.clair.welp.Firebase.NoteFirestore;
+import com.example.clair.welp.Objects.Note;
 import com.example.clair.welp.Objects.Notebook;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -26,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +53,7 @@ public class NotebookActivity extends AppCompatActivity {
         //getExtras
         passedName = getIntent().getExtras().getString("NotebookName");
         passedEmail = getIntent().getExtras().getString("Email");
-        passedList = getIntent().getExtras().getStringArrayList("NotebookNotes");
+
 
         //Title and backbutton
         ActionBar actionBar = getSupportActionBar();
@@ -67,8 +69,6 @@ public class NotebookActivity extends AppCompatActivity {
 
         mAdapter=new NoteAdapter(this);
         noteList.setAdapter(mAdapter);
-
-
     }
 
 
@@ -76,10 +76,15 @@ public class NotebookActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         NotebookActivity r=this;
+        passedList = getIntent().getExtras().getStringArrayList("NotebookNotes");
 
-       // f=new NoteFirestore(r, passedList);
+        f=new NoteFirestore(r, passedList);
     }
 
+    public void UpdateList(List<Note> n){
+        mAdapter.deleteEverything();
+        mAdapter.addAllItems(n);
+    }
 
     //UP BUTTON (BACK)
     @Override

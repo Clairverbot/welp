@@ -55,7 +55,6 @@ public class NoteFirestore {
     SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
     String datePosted,deleted;
     List<String>tags;
-    Map<String, Boolean> notebooks = new HashMap<>();
     int upvote,downvote;
 
     public NoteFirestore(MainActivity r) {
@@ -156,7 +155,69 @@ public class NoteFirestore {
 
         }
 
+    public NoteFirestore(NotebookActivity r, ArrayList<String> passedList) {
+        final NotebookActivity reference = r;
+        final ArrayList<String> listOfNoteIDs = passedList;
+        ArrayList<Note> notes = new ArrayList<>();
 
+        for (String noteID : listOfNoteIDs) {
+
+            Log.d(TAG, "Note ID1:  " + noteID);
+            db.collection("Notes").document(noteID).get().
+                    addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document != null) {
+                                    email = document.getString(magicalNames.getNotes_Column_Email());
+                                    username = document.getString(magicalNames.getNotes_Column_Username());
+                                    noteTitle = document.getString(magicalNames.getNotes_Column_NoteTitle());
+                                    noteDescription = document.getString(magicalNames.getNotes_Column_NoteDescription());
+                                    resourceURL = document.getString(magicalNames.getNotes_Column_ResourceURL());
+                                    Date DatePosted = document.getDate(magicalNames.getNotes_Column_DatePosted());
+                                    datePosted = DatePosted != null ? sdf.format(DatePosted) : null;
+                                    Date Deleted = document.getDate(magicalNames.getNotes_Column_Deleted());
+                                    deleted = Deleted != null ? sdf.format(Deleted) : null;
+
+                                    tags = (List<String>) document.get(magicalNames.getNotes_Column_Tags());
+                                    //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
+                                    upvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Upvote()).toString());
+                                    downvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Downvote()).toString());
+                                    //notebooks = document.getData(magicalNames.getNotes_Column_Notebooks());
+
+//                                    db.collection("Users").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                                        @Override
+//                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                                            if (task.isSuccessful()) {
+//                                                username = task.getResult().getString(magicalNames.getNotes_Column_Username());
+//                                            } else {
+//                                                Log.d(TAG, "Error getting documents: ", task.getException());
+//                                            }
+
+                                            Note n = new Note(email, username, userIMG, noteTitle, noteDescription, resourceURL, datePosted, deleted, tags, upvote, downvote, null);
+                                            notes.add(n);
+                                            Log.d(TAG, "Added note: " + noteTitle);
+                                            reference.UpdateList(notes);
+                                        }
+//                                    });
+
+
+//                                }
+
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+
+
+                        }
+                    });
+        }
+
+
+    }
 
     public void getUserInfo(final String Email,final String noteTitle,final String noteDescription,final String resourceURL,final String datePosted,final String deleted,final List<String> tags,final int upvote,final int downvote,MainActivity reference){
         final MainActivity ref=reference;

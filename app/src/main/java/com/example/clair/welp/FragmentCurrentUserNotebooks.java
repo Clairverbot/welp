@@ -118,6 +118,9 @@ public class FragmentCurrentUserNotebooks extends Fragment {
                         intent.putExtra("NotebookNotes", (ArrayList<String>) model.getNotebookNotes());
                         intent.putExtra("Email", model.getEmail());
                         startActivity(intent);
+                        for (String noteid: model.getNotebookNotes()){
+                            Log.d("NoteID Fragment", "Note ID in Fragment" + noteid);
+                        }
                     });
                 }
 

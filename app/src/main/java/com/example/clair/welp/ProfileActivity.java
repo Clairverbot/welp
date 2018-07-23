@@ -87,9 +87,11 @@ public class ProfileActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         String username = task.getResult().getString(magicalNames.getUsers_Column_Username());
                         String desc = task.getResult().getString(magicalNames.getUsers_Column_ProfileDescription());
+                        TextView tvDesc = (TextView)findViewById(R.id.profile_desc);
                         if(desc != null){
-                            TextView tvDesc = (TextView)findViewById(R.id.profile_desc);
                             tvDesc.setText(desc);
+                        } else{
+                            tvDesc.setText("You have no description yet");
                         }
 
                         TextView tvUsername = (TextView)findViewById(R.id.profile_username);
