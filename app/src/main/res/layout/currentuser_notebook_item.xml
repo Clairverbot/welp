@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,27 +13,29 @@
         android:orientation="horizontal"
         android:layout_margin="8dp"
         android:paddingTop="15dp"
-        android:paddingBottom="15dp">
+        android:paddingBottom="9dp"
+        android:paddingLeft="10dp">
         <ImageView
             android:id="@+id/ivNotebookImg"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/notebook"
             />
+
         <TextView
-            android:id="@+id/tvRecipeName"
+            android:id="@+id/tvNotebookName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/ivNotebookImg"
-            android:text="Fake Notebook"
-            android:textStyle="bold"
-            android:scrollHorizontally="false"
-            android:textSize="20sp"
             android:layout_marginHorizontal="16dp"
+            android:layout_marginLeft="16dp"
             android:maxWidth="220dp"
+            android:paddingLeft="5dp"
+            android:scrollHorizontally="false"
+            android:text="Fake Notebook"
             android:textColor="#1F2D3D"
-            />
+            android:textSize="17sp"
+            app:layout_constraintLeft_toRightOf="@id/ivNotebookImg"
+            tools:layout_editor_absoluteY="3dp" />
 
     </android.support.constraint.ConstraintLayout>
     <View

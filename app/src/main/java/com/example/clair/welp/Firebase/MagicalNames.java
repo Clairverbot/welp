@@ -18,6 +18,7 @@ public class MagicalNames {
     private String Notes_Column_Downvote="Downvote";
     private String Notes_Column_CommentUsername="CommentUsername";
     private String Notes_Column_Comment="Comment";
+    private String Notes_Column_Notebooks="Notebooks";
 
     public String getNotes_Column_Email() {
         return Notes_Column_Email;
@@ -70,6 +71,10 @@ public class MagicalNames {
     public String getNotes_Column_Comment() {
         return Notes_Column_Comment;
     }
+    public String getNotes_Column_Notebooks() {
+        return Notes_Column_Notebooks;
+    }
+
     //endregion
 
 
@@ -100,4 +105,6 @@ public class MagicalNames {
         return Users_Column_YearOfStudy;
     }
     //endregion
+
+
 }

@@ -48,11 +48,15 @@
             android:theme="@style/LoginSignUp" />
         <activity android:name=".AddPostDetail"
             android:label="Add Post Details"
-            ></activity>
+            />
 
         <activity android:name=".ProfileActivity"
             android:theme="@style/Profile"
-            android:noHistory="true"></activity>
+            android:noHistory="true"/>
+
+        <activity android:name=".NotebookActivity"
+            android:theme="@style/AppTheme"/>
+            <!--android:parentActivityName=".ProfileActivity"/>-->
     </application>
 
 </manifest>

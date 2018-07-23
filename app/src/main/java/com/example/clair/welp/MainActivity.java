@@ -128,7 +128,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.action_noti:
                         break;
                     case R.id.action_profile:
-                        startActivity(new Intent(MainActivity.this,ProfileActivity.class));
+                        int FRAGMENT_A = 0;
+                        Intent i = new Intent(MainActivity.this, ProfileActivity.class);
+                        i.putExtra("frgToLoad", FRAGMENT_A);
+                        startActivity(i);
                         break;
                 }
                 return true;

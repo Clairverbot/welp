@@ -2,12 +2,14 @@ package com.example.clair.welp.Objects;
 
 
 import java.util.List;
+import java.util.Map;
 
 public class Note {
     private String Email,Username,UserIMG,NoteTitle,NoteDescription,ResourceURL,DatePosted,Deleted  ;
     private List<String> Tags;
     private int Upvote,Downvote;
     private String[][] Comments;
+    private Map<String, Boolean> Notebooks;
 
     public Note(){}
 
@@ -24,6 +26,7 @@ public class Note {
         Upvote = upvote;
         Downvote = downvote;
         Comments = comments;
+       // Notebooks = notebooks;
     }
 
 //region properties
@@ -122,6 +125,14 @@ public class Note {
 
     public void setDownvote(int downvote) {
         Downvote = downvote;
+    }
+
+    public Map<String, Boolean> getNotebooks() {
+        return Notebooks;
+    }
+
+    public void setNotebooks(Map<String, Boolean> notebooks) {
+        Notebooks = notebooks;
     }
 
     //endregion

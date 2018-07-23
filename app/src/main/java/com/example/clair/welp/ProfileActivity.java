@@ -45,8 +45,6 @@ public class ProfileActivity extends AppCompatActivity {
     private ViewPager viewPager;
 
 
-    public static final String EXTRA_NAME = "cheese_name";
-
     private FirebaseAuth mFirebaseAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth.AuthStateListener fAuthStateListener;
@@ -70,7 +68,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         final CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitleEnabled(true);
-        collapsingToolbar.setTitle("ZhenRight");
         collapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.color_YouCantSeeME)); // transperent color = #00000000
         collapsingToolbar.setCollapsedTitleTextColor(Color.rgb(255, 255, 255)); //Color of your title
 
@@ -117,17 +114,6 @@ public class ProfileActivity extends AppCompatActivity {
             tvDesc.setText("You have no description yet");
         }
 
-// User ID
-//        mFirebaseUser.getUid();
-// Email-ID
-//        mFirebaseUser.getEmail();
-//// User-Profile (if available)
-//        mFirebaseUser.getPhotoUrl();
-
-
-
-
-
 
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -140,6 +126,21 @@ public class ProfileActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
 
+        //set current tab
+        int intentFragment = getIntent().getExtras().getInt("frgToLoad");
+
+        switch (intentFragment) {
+            case 1:
+                viewPager.setCurrentItem(1); //notebooks tab
+                break;
+            case 2:
+                viewPager.setCurrentItem(2); //following tab
+                break;
+
+                default: //post tab
+
+
+        }
 
 
         //region bottom nav

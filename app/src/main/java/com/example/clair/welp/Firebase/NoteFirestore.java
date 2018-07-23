@@ -54,6 +54,7 @@ public class NoteFirestore {
     SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
     String datePosted,deleted;
     List<String>tags;
+    Map<String, Boolean> notebooks = new HashMap<>();
     int upvote,downvote;
 
     public NoteFirestore(MainActivity r) {
@@ -121,6 +122,7 @@ public class NoteFirestore {
                                 //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
                                 upvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Upvote()).toString());
                                 downvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Downvote()).toString());
+                                //notebooks = document.getData(magicalNames.getNotes_Column_Notebooks());
 
                                 db.collection("Users").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override

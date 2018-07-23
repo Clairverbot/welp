@@ -48,20 +48,12 @@ public class FragmentCurrentUserPosts extends Fragment {
         // Views
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rvNote);
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        //mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-//        mName = "Android";
-//        mEmail = "android@google.com";
-
-        // specify an adapter
-//        mAdapter = new RecyclerView.Adapter(getActivity(), mNavTitles, mIcons, mName, mEmail, R.drawable.profile_icon);
         mAdapter=new NoteAdapter(mContext);
         mRecyclerView.setAdapter(mAdapter);
 
