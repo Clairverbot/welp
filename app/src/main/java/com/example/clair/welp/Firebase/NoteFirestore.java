@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.clair.welp.Firebase.MagicalNames;
 import com.example.clair.welp.FragmentCurrentUserPosts;
 import com.example.clair.welp.MainActivity;
+import com.example.clair.welp.NotebookActivity;
 import com.example.clair.welp.Objects.Note;
 import com.example.clair.welp.R;
 import com.firebase.client.annotations.NotNull;
@@ -153,7 +154,10 @@ public class NoteFirestore {
                 });
 
 
-    }
+        }
+
+
+
     public void getUserInfo(final String Email,final String noteTitle,final String noteDescription,final String resourceURL,final String datePosted,final String deleted,final List<String> tags,final int upvote,final int downvote,MainActivity reference){
         final MainActivity ref=reference;
        // final ProgressBar pbSpinner = spinner;
