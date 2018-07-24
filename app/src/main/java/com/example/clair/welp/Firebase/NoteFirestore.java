@@ -119,6 +119,7 @@ public class NoteFirestore {
 
     }
 
+
     public NoteFirestore(FragmentCurrentUserPosts r, String strEmail, TextView error) {
         final FragmentCurrentUserPosts reference = r;
         final TextView tvError = error;
@@ -371,7 +372,7 @@ public class NoteFirestore {
         notas.put(magicalNames.getNotes_Column_ResourceURL(),downloadUri[0]);
         notas.put(magicalNames.getNotes_Column_DatePosted(),datePosted);
         notas.put(magicalNames.getNotes_Column_Tags(),n.getTags());
-
+        notas.put(magicalNames.getUsers_Column_Username(),n.getUsername());
 
         collectionref.document().set(notas).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

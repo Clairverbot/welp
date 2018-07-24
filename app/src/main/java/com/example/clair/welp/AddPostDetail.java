@@ -34,7 +34,7 @@ public class AddPostDetail extends AppCompatActivity {
     RadioButton rbNotes, rbPractice,rbLesson;
     RadioGroup rg;
     Button btnPost;
-    String path,email;
+    String path,email,username;
     NoteFirestore noteFirestore;
 
     @Override
@@ -56,6 +56,7 @@ public class AddPostDetail extends AppCompatActivity {
 
         path=getIntent().getExtras().getString("path");
         email=getIntent().getExtras().getString("email");
+        username=getIntent().getExtras().getString("username");
 
         noteFirestore=new NoteFirestore();
         btnPost.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +65,7 @@ public class AddPostDetail extends AppCompatActivity {
                 if(etNoteDesc.getText()!=null &&etNoteTitle!=null){
                     RadioButton rb=findViewById(rg.getCheckedRadioButtonId());
                     List<String> tags= Arrays.asList((String) spSubject.getSelectedItem(),(String)spGrade.getSelectedItem(),(String)rb.getText(),(String) spSubject.getSelectedItem()+(String)spGrade.getSelectedItem());
-                    Note note=new Note(email,null,null,etNoteTitle.getText().toString(),etNoteDesc.getText().toString(),path, Calendar.getInstance().getTime().toString(),null,tags,0,0,null);
+                    Note note=new Note(email,username,null,etNoteTitle.getText().toString(),etNoteDesc.getText().toString(),path, Calendar.getInstance().getTime().toString(),null,tags,0,0,null);
                     noteFirestore.add(note);
                     Intent intent=new Intent(AddPostDetail.this,MainActivity.class);
                     startActivity(intent);

@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.ArrayList;
 
@@ -77,6 +79,7 @@ public class SignUp_Auth extends AppCompatActivity {
 
         }
     };
+    FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
     private void signUpUser(String username,String email, String password){
         auth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -89,6 +92,11 @@ public class SignUp_Auth extends AppCompatActivity {
                         else{
                             //todo: put user obj in firebase
                             User u=new User(etEmail.getText().toString(),yrOfStudy,etUsername.getText().toString(),subjects);
+
+                            FirebaseUser user=firebaseAuth.getCurrentUser();
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(etUsername.getText().toString()).build();
+                            user.updateProfile(profileUpdates);
                             userFirestore.add(u);
                             startActivity(new Intent(SignUp_Auth.this,MainActivity.class));
                         }

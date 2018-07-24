@@ -70,16 +70,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user=firebaseAuth.getCurrentUser();
                 if(user==null){
-                    //fiyahbase ui, for ref.
-                    /*startActivityForResult(
-                            AuthUI.getInstance()
-                            .createSignInIntentBuilder()
-                                    .setIsSmartLockEnabled(false)
-                            .setProviders(
-                                    Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(),
-                                            new AuthUI.IdpConfig.GoogleBuilder().build()))
-                            .build(),
-                                    RC_SIGN_IN);*/
                     Intent intent = new Intent(MainActivity.this, Login.class);
                     startActivity(intent);
                 }
@@ -280,7 +270,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d("PATH:",path);
                     Intent i=new Intent(MainActivity.this,AddPostDetail.class);
                     i.putExtra("path",path);
+                    Log.d("path",path);
                     i.putExtra("email",fFirebaseAuth.getCurrentUser().getEmail());
+                    i.putExtra("username",fFirebaseAuth.getCurrentUser().getDisplayName());
                     startActivity(i);
                 }
                 break;
