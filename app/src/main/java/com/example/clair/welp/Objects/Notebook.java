@@ -10,9 +10,15 @@ public class Notebook {
     private String NotebookName;
     private String Email;
     private List<String> NotebookNotes;
+    private String NotebookDocumentID;
 
-
-
+    public Notebook(String email, String notebookName, List<String> notebookNotes,String notebookDocumentID) {
+        Email = email;
+        NotebookName = notebookName;
+        NotebookNotes = notebookNotes;
+        NotebookDocumentID = notebookDocumentID;
+    }
+    public Notebook() {}
 
 
     public String getNotebookName() {
@@ -37,5 +43,13 @@ public class Notebook {
 
     public void setNotebookNotes(List<String> notebookNotes) {
         NotebookNotes = notebookNotes;
+    }
+
+    public String getNotebookDocumentID() {
+        return NotebookDocumentID;
+    }
+
+    public void setNotebookDocumentID(String notebookDocumentID) {
+        NotebookDocumentID = notebookDocumentID;
     }
 }

@@ -5,6 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="center"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:background="@color/color_YouCantSeeME"
     >
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -51,8 +54,8 @@
         android:background="@color/post_Grey"
         app:layout_constraintTop_toBottomOf="@id/clCreateNotebook"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvNotebook"
+    <ListView
+        android:id="@+id/lvNotebook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="0dp"
@@ -60,7 +63,7 @@
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbars="vertical"
         app:layout_constraintTop_toBottomOf="@id/vDivider"
-        ></android.support.v7.widget.RecyclerView>
+        />
 
     </android.support.constraint.ConstraintLayout>
 </RelativeLayout>
