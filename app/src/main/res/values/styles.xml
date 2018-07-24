@@ -25,4 +25,10 @@
         <item name="android:windowBackground">@drawable/bg1</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
+
+    <style name="DialogTheme" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="android:textColorPrimary">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/veriWhite</item>
+        <item name="android:windowBackground">@color/veriWhite</item>
+    </style>
 </resources>

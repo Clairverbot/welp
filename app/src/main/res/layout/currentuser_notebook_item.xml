@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:layout_margin="4dp"
     android:background="@color/veriWhite">
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,8 +18,8 @@
         android:paddingLeft="10dp">
         <ImageView
             android:id="@+id/ivNotebookImg"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:src="@drawable/notebook"
             />
 
@@ -38,8 +39,8 @@
             tools:layout_editor_absoluteY="3dp" />
 
     </android.support.constraint.ConstraintLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="@color/post_Grey"/>
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="2px"-->
+        <!--android:background="@color/post_Grey"/>-->
 </LinearLayout>

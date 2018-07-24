@@ -3,27 +3,35 @@ package com.example.clair.welp;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.widget.Toast;
 
 
 import com.example.clair.welp.Firebase.MagicalNames;
 import com.example.clair.welp.Objects.Note;
 import com.example.clair.welp.Objects.Notebook;
+import com.firebase.client.annotations.NotNull;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,7 +43,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -59,7 +69,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     List<String> notebookNotes;
     String notebookName, notebookDocumentID;
     ArrayList<Notebook> notebooks;
-    ArrayList<String> notebookNames;
+    AlertDialog alert;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvUsername, tvPostTimeDetail, tvNoteTitle, tvNoteDesc, tv_Upvote, tv_Downvote;
@@ -115,21 +125,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                 case R.id.llBookmark:
                     if (pos != RecyclerView.NO_POSITION) {
                         Note clickedNote = mDataset.get(pos);
-                        String bookmarkEmail = clickedNote.getEmail();
-                        //DocumentReference ref = db.collection("Notes").document(clickedNote.getDocumentID());
-                        //String myId = ref.getId();
-//                        openDialog(clickedNote.getDocumentID());
-//                        notebookDialog = new CreateOrAddNotebookDialog();
-////                        notebookDialog.setContentView(R.layout.dialog_create_addto_notebook);
-//
-//                        notebookDialog.show(({AppCompatActivity}context).getSupportFragmentManager(), "hi");
-//                        notebookDialog.setCanceledOnTouchOutside(true);
-                        // custom dialog
-//                        final Dialog dialog = new Dialog(context);
-//                        dialog.setContentView(R.layout.dialog_create_addto_notebook);
-//                        dialog.show();
-                        openDialog(bookmarkEmail);
-
+//                        String bookmarkEmail = clickedNote.getEmail();
+                        String clickedNoteDocumentID = clickedNote.getDocumentID();
+                        openAddToOrCreateDialog(clickedNoteDocumentID);
                     }
                     break;
 
@@ -139,32 +137,23 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         }
     }
 
-    private void openDialog(String bookmarkEmail) {
-//       String documentID = docID;
-//
-//        mFirebaseAuth = FirebaseAuth.getInstance();
-//        mFirebaseUser = mFirebaseAuth.getCurrentUser();
-//        userEmail = mFirebaseUser.getEmail();
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View convertView = (View) inflater.inflate(R.layout.dialog_create_addto_notebook, null);
-        alertDialog.setView(convertView);
-//                        alertDialog.setTitle("List");
-        ListView lv = (ListView) convertView.findViewById(R.id.lvNotebook);
 
-
-
+    //VERY LONG METHOD TO CREATE NOTEBOOK
+    private void openAddToOrCreateDialog(String noteDocumentID) {
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        userEmail = mFirebaseUser.getEmail();
+        Log.d("TAG", "NOTEBOOK: email " + userEmail);
         notebooks = new ArrayList<Notebook>();
+        List<String> notebookNames = new ArrayList<String>();
 
-        notebookNames = new ArrayList<String>();
-
-        db.collection("Notebooks").whereEqualTo("Email", bookmarkEmail).get().
+        FirebaseFirestore.getInstance().collection("Notebooks").whereEqualTo("Email", userEmail).get().
                 addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
                         if (task.isSuccessful()) {
-                            Log.d("TAG","NOTEBOOK: task works " + bookmarkEmail);
+                            Log.d("TAG", "NOTEBOOK: task works " + userEmail);
                             for (DocumentSnapshot document : task.getResult()) {
                                 notebookName = document.getString("NotebookName");
                                 notebookNotes = (List<String>) document.get("NotebookNotes");
@@ -172,26 +161,142 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
                                 Notebook n = new Notebook(userEmail, notebookName, notebookNotes, notebookDocumentID);
                                 notebooks.add(n);
+
                                 notebookNames.add(notebookName);
 
-                                Log.d("TAG","NOTEBOOK: document " + notebookName);
+                                Log.d("TAG", "NOTEBOOK: document " + notebookName);
                             }
+
+                            //Show Add to/Create Notebook Dialog
+                            AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                            LayoutInflater inflater = LayoutInflater.from(context);
+                            View convertView = (View) inflater.inflate(R.layout.dialog_create_addto_notebook, null);
+                            alertDialog.setView(convertView);
+                            ConstraintLayout cl = (ConstraintLayout) convertView.findViewById(R.id.clCreateNotebook);
+                            ListView lv = (ListView) convertView.findViewById(R.id.lvNotebook);
+                            if (notebookNames == null) {
+                                lv.setVisibility(View.GONE);
+
+                            } else {
+                                if (notebookNames.size() == 0) {
+                                    lv.setVisibility(View.GONE);
+                                } else {
+                                    //Populate Listview if user got notebooks
+                                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.currentuser_notebook_item, R.id.tvNotebookName, notebookNames);
+                                    adapter.notifyDataSetChanged();
+                                    lv.setAdapter(adapter);
+                                    Utility.setListViewHeightBasedOnChildren(lv); //SET MAX HEIGHT OF LISTVIEW TO 6 LV ITEMS
+                                }
+                            }
+
+                            alertDialog.setCancelable(true);
+                            alert = alertDialog.show();
+
+
+                            //CLICK Add to Existing Notebook
+                            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    Notebook notebook = notebooks.get(position);
+                                    String notebookName = notebook.getNotebookName();
+                                    String notebookDocID = notebook.getNotebookDocumentID();
+                                    List<String> notesList = notebook.getNotebookNotes();
+                                    notesList.add(noteDocumentID);
+                                    FirebaseFirestore.getInstance()
+                                            .collection("Notebooks")
+                                            .document(notebookDocID)
+                                            .update("NotebookNotes", notesList);
+                                    Toast.makeText(context, "Added to " + notebookName + "!",
+                                            Toast.LENGTH_SHORT).show();
+                                    alert.dismiss();
+                                }
+                            });
+
+                            //CLICK Create Notebook
+                            cl.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    alert.dismiss();
+                                    //Open create notebook dialog
+                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(context, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+                                    LayoutInflater inflater = LayoutInflater.from(context);
+                                    View convertView = (View) inflater.inflate(R.layout.dialog_create_notebook, null);
+                                    EditText etNotebookName = (EditText) convertView.findViewById(R.id.et_NotebookName);
+                                    alertDialog.setView(convertView)
+                                            .setTitle("Create Notebook")
+                                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                }
+                                            })
+                                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    String notebookName = "";
+                                                    notebookName = etNotebookName.getText().toString();
+
+                                                    if (notebookName.equals("")) {
+                                                        Toast.makeText(context, "Please enter a notebook name",
+                                                                Toast.LENGTH_SHORT).show();
+
+                                                    } else {
+                                                        Boolean notebookNameExists = false;
+                                                        for (String nbName : notebookNames) {
+                                                            if (nbName.equalsIgnoreCase(notebookName)) {
+                                                                notebookNameExists = true;
+                                                            }
+                                                        }
+                                                        if (notebookNameExists) {
+                                                            Toast.makeText(context, "You already have a notebook named " + notebookName,
+                                                                    Toast.LENGTH_SHORT).show();
+                                                        } else {
+                                                            List<String> Notes = new ArrayList<String>();
+                                                            Notes.add(noteDocumentID);
+                                                            Map<String, Object> notebookas = new HashMap<>();
+                                                            notebookas.put("Email", userEmail);
+                                                            notebookas.put("NotebookName", notebookName);
+                                                            notebookas.put("NotebookNotes", Notes);
+                                                            DocumentReference dr = FirebaseFirestore.getInstance().collection("Notebooks").document();
+                                                            dr.set(notebookas).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void aVoid) {
+                                                                    Log.d(TAG, "DocumentSnapshot added with ID: " + dr.getId());
+                                                                    Toast.makeText(context, "Notebook Created!",
+                                                                            Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            })
+                                                                    .addOnFailureListener(new OnFailureListener() {
+                                                                        @Override
+                                                                        public void onFailure(@NotNull Exception e) {
+                                                                            Log.w(TAG, "Eroor adding document", e);
+                                                                            Toast.makeText(context, "Something went wrong when creating your notebook",
+                                                                                    Toast.LENGTH_SHORT).show();
+                                                                        }
+                                                                    });
+                                                            ;
+                                                        }
+
+                                                    }
+                                                }
+                                            });
+
+
+                                    alertDialog.setCancelable(true);
+                                    AlertDialog createAlert = alertDialog.show();
+                                    int textViewId = createAlert.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
+                                    TextView tv = (TextView) createAlert.findViewById(textViewId);
+                                    tv.setTextColor(context.getResources().getColor(R.color.Dark_Grey));
+                                }
+                            });
 
 
                         } else {
+                            //Show create notebook button only
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
-
-
-        if (notebookNames != null){
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.currentuser_notebook_item,R.id.tvNotebookName, notebookNames);
-            lv.setAdapter(adapter);
-        }
-
-        alertDialog.setCancelable(true);
-        alertDialog.show();
     }
 
 

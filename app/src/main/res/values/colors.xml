@@ -19,4 +19,5 @@
     <color name="profile_LightBlue">#03A9F4</color>
     <color name="profile_DarkBlue">#0288D1</color>
     <color name="nicebg">#F8F9FB</color>
+    <color name="Dark_Grey">#303030</color>
 </resources>
