@@ -31,4 +31,7 @@
         <item name="android:colorBackground">@color/veriWhite</item>
         <item name="android:windowBackground">@color/veriWhite</item>
     </style>
+    <style name="spinnerStyle"  parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:padding">5sp</item>
+    </style>
 </resources>

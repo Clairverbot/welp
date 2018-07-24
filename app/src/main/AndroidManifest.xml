@@ -38,7 +38,8 @@
             android:theme="@style/LoginSignUp" />
         <activity
             android:name=".SignUp_Year"
-            android:theme="@style/LoginSignUp" />
+            android:theme="@style/Profile" />
+
         <activity
             android:name=".SignUpSubject"
             android:theme="@style/LoginSignUp" />

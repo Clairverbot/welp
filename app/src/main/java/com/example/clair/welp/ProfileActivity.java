@@ -91,10 +91,21 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         String username = task.getResult().getString(magicalNames.getUsers_Column_Username());
-                        String desc = task.getResult().getString(magicalNames.getUsers_Column_ProfileDescription());
+                        String desc = "";
+                        try{
+                            desc = task.getResult().getString(magicalNames.getUsers_Column_ProfileDescription());
+                        }catch (Exception e){
+
+                        }
+
                         TextView tvDesc = (TextView)findViewById(R.id.profile_desc);
-                        if(desc != null){
-                            tvDesc.setText(desc);
+                        if(desc != null ){
+                            if (!desc.equals("")){
+                                tvDesc.setText(desc);
+                            } else{
+                                tvDesc.setText("You have no description yet");
+                            }
+
                         } else{
                             tvDesc.setText("You have no description yet");
                         }

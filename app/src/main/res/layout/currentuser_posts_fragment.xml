@@ -19,7 +19,7 @@
         android:background="@color/color_YouCantSeeME"/>
 
     <TextView
-        android:id="@+id/tvLoading"
+        android:id="@+id/tvLoadingPosts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Loading.."

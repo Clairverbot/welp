@@ -1,6 +1,7 @@
 package com.example.clair.welp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +35,7 @@ public class FragmentCurrentUserPosts extends Fragment {
     NoteFirestore f;
     private FirebaseAuth mFirebaseAuth;
 
-    public FragmentCurrentUserPosts(){
+    public FragmentCurrentUserPosts() {
 
     }
 
@@ -52,7 +54,7 @@ public class FragmentCurrentUserPosts extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        mAdapter=new NoteAdapter(mContext);
+        mAdapter = new NoteAdapter(mContext);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
@@ -61,15 +63,27 @@ public class FragmentCurrentUserPosts extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        FragmentCurrentUserPosts r=this;
+        FragmentCurrentUserPosts r = this;
         mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        TextView tvLoading = (TextView) view.findViewById(R.id.tvLoading);
-        f=new NoteFirestore(r, mFirebaseUser.getEmail(), tvLoading);
+        Log.d("TAG", "Posts Email" + mFirebaseUser.getEmail());
+        f = new NoteFirestore(r, mFirebaseUser.getEmail());
     }
 
-    public void UpdateList(List<Note> n){
+    public void UpdateList(List<Note> n) {
         mAdapter.deleteEverything();
         mAdapter.addAllItems(n);
+        TextView tvLoading = (TextView) view.findViewById(R.id.tvLoadingPosts);
+        Log.d("TAG", "Updated Adapter I'm Here");
+        if (n.size() > 0) {
+            tvLoading.setText("");
+            Log.d("TAG", "No posts");
+        } else {
+            tvLoading.setText("You have not posted anything yet");
+            Log.d("TAG", "Yes posts");
+        }
     }
 }
+
+
+

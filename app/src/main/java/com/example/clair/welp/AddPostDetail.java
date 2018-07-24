@@ -16,8 +16,6 @@ import android.widget.Spinner;
 import com.example.clair.welp.Firebase.NoteFirestore;
 import com.example.clair.welp.Objects.Note;
 import com.example.clair.welp.Objects.Tag;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,13 +78,15 @@ public class AddPostDetail extends AppCompatActivity {
         for (String year:tag.getYearsOfStudy()) {
             yr.add(year);
         }
-        ArrayAdapter<String> dataAdapter=new ArrayAdapter<String>(this,R.layout.spinner_style,yr);
+        ArrayAdapter<String> dataAdapter=new ArrayAdapter<String>(this,R.layout.spinner_black_preview_text,yr);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_item_style);
         spGrade.setAdapter(dataAdapter);
 
         for (String subject:tag.getSubjects()) {
             sub.add(subject);
         }
-        ArrayAdapter<String> DataAdapter=new ArrayAdapter<String>(this,R.layout.spinner_style,sub);
+        ArrayAdapter<String> DataAdapter=new ArrayAdapter<String>(this,R.layout.spinner_black_preview_text,sub);
+        DataAdapter.setDropDownViewResource(R.layout.spinner_item_style);
         spSubject.setAdapter(DataAdapter);
     }
 

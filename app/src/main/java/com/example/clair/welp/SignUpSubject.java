@@ -64,7 +64,7 @@ public class SignUpSubject extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (selected == false) {
                     selected = true;
-                    view.setBackgroundColor(getResources().getColor(R.color.selectSubClicked));
+                    view.setBackgroundColor(getResources().getColor(R.color.text_color_whenInDoubtUseThis));
                     btnNext.setEnabled(true);
                     gvSubjects.getOnItemSelectedListener().onItemSelected(adapterView,view,i,l);
                     //selectedItem = (RelativeLayout) adapterView.getItemAtPosition(i);

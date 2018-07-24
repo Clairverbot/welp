@@ -37,7 +37,8 @@ public class SignUp_Year extends AppCompatActivity implements AdapterView.OnItem
              ) {
             yr.add(year);
         }
-        ArrayAdapter<String> dataAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,yr);
+        ArrayAdapter<String> dataAdapter=new ArrayAdapter<String>(this,R.layout.spinner_white_preview_text,yr);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_item_style);
 
         spYrOfStudy.setAdapter(dataAdapter);
     }

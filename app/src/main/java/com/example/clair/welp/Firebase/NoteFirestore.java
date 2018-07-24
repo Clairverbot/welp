@@ -121,9 +121,8 @@ public class NoteFirestore {
     }
 
 
-    public NoteFirestore(FragmentCurrentUserPosts r, String strEmail, TextView error) {
+    public NoteFirestore(FragmentCurrentUserPosts r, String strEmail) {
         final FragmentCurrentUserPosts reference = r;
-        final TextView tvError = error;
 
         collectionref.whereEqualTo("Email", strEmail).get().
                 addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -135,6 +134,7 @@ public class NoteFirestore {
                         if (task.isSuccessful()) {
                             for (final DocumentSnapshot document : task.getResult()) {
                                 email = document.getString(magicalNames.getNotes_Column_Email());
+                                username = document.getString(magicalNames.getNotes_Column_Username());
                                 noteTitle = document.getString(magicalNames.getNotes_Column_NoteTitle());
                                 noteDescription = document.getString(magicalNames.getNotes_Column_NoteDescription());
                                 resourceURL = document.getString(magicalNames.getNotes_Column_ResourceURL());
@@ -156,10 +156,12 @@ public class NoteFirestore {
                                 notes.add(n);
                                 reference.UpdateList(notes);
 
+                                Log.d(TAG, "Reached Here: ");
                             }
 
                         }else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
+
                         }
                     }
                 });
@@ -203,10 +205,21 @@ public class NoteFirestore {
                                 notes.add(n);
                                 reference.UpdateList(notes);
 
+                                if (notes != null){
+                                    if(notes.size()==0){
+                                        tvError.setText(username+ " has no posts yet");
+                                    }else{
+                                        tvError.setText("");
+                                    }
+                                } else{
+                                    tvError.setText(username+ " has no posts yet");
+                                }
+
                             }
 
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
+                            tvError.setText(username+ " has no posts yet");
                         }
                     }
                 });

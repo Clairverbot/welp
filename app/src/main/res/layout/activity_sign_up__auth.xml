@@ -61,7 +61,10 @@
             android:layout_marginTop="10dp"
             android:hint="@string/SignUpUsername"
             android:maxLines="1"
-            android:padding="@dimen/BiggerPadding" />
+            android:padding="@dimen/BiggerPadding"
+            android:textColorHint="@color/selectSubClicked"
+            android:textColor="@color/veriWhite"
+            android:backgroundTint="@color/veriWhite"/>
 
         <EditText
             android:id="@+id/et_Email"
@@ -70,7 +73,10 @@
             android:layout_marginTop="10dp"
             android:hint="@string/SignUpEmail"
             android:maxLines="1"
-            android:padding="@dimen/BiggerPadding" />
+            android:padding="@dimen/BiggerPadding"
+            android:textColorHint="@color/selectSubClicked"
+            android:textColor="@color/veriWhite"
+            android:backgroundTint="@color/veriWhite"/>
 
         <EditText
             android:id="@+id/et_Password"
@@ -80,7 +86,10 @@
             android:hint="@string/SignUpPassword"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:padding="@dimen/BiggerPadding" />
+            android:padding="@dimen/BiggerPadding"
+            android:textColorHint="@color/selectSubClicked"
+            android:textColor="@color/veriWhite"
+            android:backgroundTint="@color/veriWhite"/>
 
         <EditText
             android:id="@+id/et_CfmPassword"
@@ -90,7 +99,10 @@
             android:hint="@string/SignUp_confirm_password"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:padding="@dimen/BiggerPadding" />
+            android:padding="@dimen/BiggerPadding"
+            android:textColorHint="@color/selectSubClicked"
+            android:textColor="@color/veriWhite"
+            android:backgroundTint="@color/veriWhite"/>
 
 
     </LinearLayout>

@@ -189,6 +189,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/BiggerPadding"
+                android:paddingTop="5dp"
+                android:paddingBottom="1dp"
                 app:layout_constraintLeft_toLeftOf="parent">
 
                 <ImageButton
@@ -215,6 +217,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/BiggerPadding"
+                android:paddingTop="5dp"
+                android:paddingBottom="1dp"
                 app:layout_constraintLeft_toRightOf="@id/llUpvote">
 
                 <ImageButton
@@ -243,6 +247,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/BiggerPadding"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 app:layout_constraintRight_toLeftOf="@+id/llComment"
                 >
 
@@ -263,7 +269,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/home_bookmark"
-                    android:textColor="@color/post_Grey" />
+                    android:textColor="@color/post_Grey"
+                    android:layout_marginRight="10dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -271,6 +278,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/BiggerPadding"
+                android:paddingTop="5dp"
+                android:paddingBottom="1dp"
                 app:layout_constraintRight_toRightOf="parent">
 
                 <ImageButton
