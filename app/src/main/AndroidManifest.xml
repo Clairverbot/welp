@@ -54,6 +54,10 @@
             android:theme="@style/Profile"
             android:noHistory="true"/>
 
+        <activity android:name=".ProfileActivity_otheruser"
+            android:theme="@style/Profile"
+            android:noHistory="true"/>
+
         <activity android:name=".NotebookActivity"
             android:theme="@style/AppTheme"/>
             <!--android:parentActivityName=".ProfileActivity"/>-->

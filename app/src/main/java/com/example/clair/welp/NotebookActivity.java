@@ -77,7 +77,6 @@ public class NotebookActivity extends AppCompatActivity {
         super.onStart();
         NotebookActivity r=this;
         passedList = getIntent().getExtras().getStringArrayList("NotebookNotes");
-
         f=new NoteFirestore(r, passedList);
     }
 

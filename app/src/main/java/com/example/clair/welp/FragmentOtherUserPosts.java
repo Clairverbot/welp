@@ -20,8 +20,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
+public class FragmentOtherUserPosts extends Fragment {
 
-public class FragmentCurrentUserPosts extends Fragment {
+    String email;
     View view;
     // Context
     Context mContext;
@@ -31,10 +32,14 @@ public class FragmentCurrentUserPosts extends Fragment {
     NoteAdapter mAdapter;
     RecyclerView.LayoutManager mLayoutManager;
     NoteFirestore f;
-    private FirebaseAuth mFirebaseAuth;
 
-    public FragmentCurrentUserPosts(){
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        email = ProfileActivity_otheruser.passedEmail;
+        FragmentOtherUserPosts r=this;
+        TextView tvLoading = (TextView) view.findViewById(R.id.tvLoading);
+        f=new NoteFirestore(r, email, tvLoading);
     }
 
     @Nullable
@@ -42,7 +47,7 @@ public class FragmentCurrentUserPosts extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Context
         mContext = getContext();
-        view = inflater.inflate(R.layout.currentuser_posts_fragment, container, false);
+        view = inflater.inflate(R.layout.otheruser_posts_fragment, container, false);
 
         // Views
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rvNote);
@@ -56,16 +61,6 @@ public class FragmentCurrentUserPosts extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        FragmentCurrentUserPosts r=this;
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        TextView tvLoading = (TextView) view.findViewById(R.id.tvLoading);
-        f=new NoteFirestore(r, mFirebaseUser.getEmail(), tvLoading);
     }
 
     public void UpdateList(List<Note> n){

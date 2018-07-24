@@ -47,21 +47,16 @@ public class ProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseAuth.AuthStateListener fAuthStateListener;
     MagicalNames magicalNames = new MagicalNames();
 
-    @Override
-    protected void onStart() {
-        super.onStart();
 
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        Intent intent = getIntent();
+        //Toolbar settings
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

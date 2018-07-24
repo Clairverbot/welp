@@ -1,8 +1,10 @@
 package com.example.clair.welp;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.support.v7.app.AppCompatDialogFragment;
 
 
 import com.example.clair.welp.Firebase.MagicalNames;
@@ -20,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -36,20 +40,21 @@ import static android.content.ContentValues.TAG;
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
     public List<Note> mDataset;
     Context context;
-    private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-    final FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
-    String userEmail = mFirebaseUser.getEmail();
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     MagicalNames magicalNames = new MagicalNames();
     public NoteAdapter(){}
+    private FirebaseAuth mFirebaseAuth;
+    FirebaseUser mFirebaseUser;
+    private String userEmail;
 
-
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvUsername,tvPostTimeDetail,tvNoteTitle,tvNoteDesc,tv_Upvote,tv_Downvote;
         Button btnSubject,btnYear,btnCategory,btnSummary;
-        LinearLayout llUsernameTime;
+        LinearLayout llUsernameTime, llBookmark;
         ImageButton ib_Upvote, ib_Downvote;
         CircleImageView profile_image;
+
 
         public ViewHolder(View v) {
             super(v);
@@ -67,10 +72,11 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
             ib_Upvote = v.findViewById(R.id.ib_Upvote);
             ib_Downvote = v.findViewById(R.id.ib_Downvote);
             llUsernameTime = v.findViewById(R.id.llUsernameTime);
-
+            llBookmark = v.findViewById(R.id.llBookmark);
             //SET onClickListeners for views in note_template here
             llUsernameTime.setOnClickListener((View.OnClickListener) this);
             profile_image.setOnClickListener((View.OnClickListener) this);
+            llBookmark.setOnClickListener((View.OnClickListener) this);
         }
 
         //DO something when view is clicked on, based on view's id
@@ -93,11 +99,41 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
                     }
                     break;
 
+                case R.id.llBookmark:
+                    if(pos != RecyclerView.NO_POSITION){
+                        Note clickedNote = mDataset.get(pos);
+
+                        //DocumentReference ref = db.collection("Notes").document(clickedNote.getDocumentID());
+                        //String myId = ref.getId();
+//                        openDialog(clickedNote.getDocumentID());
+//                        notebookDialog = new CreateOrAddNotebookDialog();
+////                        notebookDialog.setContentView(R.layout.dialog_create_addto_notebook);
+//
+//                        notebookDialog.show(({AppCompatActivity}context).getSupportFragmentManager(), "hi");
+//                        notebookDialog.setCanceledOnTouchOutside(true);
+                        // custom dialog
+                        final Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dialog_create_addto_notebook);
+                        dialog.show();
+                    }
+                    break;
+
                 default:
                     break;
             }
         }
     }
+
+//    private void openDialog(String docID) {
+//        String documentID = docID;
+//        CreateOrAddNotebookDialog createOrAddNotebookDialog = new CreateOrAddNotebookDialog();
+//        createOrAddNotebookDialog.show(createOrAddNotebookDialog.getSupportFragmentManager(), "Notebook Dialog");
+//
+//    }
+
+//    public void ShowNotebookDialog(View v){
+//
+//    }
 
     public NoteAdapter(Context context){
         this.context=context;
@@ -132,12 +168,16 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
     //CHECK whether user is current or not, then go to profile page based on that
     public void checkAndGoToProfile(Note clickedNote){
         Note note = clickedNote;
-        if(userEmail == note.getEmail()){
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        userEmail = mFirebaseUser.getEmail();
+
+        if(userEmail.equals(note.getEmail())){
             goToPage(note, "ProfileActivity");
-            Log.d(TAG, "checkAndGoToProfile: is current "+ note.getUsername() + " " + note.getEmail() + "" );
+            Log.d(TAG, "checkAndGoToProfile: is current "+ note.getUsername() + " " + note.getEmail() + " " +userEmail);
         } else{
-            goToPage(note,"ProfileActivity");
-            Log.d(TAG, "checkAndGoToProfile: is not current "+ note.getUsername() + " " + note.getEmail() + "" );
+            goToPage(note,"ProfileActivity_otheruser");
+            Log.d(TAG, "checkAndGoToProfile: is not current "+ note.getUsername() + " " + note.getEmail() + " " +userEmail);
         }
     }
 
@@ -155,6 +195,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder>{
                 break;
 
             case "ProfileActivity_otheruser":
+                Intent i2 = new Intent(context,ProfileActivity_otheruser.class);
+                i2.putExtra("Email", PassedNote.getEmail());
+                i2.putExtra("Username", PassedNote.getUsername());
+                context.startActivity(i2);
                 break;
 
             default:

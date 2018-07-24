@@ -5,14 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 public class Note {
-    private String Email,Username,UserIMG,NoteTitle,NoteDescription,ResourceURL,DatePosted,Deleted  ;
+    private String Email,Username,UserIMG,NoteTitle,NoteDescription,ResourceURL,DatePosted,Deleted,DocumentID  ;
     private List<String> Tags;
     private int Upvote,Downvote;
     private String[][] Comments;
     private Map<String, Boolean> Notebooks;
 
     public Note(){}
-
     public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, List<String> tags, int upvote, int downvote, String[][] comments) {
         Email = email;
         Username = username;
@@ -26,6 +25,23 @@ public class Note {
         Upvote = upvote;
         Downvote = downvote;
         Comments = comments;
+        // Notebooks = notebooks;
+    }
+
+    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, List<String> tags, int upvote, int downvote, String[][] comments, String documentID) {
+        Email = email;
+        Username = username;
+        UserIMG = userIMG;
+        NoteTitle = noteTitle;
+        NoteDescription = noteDescription;
+        ResourceURL = resourceURL;
+        DatePosted = datePosted;
+        Deleted = deleted;
+        Tags = tags;
+        Upvote = upvote;
+        Downvote = downvote;
+        Comments = comments;
+        DocumentID = documentID;
        // Notebooks = notebooks;
     }
 
@@ -133,6 +149,14 @@ public class Note {
 
     public void setNotebooks(Map<String, Boolean> notebooks) {
         Notebooks = notebooks;
+    }
+
+    public String getDocumentID() {
+        return DocumentID;
+    }
+
+    public void setDocumentID(String documentID) {
+        DocumentID = documentID;
     }
 
     //endregion
