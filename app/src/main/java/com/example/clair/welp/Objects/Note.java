@@ -159,6 +159,10 @@ public class Note {
         DocumentID = documentID;
     }
 
+    public void getShortDateString(String datePosted){
+
+    }
+
     //endregion
 
 

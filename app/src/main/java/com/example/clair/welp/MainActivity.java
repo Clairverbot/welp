@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
+//region fab
     public void gooeyFab(){
         ObjectAnimator anim = ObjectAnimator.ofFloat(fab, "scaleY", R.animator.gooey_path_anim);
         anim.setDuration(2000);                  // Duration in milliseconds
@@ -286,5 +286,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+    //endregion
     }
 

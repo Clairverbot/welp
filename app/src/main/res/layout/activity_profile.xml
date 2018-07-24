@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="290dp"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
+            app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:titleEnabled="false"
             android:gravity="center"
@@ -135,6 +135,60 @@
         android:background="@color/selectSubClicked"/>
 
 
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabPdf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabCustomSize="@dimen/fab"
+            app:layout_constraintBottom_toBottomOf="@id/fabUpload"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:backgroundTint="@color/btn_color_PakatanHarapan"
+            android:src="@drawable/ic_pdf"
+            app:borderWidth="0dp"
+            />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabCustomSize="@dimen/fab"
+            app:layout_constraintBottom_toBottomOf="@id/fabUpload"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:backgroundTint="@color/btn_color_PakatanHarapan"
+            android:src="@drawable/ic_img"
+            app:borderWidth="0dp"
+            />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabVid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabCustomSize="@dimen/fab"
+            app:layout_constraintBottom_toBottomOf="@id/fabUpload"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:backgroundTint="@color/btn_color_PakatanHarapan"
+            android:src="@drawable/ic_video"
+            app:borderWidth="0dp"
+            />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabUpload"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:clickable="true"
+            android:src="@drawable/upload"
+            android:backgroundTint="@color/btn_color_PakatanHarapan"
+            app:borderWidth="0dp"
+            android:layout_centerInParent="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginBottom="@dimen/BiggerPadding"
+            />
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
@@ -144,7 +198,9 @@
         app:itemTextColor="@color/bottom_nav_color"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_gravity="bottom"
-        app:menu="@menu/bottom_nav_items"/>
+        app:menu="@menu/bottom_nav_items"
+        android:translationZ="-100dp"/>
+    </android.support.constraint.ConstraintLayout>
 
 
 

@@ -61,6 +61,18 @@
         <activity android:name=".NotebookActivity"
             android:theme="@style/AppTheme"/>
             <!--android:parentActivityName=".ProfileActivity"/>-->
+        <activity
+            android:name=".AddPostDetail"
+            android:label="Add Post Details" />
+        <activity
+            android:name=".ProfileActivity"
+            android:noHistory="true"
+            android:theme="@style/Profile" />
+        <activity
+            android:name=".NotebookActivity"
+            android:theme="@style/AppTheme" />
+        <!-- android:parentActivityName=".ProfileActivity"/> -->
+        <activity android:name=".NoteViewer"></activity>
     </application>
 
 </manifest>

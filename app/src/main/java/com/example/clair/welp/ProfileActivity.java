@@ -1,11 +1,14 @@
 package com.example.clair.welp;
 
+import android.animation.ObjectAnimator;
+import android.animation.TimeInterpolator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,12 +37,13 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
 import static android.content.ContentValues.TAG;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
 
     private TabLayout tabLayout;
     private TabLayout appBarLayout;
@@ -49,7 +54,12 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     MagicalNames magicalNames = new MagicalNames();
 
-
+    boolean isFabOpen=false;
+    FloatingActionButton fab,fabPdf,fabImg,fabVid;
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -141,6 +151,28 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         //region bottom nav
+        fab = findViewById(R.id.fabUpload);
+        fabPdf = findViewById(R.id.fabPdf);
+        fabImg = findViewById(R.id.fabImg);
+        fabVid = findViewById(R.id.fabVid);
+        fabPdf.setOnClickListener(this);
+        fabImg.setOnClickListener(this);
+        fabVid.setOnClickListener(this);
+
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //todo: make upload
+                if(!isFabOpen){
+                    showFabMenu();
+                }
+                else {
+                    closeFabMenu();
+                }
+            }
+        });
+
         BottomNavigationView bottomNavigationView;
         bottomNavigationView=findViewById(R.id.bottomNav);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
@@ -199,5 +231,89 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    //region fab
+    public void gooeyFab(){
+        ObjectAnimator anim = ObjectAnimator.ofFloat(fab, "scaleY", R.animator.gooey_path_anim);
+        anim.setDuration(2000);                  // Duration in milliseconds
+        anim.setInterpolator(new TimeInterpolator() {
+            @Override
+            public float getInterpolation(float input) {
+                return 0;
+            }
+        });  // E.g. Linear, Accelerate, Decelerate
+        anim.start();
+    }
+    private void showFabMenu(){
+        isFabOpen=true;
+        gooeyFab();
+        fabPdf.animate().translationY(-getResources().getDimension(R.dimen.fab));
+        fabPdf.animate().translationX(-getResources().getDimension(R.dimen.fabMargin));
+        fabImg.animate().translationY(-getResources().getDimension(R.dimen.fabCenter));
+        fabVid.animate().translationY(-getResources().getDimension(R.dimen.fab));
+        fabVid.animate().translationX(getResources().getDimension(R.dimen.fabMargin));
 
+    }
+
+    private void closeFabMenu(){
+        isFabOpen=false;
+        fabPdf.animate().translationY(0);
+        fabPdf.animate().translationX(0);
+        fabImg.animate().translationY(0);
+        fabImg.animate().translationX(0);
+        fabVid.animate().translationY(0);
+        fabVid.animate().translationX(0);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent i;
+        int requestCode=0;
+        if(isFabOpen){
+            i = new Intent(Intent.ACTION_GET_CONTENT);
+            switch (v.getId()){
+                case R.id.fabImg:
+                    i.setType("image/*");
+                    requestCode=0;
+                    break;
+                case R.id.fabPdf:
+                    i.setType("application/pdf");
+                    requestCode=1;
+                    break;
+                case R.id.fabVid:
+                    i.setType("video/*");
+                    requestCode=2;
+                    break;
+            }
+            i.addCategory(Intent.CATEGORY_OPENABLE);
+
+            try {
+                startActivityForResult(
+                        Intent.createChooser(i, "Select note"),
+                        requestCode);
+            } catch (android.content.ActivityNotFoundException ex) {
+                // Potentially direct the user to the Market with a Dialog
+
+            }
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+            case 0:
+            case 1:
+            case 2:
+                if(resultCode==RESULT_OK){
+                    File file=new File(data.getData().toString());
+                    String path=file.getAbsolutePath();
+                    Log.d("PATH:",path);
+                    Intent i=new Intent(ProfileActivity.this,AddPostDetail.class);
+                    i.putExtra("path",path);
+                    i.putExtra("email",mFirebaseAuth.getCurrentUser().getEmail());
+                    startActivity(i);
+                }
+                break;
+        }
+    }
+    //endregion
 }

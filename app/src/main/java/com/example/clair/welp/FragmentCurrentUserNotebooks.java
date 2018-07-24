@@ -44,6 +44,9 @@ public class FragmentCurrentUserNotebooks extends Fragment {
 
     RecyclerView.LayoutManager mLayoutManager;
     NoteFirestore f;
+    private FirebaseFirestore db;
+    private FirestoreRecyclerAdapter adapter;
+    private FirebaseAuth mFirebaseAuth;
 
     @BindView(R.id.rvNotebook)
     RecyclerView notebookList;
@@ -51,12 +54,7 @@ public class FragmentCurrentUserNotebooks extends Fragment {
     @BindView(R.id.tvLoading)
     TextView textLoading;
 
-    private FirebaseFirestore db;
-    private FirestoreRecyclerAdapter adapter;
 
-
-
-    private FirebaseAuth mFirebaseAuth;
 
     public FragmentCurrentUserNotebooks(){
 
@@ -71,7 +69,7 @@ public class FragmentCurrentUserNotebooks extends Fragment {
 
 
         ButterKnife.bind(this, view);
-       // notebookList = (RecyclerView) view.findViewById(R.id.rvNotebook);
+        // notebookList = (RecyclerView) view.findViewById(R.id.rvNotebook);
         init();
         getNotebookList();
 
@@ -181,3 +179,4 @@ public class FragmentCurrentUserNotebooks extends Fragment {
 
 
 }
+

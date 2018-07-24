@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NoteViewer">
+<com.github.barteksc.pdfviewer.PDFView
+    android:id="@+id/pdfView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toTopOf="@id/bottom">
+
+</com.github.barteksc.pdfviewer.PDFView>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="@dimen/BiggerPadding">
+
+        <Button
+            android:id="@+id/btnUpvote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/BiggerPadding"
+            app:layout_constraintLeft_toLeftOf="parent">
+
+            <ImageButton
+                android:id="@+id/ib_Upvote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@color/color_YouCantSeeME"
+                android:maxWidth="23dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/post_upvote"
+                android:tint="@color/bottom_nav_color" />
+
+            <TextView
+                android:id="@+id/tv_Upvote"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/BiggerPadding"
+                android:text="1.2k"
+                android:textColor="@color/bottom_nav_color" />
+        </Button>
+
+        <Button
+            android:id="@+id/btnDownvote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/BiggerPadding"
+            app:layout_constraintLeft_toRightOf="@id/btnUpvote">
+
+            <ImageButton
+                android:id="@+id/ib_Downvote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@color/color_YouCantSeeME"
+                android:maxWidth="23dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/post_downvote"
+                android:tint="@color/bottom_nav_color" />
+
+            <TextView
+                android:id="@+id/tv_Downvote"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/BiggerPadding"
+                android:text="12"
+                android:textColor="@color/bottom_nav_color" />
+
+        </Button>
+
+        <Button
+            android:id="@+id/btnBookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/BiggerPadding"
+            app:layout_constraintRight_toLeftOf="@id/btnComment">
+
+            <ImageButton
+                android:id="@+id/ib_Bookmark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="55dp"
+                android:layout_marginRight="@dimen/BiggerPadding"
+                android:adjustViewBounds="true"
+                android:background="@color/color_YouCantSeeME"
+                android:maxWidth="17dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/post_notebook"
+                android:tint="@color/bottom_nav_color" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/home_bookmark"
+                android:textColor="@color/bottom_nav_color" />
+        </Button>
+
+        <Button
+            android:id="@+id/btnComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/BiggerPadding"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <ImageButton
+                android:id="@+id/ib_Comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@color/color_YouCantSeeME"
+                android:maxWidth="21dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/post_comments"
+                android:tint="@color/bottom_nav_color" />
+
+            <TextView
+                android:id="@+id/tv_Comment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/BiggerPadding"
+                android:text="12"
+                android:textColor="@color/bottom_nav_color" />
+        </Button>
+</android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

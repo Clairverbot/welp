@@ -37,10 +37,12 @@ import java.text.SimpleDateFormat;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static android.content.ContentValues.TAG;
 
@@ -84,9 +86,10 @@ public class NoteFirestore {
 
                                 tags = (List<String>)document.get(magicalNames.getNotes_Column_Tags());
                                 //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
-                                upvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Upvote()).toString());
-                                downvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Downvote()).toString());
-
+                                Long Upvote=document.getLong(magicalNames.getNotes_Column_Upvote());
+                                upvote= null==Upvote?0:Upvote.intValue();
+                                Long Downvote = document.getLong(magicalNames.getNotes_Column_Downvote());
+                                downvote= null==Downvote?0:Downvote.intValue();
                                 documentID = document.getId();
                                 //getUserInfo(email,noteTitle,noteDescription,resourceURL,datePosted,deleted,tags,upvote,downvote,reference);
 //                                db.collection("Users").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -140,8 +143,10 @@ public class NoteFirestore {
 
                                 tags = (List<String>)document.get(magicalNames.getNotes_Column_Tags());
                                 //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
-                                upvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Upvote()).toString());
-                                downvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Downvote()).toString());
+                                Long Upvote=document.getLong(magicalNames.getNotes_Column_Upvote());
+                                upvote= null==Upvote?0:Upvote.intValue();
+                                Long Downvote = document.getLong(magicalNames.getNotes_Column_Downvote());
+                                downvote= null==Downvote?0:Downvote.intValue();
                                 //notebooks = document.getData(magicalNames.getNotes_Column_Notebooks());
                                 documentID = document.getId();
 
@@ -200,8 +205,10 @@ public class NoteFirestore {
 
                                 tags = (List<String>)document.get(magicalNames.getNotes_Column_Tags());
                                 //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
-                                upvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Upvote()).toString());
-                                downvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Downvote()).toString());
+                                Long Upvote=document.getLong(magicalNames.getNotes_Column_Upvote());
+                                upvote= null==Upvote?0:Upvote.intValue();
+                                Long Downvote = document.getLong(magicalNames.getNotes_Column_Downvote());
+                                downvote= null==Downvote?0:Downvote.intValue();
                                 //notebooks = document.getData(magicalNames.getNotes_Column_Notebooks());
                                 documentID = document.getId();
 
@@ -265,8 +272,10 @@ public class NoteFirestore {
 
                                     tags = (List<String>) document.get(magicalNames.getNotes_Column_Tags());
                                     //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
-                                    upvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Upvote()).toString());
-                                    downvote = Integer.parseInt(document.getLong(magicalNames.getNotes_Column_Downvote()).toString());
+                                    Long Upvote=document.getLong(magicalNames.getNotes_Column_Upvote());
+                                    upvote= null==Upvote?0:Upvote.intValue();
+                                    Long Downvote = document.getLong(magicalNames.getNotes_Column_Downvote());
+                                    downvote= null==Downvote?0:Downvote.intValue();
                                     documentID = document.getId();
                                     //notebooks = document.getData(magicalNames.getNotes_Column_Notebooks());
 
@@ -355,11 +364,12 @@ public class NoteFirestore {
                 }
             }
         });
+        Date datePosted= Calendar.getInstance().getTime();
         notas.put(magicalNames.getNotes_Column_Email(),n.getEmail());
         notas.put(magicalNames.getNotes_Column_NoteTitle(),n.getNoteTitle());
         notas.put(magicalNames.getNotes_Column_NoteDescription(),n.getNoteDescription());
         notas.put(magicalNames.getNotes_Column_ResourceURL(),downloadUri[0]);
-        notas.put(magicalNames.getNotes_Column_DatePosted(),n.getDatePosted());
+        notas.put(magicalNames.getNotes_Column_DatePosted(),datePosted);
         notas.put(magicalNames.getNotes_Column_Tags(),n.getTags());
 
 
