@@ -3,6 +3,7 @@ package com.example.clair.welp;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -265,12 +266,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case 1:
                 case 2:
                 if(resultCode==RESULT_OK){
-                    File file=new File(data.getData().toString());
-                    String path=file.getAbsolutePath();
-                    Log.d("PATH:",path);
+                    Uri file=data.getData();
                     Intent i=new Intent(MainActivity.this,AddPostDetail.class);
-                    i.putExtra("path",path);
-                    Log.d("path",path);
+                    i.putExtra("path",file);
+                    Log.d("Ppath",file.toString());
                     i.putExtra("email",fFirebaseAuth.getCurrentUser().getEmail());
                     i.putExtra("username",fFirebaseAuth.getCurrentUser().getDisplayName());
                     startActivity(i);
