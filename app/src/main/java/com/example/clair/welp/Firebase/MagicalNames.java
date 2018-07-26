@@ -84,6 +84,7 @@ public class MagicalNames {
     private String Users_Column_Username="Username";
     private String Users_Column_YearOfStudy="YearOfStudy";
     private String Users_Column_ProfileDescription="ProfileDescription";
+    private String Users_Column_FollowingUsers="FollowingUsers";
 
     public String getUsers_Column_Email() {
         return Users_Column_Email;
@@ -103,6 +104,10 @@ public class MagicalNames {
 
     public String getUsers_Column_YearOfStudy() {
         return Users_Column_YearOfStudy;
+    }
+
+    public String getUsers_Column_FollowingUsers() {
+        return Users_Column_FollowingUsers;
     }
     //endregion
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_margin="0dp"
+    android:background="@color/veriWhite">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="8dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="9dp"
+        android:paddingLeft="10dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/ivOtherUserImg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/dummyimg"
+            app:civ_border_color="@color/colorAccent"
+            app:civ_border_width="0dp" />
+
+
+        <TextView
+            android:id="@+id/tvOtherUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginVertical="15dp"
+            android:maxWidth="220dp"
+            android:paddingLeft="5dp"
+            android:scrollHorizontally="false"
+            android:text="Fake Other Username"
+            android:textColor="#1F2D3D"
+            android:textSize="17sp"
+            app:layout_constraintLeft_toRightOf="@id/ivOtherUserImg"
+            tools:layout_editor_absoluteY="7dp" />
+
+    </android.support.constraint.ConstraintLayout>
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="2px"-->
+    <!--android:background="@color/post_Grey"/>-->
+</LinearLayout>

@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.clair.welp.Firebase.NoteFirestore;
-import com.example.clair.welp.Objects.Note;
 import com.example.clair.welp.Objects.Notebook;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -28,13 +25,11 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
-import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
-
-public class FragmentCurrentUserNotebooks extends Fragment {
+public class FragmentOtherUserNotebooks extends Fragment {
     View view;
     // Context
     Context mContext;
@@ -52,9 +47,10 @@ public class FragmentCurrentUserNotebooks extends Fragment {
     @BindView(R.id.tvLoading)
     TextView textLoading;
 
+    ProfileActivity_otheruser otheruser;
 
 
-    public FragmentCurrentUserNotebooks(){
+    public FragmentOtherUserNotebooks(){
 
     }
 
@@ -63,7 +59,7 @@ public class FragmentCurrentUserNotebooks extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Context
         mContext = getContext();
-        view = inflater.inflate(R.layout.currentuser_notebooks_fragment, container, false);
+        view = inflater.inflate(R.layout.otheruser_notebooks_fragment, container, false);
 
 
         ButterKnife.bind(this, view);
@@ -84,19 +80,19 @@ public class FragmentCurrentUserNotebooks extends Fragment {
 
     private void getNotebookList(){
         mFirebaseAuth = FirebaseAuth.getInstance();
-        final FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
-
-        if (mFirebaseUser.getEmail() != null){
-            String userEmail = mFirebaseUser.getEmail();
-            Query query = db.collection("Notebooks").whereEqualTo("Email", userEmail);
+        String otheruserEmail = otheruser.passedEmail;
+        String otheruserUsername = otheruser.passedUsername;
+        Log.d("TAG", "otheruser " +otheruserEmail + " " + otheruserUsername);
+        if (otheruserEmail != null){
+            Query query = db.collection("Notebooks").whereEqualTo("Email", otheruserEmail);
 
             FirestoreRecyclerOptions<Notebook> notebook = new FirestoreRecyclerOptions.Builder<Notebook>()
                     .setQuery(query, Notebook.class)
                     .build();
 
-            adapter = new FirestoreRecyclerAdapter<Notebook, NotebooksHolder>(notebook) {
+            adapter = new FirestoreRecyclerAdapter<Notebook, FragmentOtherUserNotebooks.NotebooksHolder>(notebook) {
                 @Override
-                public void onBindViewHolder(NotebooksHolder holder, int position, Notebook model) {
+                public void onBindViewHolder(FragmentOtherUserNotebooks.NotebooksHolder holder, int position, Notebook model) {
                     //progressBar.setVisibility(View.GONE);
                     holder.textName.setText(model.getNotebookName());
 //                holder.textTitle.setText(model.getTitle());
@@ -121,12 +117,12 @@ public class FragmentCurrentUserNotebooks extends Fragment {
                 }
 
                 @Override
-                public NotebooksHolder onCreateViewHolder(ViewGroup group, int i) {
+                public FragmentOtherUserNotebooks.NotebooksHolder onCreateViewHolder(ViewGroup group, int i) {
                     View view = LayoutInflater.from(group.getContext()).inflate(R.layout.currentuser_notebook_item, group, false);
 //                View view = LayoutInflater.from(group.getContext())
 //                        .inflate(R.layout.list_item, group, false);
 
-                    return new NotebooksHolder(view);
+                    return new FragmentOtherUserNotebooks.NotebooksHolder(view);
                 }
 
                 @Override
@@ -137,7 +133,7 @@ public class FragmentCurrentUserNotebooks extends Fragment {
 
             adapter.notifyDataSetChanged();
             if (adapter == null) {
-                textLoading.setText("You have no notebooks yet");
+                textLoading.setText("User has no notebooks yet");
             } else {
                 textLoading.setText("");
             }
@@ -174,7 +170,4 @@ public class FragmentCurrentUserNotebooks extends Fragment {
         super.onStop();
         adapter.stopListening();
     }
-
-
 }
-

@@ -75,6 +75,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         TextView tvUsername, tvPostTimeDetail, tvNoteTitle, tvNoteDesc, tv_Upvote, tv_Downvote;
         Button btnSubject, btnYear, btnCategory, btnSummary;
         LinearLayout llUsernameTime, llBookmark;
+        ConstraintLayout llNoteTopBar;
         ImageButton ib_Upvote, ib_Downvote;
         CircleImageView profile_image;
 
@@ -96,9 +97,11 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             ib_Downvote = v.findViewById(R.id.ib_Downvote);
             llUsernameTime = v.findViewById(R.id.llUsernameTime);
             llBookmark = v.findViewById(R.id.llBookmark);
+            llNoteTopBar = v.findViewById(R.id.llNoteTopBar);
             //SET onClickListeners for views in note_template here
-            llUsernameTime.setOnClickListener((View.OnClickListener) this);
-            profile_image.setOnClickListener((View.OnClickListener) this);
+            llNoteTopBar.setOnClickListener((View.OnClickListener) this);
+            //llUsernameTime.setOnClickListener((View.OnClickListener) this);
+            //profile_image.setOnClickListener((View.OnClickListener) this);
             llBookmark.setOnClickListener((View.OnClickListener) this);
         }
 
@@ -108,7 +111,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             int pos = getAdapterPosition();
             switch (v.getId()) {
 
-                case R.id.llUsernameTime:
+                case R.id.llNoteTopBar:
                     if (pos != RecyclerView.NO_POSITION) {
                         Note clickedNote = mDataset.get(pos);
                         checkAndGoToProfile(clickedNote);
@@ -265,16 +268,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                                                                     Toast.makeText(context, "Notebook Created!",
                                                                             Toast.LENGTH_SHORT).show();
                                                                 }
-                                                            })
-                                                                    .addOnFailureListener(new OnFailureListener() {
-                                                                        @Override
-                                                                        public void onFailure(@NotNull Exception e) {
-                                                                            Log.w(TAG, "Eroor adding document", e);
-                                                                            Toast.makeText(context, "Something went wrong when creating your notebook",
-                                                                                    Toast.LENGTH_SHORT).show();
-                                                                        }
-                                                                    });
-                                                            ;
+                                                            }).addOnFailureListener(new OnFailureListener() {
+                                                                @Override
+                                                                public void onFailure(@NotNull Exception e) {
+                                                                    Log.w(TAG, "Eroor adding document", e);
+                                                                    Toast.makeText(context, "Something went wrong when creating your notebook",
+                                                                            Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            });
+
                                                         }
 
                                                     }
