@@ -1,6 +1,7 @@
 package com.example.clair.welp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,7 +33,8 @@ public class AddPostDetail extends AppCompatActivity {
     RadioButton rbNotes, rbPractice,rbLesson;
     RadioGroup rg;
     Button btnPost;
-    String path,email,username;
+    Uri path;
+    String email,username;
     NoteFirestore noteFirestore;
 
     @Override
@@ -52,7 +54,7 @@ public class AddPostDetail extends AppCompatActivity {
         rg=findViewById(R.id.rg);
         btnPost=findViewById(R.id.btnPost);
 
-        path=getIntent().getExtras().getString("path");
+        path= (Uri) getIntent().getExtras().get("path");
         email=getIntent().getExtras().getString("email");
         username=getIntent().getExtras().getString("username");
 
@@ -63,7 +65,8 @@ public class AddPostDetail extends AppCompatActivity {
                 if(etNoteDesc.getText()!=null &&etNoteTitle!=null){
                     RadioButton rb=findViewById(rg.getCheckedRadioButtonId());
                     List<String> tags= Arrays.asList((String) spSubject.getSelectedItem(),(String)spGrade.getSelectedItem(),(String)rb.getText(),(String) spSubject.getSelectedItem()+(String)spGrade.getSelectedItem());
-                    Note note=new Note(email,username,null,etNoteTitle.getText().toString(),etNoteDesc.getText().toString(),path, Calendar.getInstance().getTime().toString(),null,tags,0,0,null);
+                    Note note=new Note(email,username,null,etNoteTitle.getText().toString(),etNoteDesc.getText().toString(),path.toString(), Calendar.getInstance().getTime().toString(),null,tags,0,0,null);
+                    noteFirestore.storage(note);
                     noteFirestore.add(note);
                     Intent intent=new Intent(AddPostDetail.this,MainActivity.class);
                     startActivity(intent);

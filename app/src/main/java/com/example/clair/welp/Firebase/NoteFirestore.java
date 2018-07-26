@@ -301,10 +301,13 @@ public class NoteFirestore {
 //
 //    }
 
-    public void add(Note n) {
-        FirebaseStorage storage = FirebaseStorage.getInstance();
 
-        StorageReference storageRef = storage.getReference();
+    public String storage(Note n){
+        FirebaseStorage storage=FirebaseStorage.getInstance();
+        StorageReference storageRef=storage.getReference();
+        Uri file = Uri.fromFile(new File(n.getResourceURL()));
+        StorageReference riversRef = storageRef.child(n.getResourceURL());
+        UploadTask uploadTask = riversRef.putFile(Uri.parse("com.android.providers.downloads.documents/document/23.pdf"));
 
         Uri file = Uri.fromFile(new File(n.getResourceURL()));
         final Uri[] downloadUri = new Uri[1];
@@ -314,48 +317,28 @@ public class NoteFirestore {
 
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+                url[0] =taskSnapshot.getDownloadUrl().toString();
             }
         });
-
-        final StorageReference ref = storageRef.child(n.getResourceURL());
-        uploadTask = ref.putFile(file);
-
-        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                if (!task.isSuccessful()) {
-                    throw task.getException();
-                }
-
-                // Continue with the task to get the download URL
-                return ref.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    downloadUri[0] = task.getResult();
-                } else {
-                    // Handle failures
-                    // ...
-                }
-            }
-        });
-        Date datePosted = Calendar.getInstance().getTime();
-        notas.put(magicalNames.getNotes_Column_Email(), n.getEmail());
-        notas.put(magicalNames.getNotes_Column_NoteTitle(), n.getNoteTitle());
-        notas.put(magicalNames.getNotes_Column_NoteDescription(), n.getNoteDescription());
-        notas.put(magicalNames.getNotes_Column_ResourceURL(), downloadUri[0]);
-        notas.put(magicalNames.getNotes_Column_DatePosted(), datePosted);
-        notas.put(magicalNames.getNotes_Column_Tags(), n.getTags());
-        notas.put(magicalNames.getUsers_Column_Username(), n.getUsername());
+        return url[0];
+    }
+    public void add(Note n) {
+                Date datePosted= Calendar.getInstance().getTime();
+        notas.put(magicalNames.getNotes_Column_Email(),n.getEmail());
+        notas.put(magicalNames.getNotes_Column_NoteTitle(),n.getNoteTitle());
+        notas.put(magicalNames.getNotes_Column_NoteDescription(),n.getNoteDescription());
+        notas.put(magicalNames.getNotes_Column_ResourceURL(),storage(n));
+        notas.put(magicalNames.getNotes_Column_DatePosted(),datePosted);
+        notas.put(magicalNames.getNotes_Column_Tags(),n.getTags());
+        notas.put(magicalNames.getUsers_Column_Username(),n.getUsername());
 
         collectionref.document().set(notas).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

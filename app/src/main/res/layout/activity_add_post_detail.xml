@@ -8,6 +8,11 @@
     android:background="@color/nicebg"
     android:padding="24dp"
     android:id="@+id/clAddPostDetail">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical">
 <TextView
     android:id="@+id/tv1"
     android:layout_width="wrap_content"
@@ -159,6 +164,7 @@
             android:textColor="@color/colorPrimary"
             android:buttonTint="@color/colorPrimary"/>
     </RadioGroup>
+    </android.support.constraint.ConstraintLayout>
     <Button
         android:id="@+id/btnPost"
         android:layout_width="match_parent"
