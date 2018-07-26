@@ -302,40 +302,41 @@ public class NoteFirestore {
 //    }
 
 
-    public String storage(Note n){
-        FirebaseStorage storage=FirebaseStorage.getInstance();
-        StorageReference storageRef=storage.getReference();
-        Uri file = Uri.fromFile(new File(n.getResourceURL()));
-        StorageReference riversRef = storageRef.child(n.getResourceURL());
-        UploadTask uploadTask = riversRef.putFile(Uri.parse("com.android.providers.downloads.documents/document/23.pdf"));
+//    public String storage(Note n){
+//        FirebaseStorage storage=FirebaseStorage.getInstance();
+//        StorageReference storageRef=storage.getReference();
+//        Uri file = Uri.fromFile(new File(n.getResourceURL()));
+//        StorageReference riversRef = storageRef.child(n.getResourceURL());
+//        UploadTask uploadTask = riversRef.putFile(Uri.parse("com.android.providers.downloads.documents/document/23.pdf"));
+//
+//        Uri file = Uri.fromFile(new File(n.getResourceURL()));
+//        final Uri[] downloadUri = new Uri[1];
+//        StorageReference fileRef = storageRef.child(n.getResourceURL());
+//
+//        UploadTask uploadTask = fileRef.putFile(file);
+//
+//        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onFailure(@NonNull Exception exception) {
+//                // Handle unsuccessful uploads
+//            }
+//        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+//                // ...
+//                url[0] =taskSnapshot.getDownloadUrl().toString();
+//            }
+//        });
+//        return url[0];
+//    }
 
-        Uri file = Uri.fromFile(new File(n.getResourceURL()));
-        final Uri[] downloadUri = new Uri[1];
-        StorageReference fileRef = storageRef.child(n.getResourceURL());
-
-        UploadTask uploadTask = fileRef.putFile(file);
-
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
-                url[0] =taskSnapshot.getDownloadUrl().toString();
-            }
-        });
-        return url[0];
-    }
     public void add(Note n) {
                 Date datePosted= Calendar.getInstance().getTime();
         notas.put(magicalNames.getNotes_Column_Email(),n.getEmail());
         notas.put(magicalNames.getNotes_Column_NoteTitle(),n.getNoteTitle());
         notas.put(magicalNames.getNotes_Column_NoteDescription(),n.getNoteDescription());
-        notas.put(magicalNames.getNotes_Column_ResourceURL(),storage(n));
+        //notas.put(magicalNames.getNotes_Column_ResourceURL(),storage(n));
         notas.put(magicalNames.getNotes_Column_DatePosted(),datePosted);
         notas.put(magicalNames.getNotes_Column_Tags(),n.getTags());
         notas.put(magicalNames.getUsers_Column_Username(),n.getUsername());

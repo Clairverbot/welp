@@ -40,6 +40,8 @@ public class FragmentCurrentUserNotebooks extends Fragment {
     Context mContext;
 
     // RecyclerView
+
+
     RecyclerView.LayoutManager mLayoutManager;
     NoteFirestore f;
     private FirebaseFirestore db;
@@ -113,6 +115,8 @@ public class FragmentCurrentUserNotebooks extends Fragment {
                         intent.putExtra("NotebookName", model.getNotebookName()); // getText() SHOULD NOT be static!!!
                         intent.putExtra("NotebookNotes", (ArrayList<String>) model.getNotebookNotes());
                         intent.putExtra("Email", model.getEmail());
+                        intent.putExtra("From", "currentuser");
+                        intent.putExtra("Username", mFirebaseUser.getDisplayName());
                         startActivity(intent);
                         for (String noteid: model.getNotebookNotes()){
                             Log.d("NoteID Fragment", "Note ID in Fragment" + noteid);

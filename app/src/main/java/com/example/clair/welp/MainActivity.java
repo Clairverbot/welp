@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.example.clair.welp.Firebase.NoteFirestore;
 import com.example.clair.welp.Objects.Note;
@@ -28,7 +27,6 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.File;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -261,6 +259,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        FirebaseUser currentUser = fFirebaseAuth.getCurrentUser();
         switch (requestCode) {
             case 0:
             case 1:
@@ -270,8 +269,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Intent i=new Intent(MainActivity.this,AddPostDetail.class);
                     i.putExtra("path",file);
                     Log.d("Ppath",file.toString());
-                    i.putExtra("email",fFirebaseAuth.getCurrentUser().getEmail());
-                    i.putExtra("username",fFirebaseAuth.getCurrentUser().getDisplayName());
+                    i.putExtra("email", currentUser.getEmail());
+                    i.putExtra("username",currentUser.getDisplayName());
                     startActivity(i);
                 }
                 break;

@@ -1,52 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".FragmentCurrentUserNotebooks"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/color_YouCantSeeME">
+    <View
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/color_YouCantSeeME"
+        android:padding="0dp"
+        android:layout_margin="0dp"
+        android:orientation="vertical"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/veriWhite"
+        android:orientation="vertical"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/emptyView">
 
     <TextView
-        android:id="@+id/tvCreateNotebook"
+        android:id="@+id/tvTags"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginLeft="4dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="8dp"
         android:maxWidth="220dp"
-        android:paddingLeft="5dp"
+        android:paddingLeft="0dp"
         android:scrollHorizontally="false"
-        android:text="View Followed Tags"
-        android:textColor="#1F2D3D"
+        android:text="Tags"
+        android:textColor="#303030"
         android:textSize="17sp"
-        app:layout_constraintBottom_toTopOf="@+id/clCreateNotebook"
-        tools:layout_editor_absoluteY="4dp" />
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/clViewFollowedTags"
+         />
+
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/clViewFollowedTags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="0dp"
-            android:paddingTop="18dp"
+            android:paddingTop="20dp"
             android:paddingBottom="20dp"
             android:paddingLeft="10dp"
             android:background="@color/veriWhite">
 
             <ImageView
                 android:id="@+id/ivTagImg"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/tag"
-                tools:layout_editor_absoluteX="13dp"
-                tools:layout_editor_absoluteY="1dp" />
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="20dp"
+                 />
 
             <TextView
                 android:id="@+id/tvViewFollowedTags"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="5dp"
                 android:maxWidth="220dp"
                 android:paddingLeft="5dp"
                 android:scrollHorizontally="false"
@@ -54,11 +81,11 @@
                 android:textColor="#1F2D3D"
                 android:textSize="17sp"
                 app:layout_constraintLeft_toRightOf="@id/ivTagImg"
-                tools:layout_editor_absoluteY="4dp" />
+                tools:layout_editor_absoluteY="2dp" />
             <ImageView
                 android:id="@+id/ivRightArrowImg"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/rightarrow"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginRight="20dp"/>
@@ -67,24 +94,74 @@
         <View
             android:id="@+id/vDivider"
             android:layout_width="match_parent"
-            android:layout_height="4px"
+            android:layout_height="1px"
             android:background="@color/post_Grey"
             app:layout_constraintTop_toBottomOf="@id/clViewFollowedTags"/>
 
+        <TextView
+            android:id="@+id/tvUsers"
+            android:paddingTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginLeft="8dp"
+            android:maxWidth="220dp"
+            android:paddingLeft="0dp"
+            android:scrollHorizontally="false"
+            android:text="Users"
+            android:textColor="#303030"
+            android:textSize="17sp"
+            android:layout_marginVertical="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/clViewFollowedTags"
+            />
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/clNotFollowing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="18dp"
+            android:paddingBottom="20dp"
+            android:background="@color/veriWhite">
+
+
+            <TextView
+                android:id="@+id/tvNotFollowing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollHorizontally="false"
+                android:text="Loading.."
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                android:paddingVertical="20dp"
+                tools:layout_editor_absoluteY="2dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+
+        </android.support.constraint.ConstraintLayout>
         <ListView
             android:id="@+id/lvFollowingUsers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="400dp"
             android:layout_marginHorizontal="0dp"
             android:layout_marginVertical="0dp"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:scrollbars="vertical"
-            app:layout_constraintTop_toBottomOf="@id/vDivider"
-            android:dividerHeight="0dp"
+
+            app:layout_constraintTop_toBottomOf="@id/tvUsers"
+            android:dividerHeight="0.5dp"
             android:divider="@color/post_Grey"
+            />
+        <View
+            android:id="@+id/emptyView2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/color_YouCantSeeME"
+            android:padding="0dp"
+            android:layout_margin="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             />
 
 
-
-</android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

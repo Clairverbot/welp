@@ -21,7 +21,7 @@
         />
     <item
         android:id="@+id/action_noti"
-        android:title="Notification"
+        android:title="Notifications"
         android:icon="@drawable/tab_noti"
         app:showAsAction="always|withText" />
     <item

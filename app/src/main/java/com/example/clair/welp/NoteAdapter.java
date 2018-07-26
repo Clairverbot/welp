@@ -1,13 +1,11 @@
 package com.example.clair.welp;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +19,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.support.v7.app.AppCompatDialogFragment;
 import android.widget.Toast;
 
 
@@ -38,11 +35,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -140,12 +135,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         }
     }
 
-
     //VERY LONG METHOD TO CREATE NOTEBOOK
     private void openAddToOrCreateDialog(String noteDocumentID) {
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        userEmail = mFirebaseUser.getEmail();
+        userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         Log.d("TAG", "NOTEBOOK: email " + userEmail);
         notebooks = new ArrayList<Notebook>();
         List<String> notebookNames = new ArrayList<String>();
@@ -191,7 +183,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                                     Utility.setListViewHeightBasedOnChildren(lv); //SET MAX HEIGHT OF LISTVIEW TO 6 LV ITEMS
                                 }
                             }
-
                             alertDialog.setCancelable(true);
                             alert = alertDialog.show();
 
@@ -336,9 +327,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     //CHECK whether user is current or not, then go to profile page based on that
     public void checkAndGoToProfile(Note clickedNote) {
         Note note = clickedNote;
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        userEmail = mFirebaseUser.getEmail();
+
+        userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         if (userEmail.equals(note.getEmail())) {
             goToPage(note, "ProfileActivity");

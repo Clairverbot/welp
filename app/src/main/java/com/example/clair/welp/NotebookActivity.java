@@ -40,7 +40,7 @@ public class NotebookActivity extends AppCompatActivity {
     NoteAdapter mAdapter;
     private FirebaseFirestore db;
     private FirestoreRecyclerAdapter adapter;
-    String passedName, passedEmail;
+    String passedName, passedEmail, passedFrom, passedUsername;
     ArrayList<String> passedList;
     NoteFirestore f;
 
@@ -53,7 +53,8 @@ public class NotebookActivity extends AppCompatActivity {
         //getExtras
         passedName = getIntent().getExtras().getString("NotebookName");
         passedEmail = getIntent().getExtras().getString("Email");
-
+        passedFrom = getIntent().getExtras().getString("From");
+        passedUsername = getIntent().getExtras().getString("Username");
 
         //Title and backbutton
         ActionBar actionBar = getSupportActionBar();
@@ -91,14 +92,9 @@ public class NotebookActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //GOTO : Profile Activity with Notebook Tab Selected
-        if(id == android.R.id.home){
-            int FRAGMENT_B = 1;
-            Intent i = new Intent(NotebookActivity.this, ProfileActivity.class);
-            i.putExtra("frgToLoad", FRAGMENT_B);
-            startActivity(i);
-            this.finish();
+        if(id == android.R.id.home) {
+            onBackPressed();
         }
-
         return super.onOptionsItemSelected(item);
 
     }
@@ -106,10 +102,6 @@ public class NotebookActivity extends AppCompatActivity {
     //BACK BUTTON (BOTTOM)
     @Override
     public void onBackPressed() {
-        int FRAGMENT_B = 1;
-        Intent i = new Intent(NotebookActivity.this, ProfileActivity.class);
-        i.putExtra("frgToLoad", FRAGMENT_B);
-        startActivity(i);
-        finish();
+        this.finish();
     }
 }

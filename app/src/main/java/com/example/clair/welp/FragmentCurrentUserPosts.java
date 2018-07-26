@@ -1,7 +1,6 @@
 package com.example.clair.welp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -64,10 +63,9 @@ public class FragmentCurrentUserPosts extends Fragment {
     public void onStart() {
         super.onStart();
         FragmentCurrentUserPosts r = this;
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        Log.d("TAG", "Posts Email" + mFirebaseUser.getEmail());
-        f = new NoteFirestore(r, mFirebaseUser.getEmail());
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        f = new NoteFirestore(r, currentUser.getEmail());
     }
 
     public void UpdateList(List<Note> n) {

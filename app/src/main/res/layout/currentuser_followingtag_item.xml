@@ -17,21 +17,19 @@
         android:paddingBottom="9dp"
         android:paddingLeft="20dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/ivOtherUserImg"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/dummyimg"
-            app:civ_border_color="@color/colorAccent"
-            app:civ_border_width="0dp"
+        <ImageView
+            android:id="@+id/ivTagImg"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/tag"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="10dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
         <TextView
-            android:id="@+id/tvOtherUserName"
+            android:id="@+id/tvTagName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
@@ -40,17 +38,17 @@
             android:maxWidth="220dp"
             android:paddingLeft="5dp"
             android:scrollHorizontally="false"
-            android:text="Fake Other Username"
+            android:text="Fake Tag Name"
             android:textColor="#1F2D3D"
             android:textSize="17sp"
-            app:layout_constraintLeft_toRightOf="@id/ivOtherUserImg"
+            app:layout_constraintLeft_toRightOf="@id/ivTagImg"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:layout_editor_absoluteY="7dp" />
 
     </android.support.constraint.ConstraintLayout>
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="2px"-->
-    <!--android:background="@color/post_Grey"/>-->
+    <View
+    android:layout_width="match_parent"
+    android:layout_height="0.5px"
+    android:background="@color/post_Grey"/>
 </LinearLayout>

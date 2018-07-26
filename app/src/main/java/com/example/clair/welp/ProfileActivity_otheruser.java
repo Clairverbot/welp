@@ -75,6 +75,7 @@ public class ProfileActivity_otheruser extends AppCompatActivity {
 
         passedEmail = getIntent().getExtras().getString("Email");
         passedUsername = getIntent().getExtras().getString("Username");
+
         fFirebaseAuth = FirebaseAuth.getInstance();
         user = fFirebaseAuth.getCurrentUser();
         if (user == null) {
@@ -142,29 +143,6 @@ public class ProfileActivity_otheruser extends AppCompatActivity {
 //    }
 
 
-    //region menu on top
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.actionbar_items_otheruser_profile, menu);
-        itemFollow = menu.findItem(R.id.menuFollow);
-        showInitialFollowStatus();
-        return true;
-    }
-
-    //UP BUTTON (BACK) AND FOLLOW
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menuFollow:
-                Log.d("TAG", "Click Follow");
-                followOrUnfollow();
-                return true;
-            default:
-                this.finish();
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
     public void showInitialFollowStatus(){
 
             db.collection("Users").document(user.getEmail()).get().
@@ -323,14 +301,44 @@ public class ProfileActivity_otheruser extends AppCompatActivity {
 
 
 
+    //region menu on top
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.actionbar_items_otheruser_profile, menu);
+        itemFollow = menu.findItem(R.id.menuFollow);
+        showInitialFollowStatus();
+        return true;
+    }
+
+    //UP BUTTON (BACK) AND FOLLOW
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menuFollow:
+                Log.d("TAG", "Click Follow");
+                followOrUnfollow();
+                return true;
+
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
 
 
 
     //BACK BUTTON (BOTTOM)
     @Override
     public void onBackPressed() {
+
 //        startActivity(new Intent(ProfileActivity_otheruser.this, MainActivity.class));
         this.finish();
     }
+
 
 }

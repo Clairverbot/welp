@@ -143,9 +143,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
-
         //set current tab
-        int intentFragment = getIntent().getExtras().getInt("frgToLoad");
+        int intentFragment = 100;
+        intentFragment = getIntent().getExtras().getInt("frgToLoad");
 
         switch (intentFragment) {
             case 1:

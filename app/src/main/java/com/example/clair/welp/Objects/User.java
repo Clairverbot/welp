@@ -2,17 +2,23 @@ package com.example.clair.welp.Objects;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class User {
     public User(){}
     private String Email, YearOfStudy,Username;
     private ArrayList Subjects;
+    private List<String> FollowingUsers;
 
     public User(String email, String yearOfStudy, String username, ArrayList subjects) {
         Email = email;
         YearOfStudy = yearOfStudy;
         Username = username;
         Subjects = subjects;
+    }
+    public User(String email, String username) {
+        Email = email;
+        Username = username;
     }
 
     public String getEmail() {

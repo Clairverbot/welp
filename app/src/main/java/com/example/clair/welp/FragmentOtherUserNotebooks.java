@@ -95,20 +95,18 @@ public class FragmentOtherUserNotebooks extends Fragment {
                 public void onBindViewHolder(FragmentOtherUserNotebooks.NotebooksHolder holder, int position, Notebook model) {
                     //progressBar.setVisibility(View.GONE);
                     holder.textName.setText(model.getNotebookName());
-//                holder.textTitle.setText(model.getTitle());
-//                holder.textCompany.setText(model.getCompany());
+
 //                Glide.with(getApplicationContext())
 //                        .load(model.getImage())
 //                        .into(holder.imageView);
 
                     holder.itemView.setOnClickListener(v -> {
-//                        Snackbar.make(notebookList, model.getNotebookName()+", "+model.getEmail(), Snackbar.LENGTH_LONG)
-//                                .setAction("Action", null).show();
-
                         Intent intent = new Intent(getActivity(), NotebookActivity.class);
                         intent.putExtra("NotebookName", model.getNotebookName()); // getText() SHOULD NOT be static!!!
                         intent.putExtra("NotebookNotes", (ArrayList<String>) model.getNotebookNotes());
                         intent.putExtra("Email", model.getEmail());
+                        intent.putExtra("From", "otheruser");
+                        intent.putExtra("Username", otheruser.passedUsername);
                         startActivity(intent);
                         for (String noteid: model.getNotebookNotes()){
                             Log.d("NoteID Fragment", "Note ID in Fragment" + noteid);

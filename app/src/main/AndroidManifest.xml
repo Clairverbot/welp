@@ -52,12 +52,10 @@
             />
 
         <activity android:name=".ProfileActivity"
-            android:theme="@style/Profile"
-            android:noHistory="true"/>
+            android:theme="@style/Profile"/>
 
         <activity android:name=".ProfileActivity_otheruser"
-            android:theme="@style/Profile"
-            android:noHistory="true"/>
+            android:theme="@style/Profile"/>
 
         <activity android:name=".NotebookActivity"
             android:theme="@style/AppTheme"/>
@@ -65,7 +63,8 @@
 
         <!-- android:parentActivityName=".ProfileActivity"/> -->
         <activity android:name=".NoteViewer"></activity>
-
+        <activity android:name=".FollowingTagsActivity"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>
