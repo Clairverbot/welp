@@ -179,8 +179,8 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
 
                     holder.itemView.setOnClickListener(v -> {
                         Intent intent = new Intent(NotificationsActivity.this, ProfileActivity_otheruser.class);
-                        intent.putExtra("passedEmail", model.getSendingEmail()); // getText() SHOULD NOT be static!!!
-                        intent.putExtra("passedUsername",  model.getSendingUsername());
+                        intent.putExtra("Email", model.getSendingEmail()); // getText() SHOULD NOT be static!!!
+                        intent.putExtra("Username",  model.getSendingUsername());
                         startActivity(intent);
                         }
                     );
