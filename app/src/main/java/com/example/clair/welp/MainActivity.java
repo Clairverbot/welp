@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     BottomNavigationView bottomNavigationView;
     boolean isFabOpen=false;
     FloatingActionButton fab,fabPdf,fabImg,fabVid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(user==null){
                     Intent intent = new Intent(MainActivity.this, Login.class);
                     startActivity(intent);
+                    finish();
                 }
             }
         };
@@ -115,12 +117,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.action_upload:
                         break;
                     case R.id.action_noti:
+                        startActivity(new Intent(MainActivity.this, NotificationsActivity.class));
+                        finish();
                         break;
                     case R.id.action_profile:
-                        int FRAGMENT_A = 0;
-                        Intent i = new Intent(MainActivity.this, ProfileActivity.class);
-                        i.putExtra("frgToLoad", FRAGMENT_A);
-                        startActivity(i);
+                        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+
                         break;
                 }
                 return true;
@@ -173,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (item.getItemId()) {
             case R.id.sign_out_menu:
                 AuthUI.getInstance().signOut(this);
+                finish();
                 return true;
             case R.id.credits_menu:
                 //TODO: create credits page one dayyy

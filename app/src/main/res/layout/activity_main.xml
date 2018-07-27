@@ -92,7 +92,5 @@
         app:itemTextColor="@color/bottom_nav_color"
         app:menu="@menu/bottom_nav_items"
         android:translationZ="-100dp"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-    </android.support.design.widget.BottomNavigationView>
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </android.support.constraint.ConstraintLayout>

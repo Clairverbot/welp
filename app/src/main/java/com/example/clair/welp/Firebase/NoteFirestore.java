@@ -79,9 +79,8 @@ public class NoteFirestore {
                                 noteTitle = document.getString(magicalNames.getNotes_Column_NoteTitle());
                                 noteDescription = document.getString(magicalNames.getNotes_Column_NoteDescription());
                                 resourceURL = document.getString(magicalNames.getNotes_Column_ResourceURL());
-                                Date DatePosted = document.getDate(magicalNames.getNotes_Column_DatePosted());
 
-                                datePosted = DatePosted != null ? sdf.format(DatePosted) : null;
+                                datePosted = document.getString(magicalNames.getNotes_Column_DatePosted());
                                 Date Deleted = document.getDate(magicalNames.getNotes_Column_Deleted());
                                 deleted = Deleted != null ? sdf.format(Deleted) : null;
 
@@ -138,8 +137,7 @@ public class NoteFirestore {
                                 noteTitle = document.getString(magicalNames.getNotes_Column_NoteTitle());
                                 noteDescription = document.getString(magicalNames.getNotes_Column_NoteDescription());
                                 resourceURL = document.getString(magicalNames.getNotes_Column_ResourceURL());
-                                Date DatePosted = document.getDate(magicalNames.getNotes_Column_DatePosted());
-                                datePosted = DatePosted != null ? sdf.format(DatePosted) : null;
+                                datePosted = document.getString(magicalNames.getNotes_Column_DatePosted());
                                 Date Deleted = document.getDate(magicalNames.getNotes_Column_Deleted());
                                 deleted = Deleted != null ? sdf.format(Deleted) : null;
 
@@ -187,8 +185,7 @@ public class NoteFirestore {
                                 noteTitle = document.getString(magicalNames.getNotes_Column_NoteTitle());
                                 noteDescription = document.getString(magicalNames.getNotes_Column_NoteDescription());
                                 resourceURL = document.getString(magicalNames.getNotes_Column_ResourceURL());
-                                Date DatePosted = document.getDate(magicalNames.getNotes_Column_DatePosted());
-                                datePosted = DatePosted != null ? sdf.format(DatePosted) : null;
+                                datePosted = document.getString(magicalNames.getNotes_Column_DatePosted());
                                 Date Deleted = document.getDate(magicalNames.getNotes_Column_Deleted());
                                 deleted = Deleted != null ? sdf.format(Deleted) : null;
 

@@ -56,10 +56,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     boolean isFabOpen=false;
     FloatingActionButton fab,fabPdf,fabImg,fabVid;
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
+    private FirebaseAuth fFirebaseAuth;
+    private FirebaseAuth.AuthStateListener fAuthStateListener;
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -143,24 +143,37 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
-        //set current tab
-        int intentFragment = 100;
-        intentFragment = getIntent().getExtras().getInt("frgToLoad");
+//        //set current tab
+//        int intentFragment = 100;
+//        intentFragment = getIntent().getExtras().getInt("frgToLoad");
+//
+//        switch (intentFragment) {
+//            case 1:
+//                viewPager.setCurrentItem(1); //notebooks tab
+//                break;
+//            case 2:
+//                viewPager.setCurrentItem(2); //following tab
+//                break;
+//
+//                default: //post tab
+//
+//        }
 
-        switch (intentFragment) {
-            case 1:
-                viewPager.setCurrentItem(1); //notebooks tab
-                break;
-            case 2:
-                viewPager.setCurrentItem(2); //following tab
-                break;
+        //region auth
+        fFirebaseAuth=FirebaseAuth.getInstance();
+        fAuthStateListener=new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user=firebaseAuth.getCurrentUser();
+                if(user==null){
+                    Intent intent = new Intent(ProfileActivity.this, Login.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        };
 
-                default: //post tab
-
-
-        }
-
-
+        //endregion
         //region bottom nav
         fab = findViewById(R.id.fabUpload);
         fabPdf = findViewById(R.id.fabPdf);
@@ -194,15 +207,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 switch (item.getItemId()){
                     case R.id.action_home:
                         startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+                        finish();
                         break;
                     case R.id.action_chat:
                         break;
                     case R.id.action_upload:
                         break;
                     case R.id.action_noti:
+                        startActivity(new Intent(ProfileActivity.this, NotificationsActivity.class));
+                        finish();
                         break;
                     case R.id.action_profile:
-
                         break;
                 }
                 return true;
@@ -327,4 +342,19 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
     //endregion
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(fAuthStateListener!=null){
+            fFirebaseAuth.removeAuthStateListener(fAuthStateListener);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fFirebaseAuth.addAuthStateListener(fAuthStateListener);
+    }
 }

@@ -308,9 +308,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull NoteAdapter.ViewHolder holder, int position) {
 
+
         final Note n = mDataset.get(position);
+        //Set date format to timeAgo
+        long time = Long.valueOf(TimeUtility.getDateFromDateTime(n.getDatePosted()));//2016-09-01 15:57:20 pass your date here
+        String timeStr = TimeUtility.timeAgo(time/1000);
+
         holder.tvUsername.setText(n.getUsername());
-        holder.tvPostTimeDetail.setText("Posted: " + n.getDatePosted());
+        holder.tvPostTimeDetail.setText("Posted " + timeStr);
         holder.tvNoteTitle.setText(n.getNoteTitle());
         holder.tvNoteDesc.setText(n.getNoteDescription());
         String upvote = n.getUpvote() + "";

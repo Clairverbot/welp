@@ -65,6 +65,9 @@
         <activity android:name=".NoteViewer"></activity>
         <activity android:name=".FollowingTagsActivity"
             android:theme="@style/AppTheme"/>
+
+        <activity android:name=".NotificationsActivity"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>
