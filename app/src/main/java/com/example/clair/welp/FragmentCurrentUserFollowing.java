@@ -91,16 +91,15 @@ public class FragmentCurrentUserFollowing extends Fragment {
                             DocumentSnapshot document = task.getResult();
                             if(document.exists() && document != null) {
                                 followingUsers = (List<String>) document.get("FollowingUsers");
-                                if (followingUsers == null) {
-                                    clNotFollowing.setVisibility(View.VISIBLE);
-                                    tvNotFollowing.setText("You have not followed anyone yet");
-                                } else {
-                                    if (followingUsers.size() == 0) {
-                                        clNotFollowing.setVisibility(View.VISIBLE);
-                                        tvNotFollowing.setText("You have not followed anyone yet");
-                                    } else {
+
+                                clNotFollowing.setVisibility(View.VISIBLE);
+                                tvNotFollowing.setText("You have not followed anyone yet");
+
+                                if (followingUsers != null) {
+                                    if (followingUsers.size() > 0) {
                                         //Populate Listview if user got following users
                                         clNotFollowing.setVisibility(View.GONE);
+                                        lvfollowingUsers.setVisibility(View.VISIBLE);
                                         adapter = new ArrayAdapter<String>(mContext, R.layout.currentuser_followinguser_item, R.id.tvOtherUserName, followingUsers);
 
                                         adapter.notifyDataSetChanged();
@@ -117,7 +116,7 @@ public class FragmentCurrentUserFollowing extends Fragment {
 
 
 
-    //Get
+    //Go to user's profile
     public void onClickFollowingUser() {
 
         lvfollowingUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -145,18 +144,21 @@ public class FragmentCurrentUserFollowing extends Fragment {
                         });
             }
         });
+    }
 
-
+    public void resetListView(){
+        if (followingUsers != null) {
+            followingUsers.clear();
+            adapter.notifyDataSetChanged();
+            lvfollowingUsers.setAdapter(adapter);
+            lvfollowingUsers.setVisibility(View.GONE);
+        }
+        populateListView();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (followingUsers != null) {
-            followingUsers.clear();
-            adapter.notifyDataSetChanged();
-            lvfollowingUsers.setAdapter(adapter);
-        }
-        populateListView();
+        resetListView();
     }
 }

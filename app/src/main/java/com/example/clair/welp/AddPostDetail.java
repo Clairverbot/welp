@@ -64,7 +64,7 @@ public class AddPostDetail extends AppCompatActivity {
             public void onClick(View v) {
                 if(etNoteDesc.getText()!=null &&etNoteTitle!=null){
                     RadioButton rb=findViewById(rg.getCheckedRadioButtonId());
-                    List<String> tags= Arrays.asList((String) spSubject.getSelectedItem(),(String)spGrade.getSelectedItem(),(String)rb.getText(),(String) spSubject.getSelectedItem()+" "+(String)spGrade.getSelectedItem());
+                    List<String> tags= Arrays.asList((String) spSubject.getSelectedItem(),(String)spGrade.getSelectedItem(),(String)rb.getText(),(String) spSubject.getSelectedItem()+" + "+(String)spGrade.getSelectedItem());
                     Note note=new Note(email,username,null,etNoteTitle.getText().toString(),etNoteDesc.getText().toString(),path.toString(), Calendar.getInstance().getTime().toString(),null,tags,0,0,null);
                     //noteFirestore.storage(note);
                     noteFirestore.add(note);
