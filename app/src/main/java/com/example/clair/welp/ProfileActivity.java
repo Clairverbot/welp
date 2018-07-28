@@ -241,7 +241,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     //region menu on top
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
+        inflater.inflate(R.menu.profile_menu, menu);
         return true;
     }
     @Override
@@ -250,7 +250,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.sign_out_menu:
                 AuthUI.getInstance().signOut(this);
                 return true;
-            case R.id.credits_menu:
+            case R.id.about_menu:
                 //TODO: create credits page one dayyy
             default:
                 return super.onOptionsItemSelected(item);

@@ -32,6 +32,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.content.ContentValues.TAG;
+
 
 public class NotebookActivity extends AppCompatActivity {
     @BindView(R.id.rvNote)
@@ -67,7 +69,7 @@ public class NotebookActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         noteList.setLayoutManager(mLayoutManager);
         noteList.setItemAnimator(new DefaultItemAnimator());
-
+        Log.d(TAG, "ERROR " + "Adapter Problem");
         mAdapter=new NoteAdapter(this);
         noteList.setAdapter(mAdapter);
     }
@@ -78,6 +80,9 @@ public class NotebookActivity extends AppCompatActivity {
         super.onStart();
         NotebookActivity r=this;
         passedList = getIntent().getExtras().getStringArrayList("NotebookNotes");
+        for (String id : passedList){
+            Log.d("TAG", "Note ID onStart:" + id);
+        }
         f=new NoteFirestore(r, passedList);
     }
 

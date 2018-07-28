@@ -15,7 +15,7 @@
         android:id="@+id/emptyView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.2"
+        app:layout_constraintHeight_percent="0.3"
         android:background="@color/color_YouCantSeeME"/>
 
     <TextView

@@ -143,6 +143,7 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
         //endregion
 
         init();
+
         getNotificationsList();
     }
 
@@ -155,10 +156,10 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
         Log.d("TAG","Notifications init");
     }
 
-    private void getNotificationsList(){
+    private void getNotificationsList() {
         String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        if (userEmail != null){
-            Log.d("TAG","Notifications " + userEmail);
+        if (userEmail != null) {
+            Log.d("TAG", "Notifications " + userEmail);
             Query query = db.collection("Notifications").whereEqualTo("ReceivingEmail", userEmail).orderBy("DateSent", com.google.firebase.firestore.Query.Direction.DESCENDING);
 
             FirestoreRecyclerOptions<Notification> notification = new FirestoreRecyclerOptions.Builder<Notification>()
@@ -169,20 +170,20 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
                 @Override
                 public void onBindViewHolder(NotificationsHolder holder, int position, Notification model) {
                     holder.tvNotification.setText(model.getNotificationString());
-                    Log.d("TAG","Notifications ADAPTER");
+                    Log.d("TAG", "Notifications ADAPTER");
                     long time = Long.valueOf(TimeUtility.getDateFromDateTime(model.getDateSent()));//2016-09-01 15:57:20 pass your date here
-                    String timeStr = TimeUtility.timeAgo(time/1000);
+                    String timeStr = TimeUtility.timeAgo(time / 1000);
                     holder.tvNotificationTime.setText(timeStr);
 //                Glide.with(getApplicationContext())
 //                        .load(model.getImage())
 //                        .into(holder.imageView);
 
                     holder.itemView.setOnClickListener(v -> {
-                        Intent intent = new Intent(NotificationsActivity.this, ProfileActivity_otheruser.class);
-                        intent.putExtra("Email", model.getSendingEmail()); // getText() SHOULD NOT be static!!!
-                        intent.putExtra("Username",  model.getSendingUsername());
-                        startActivity(intent);
-                        }
+                                Intent intent = new Intent(NotificationsActivity.this, ProfileActivity_otheruser.class);
+                                intent.putExtra("Email", model.getSendingEmail()); // getText() SHOULD NOT be static!!!
+                                intent.putExtra("Username", model.getSendingUsername());
+                                startActivity(intent);
+                            }
                     );
                 }
 
@@ -203,23 +204,22 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
 
             adapter.notifyDataSetChanged();
             if (adapter != null) {
-                if (adapter.getItemCount() > 0){
-                    ivNoNotifs.setVisibility(View.GONE);
-                    Log.d("TAG","Notifications GONE");
-                } else{
+                if (adapter.getItemCount() > 0) {
+                    ivNoNotifs.setVisibility(View.INVISIBLE);
+                }else{
                     ivNoNotifs.setVisibility(View.VISIBLE);
                 }
             }
 
             rvNotifications.setAdapter(adapter);
 
-        }else{
+        } else {
             Intent intent = new Intent(this, Login.class);
             startActivity(intent);
         }
 
-
     }
+
 
     public class NotificationsHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.tvNotification)
@@ -236,7 +236,13 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
     public void onStart() {
         super.onStart();
         adapter.startListening();
-
+        if (adapter != null) {
+            if (adapter.getItemCount() > 0) {
+                ivNoNotifs.setVisibility(View.INVISIBLE);
+            }else{
+                ivNoNotifs.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
@@ -362,7 +368,7 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
             case R.id.sign_out_menu:
                 AuthUI.getInstance().signOut(this);
                 return true;
-            case R.id.credits_menu:
+            case R.id.about_menu:
                 //TODO: create credits page one dayyy
             default:
                 return super.onOptionsItemSelected(item);

@@ -230,7 +230,6 @@ public class NoteFirestore {
         ArrayList<Note> notes = new ArrayList<>();
 
         for (String noteID : listOfNoteIDs) {
-
             Log.d(TAG, "Note ID1:  " + noteID);
             db.collection("Notes").document(noteID).get().
                     addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -246,8 +245,8 @@ public class NoteFirestore {
                                     noteTitle = document.getString(magicalNames.getNotes_Column_NoteTitle());
                                     noteDescription = document.getString(magicalNames.getNotes_Column_NoteDescription());
                                     resourceURL = document.getString(magicalNames.getNotes_Column_ResourceURL());
-                                    Date DatePosted = document.getDate(magicalNames.getNotes_Column_DatePosted());
-                                    datePosted = DatePosted != null ? sdf.format(DatePosted) : null;
+
+                                    datePosted = document.getString(magicalNames.getNotes_Column_DatePosted());
                                     Date Deleted = document.getDate(magicalNames.getNotes_Column_Deleted());
                                     deleted = Deleted != null ? sdf.format(Deleted) : null;
 
@@ -258,26 +257,13 @@ public class NoteFirestore {
                                     Long Downvote = document.getLong(magicalNames.getNotes_Column_Downvote());
                                     downvote = null == Downvote ? 0 : Downvote.intValue();
                                     documentID = document.getId();
-                                    //notebooks = document.getData(magicalNames.getNotes_Column_Notebooks());
 
-//                                    db.collection("Users").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                                        @Override
-//                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                                            if (task.isSuccessful()) {
-//                                                username = task.getResult().getString(magicalNames.getNotes_Column_Username());
-//                                            } else {
-//                                                Log.d(TAG, "Error getting documents: ", task.getException());
-//                                            }
 
                                     Note n = new Note(email, username, userIMG, noteTitle, noteDescription, resourceURL, datePosted, deleted, tags, upvote, downvote, null, documentID);
                                     notes.add(n);
-                                    Log.d(TAG, "Added note: " + noteTitle);
+                                    Log.d(TAG, "Added note: " + datePosted);
                                     reference.UpdateList(notes);
                                 }
-//                                    });
-
-
-//                                }
 
                             } else {
                                 Log.d(TAG, "Error getting documents: ", task.getException());
@@ -329,12 +315,12 @@ public class NoteFirestore {
 //    }
 
     public void add(Note n) {
-                Date datePosted= Calendar.getInstance().getTime();
+//                Date datePosted= Calendar.getInstance().getTime();
         notas.put(magicalNames.getNotes_Column_Email(),n.getEmail());
         notas.put(magicalNames.getNotes_Column_NoteTitle(),n.getNoteTitle());
         notas.put(magicalNames.getNotes_Column_NoteDescription(),n.getNoteDescription());
         //notas.put(magicalNames.getNotes_Column_ResourceURL(),storage(n));
-        notas.put(magicalNames.getNotes_Column_DatePosted(),datePosted);
+        notas.put(magicalNames.getNotes_Column_DatePosted(),n.getDatePosted());
         notas.put(magicalNames.getNotes_Column_Tags(),n.getTags());
         notas.put(magicalNames.getUsers_Column_Username(),n.getUsername());
 

@@ -13,6 +13,7 @@ public class Note {
 
     public Note(){}
     public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, List<String> tags, int upvote, int downvote, String[][] comments) {
+
         Email = email;
         Username = username;
         UserIMG = userIMG;

@@ -71,7 +71,8 @@ public class AddPostDetail extends AppCompatActivity {
 
                     //CHANGE DATE FORMAT
                     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                    String datePosted = dateFormat.format(new Date());
+                    Date date = new Date();
+                    String datePosted = dateFormat.format(date);
 
                     Note note=new Note(email,username,null,etNoteTitle.getText().toString(),etNoteDesc.getText().toString(),path.toString(), datePosted,null,tags,0,0,null);
                     //noteFirestore.storage(note);

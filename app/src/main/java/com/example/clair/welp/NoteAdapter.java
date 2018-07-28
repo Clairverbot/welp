@@ -309,8 +309,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull NoteAdapter.ViewHolder holder, int position) {
 
 
-        final Note n = mDataset.get(position);
+        Note n = mDataset.get(position);
         //Set date format to timeAgo
+        Log.d(TAG, "ERROR " + n.getDatePosted());
         long time = Long.valueOf(TimeUtility.getDateFromDateTime(n.getDatePosted()));//2016-09-01 15:57:20 pass your date here
         String timeStr = TimeUtility.timeAgo(time/1000);
 

@@ -68,8 +68,8 @@
             app:layout_constraintTop_toBottomOf="@+id/tvNotification"/>
     </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="2px"-->
-    <!--android:background="@color/post_Grey"/>-->
+    <View
+    android:layout_width="match_parent"
+    android:layout_height="0.5px"
+    android:background="@color/post_Grey"/>
 </LinearLayout>

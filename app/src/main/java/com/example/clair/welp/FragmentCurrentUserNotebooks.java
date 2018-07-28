@@ -140,10 +140,11 @@ public class FragmentCurrentUserNotebooks extends Fragment {
             };
 
             adapter.notifyDataSetChanged();
-            if (adapter == null) {
-                textLoading.setText("You have no notebooks yet");
-            } else {
-                textLoading.setText("");
+            textLoading.setText("");
+            if (adapter != null) {
+                if (adapter.getItemCount() == 0){
+                    textLoading.setText("You have no notebooks yet");
+                }
             }
 
             notebookList.setAdapter(adapter);

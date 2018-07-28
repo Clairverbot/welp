@@ -322,7 +322,7 @@ public class ProfileActivity_otheruser extends AppCompatActivity {
         notification.put("SendingUsername", currentUsername);
         notification.put("SendingEmail", user.getEmail());
         notification.put("NotificationType", "Notification");
-        notification.put("NotificationString", currentUsername+" has started following you.");
+        notification.put("NotificationString", currentUsername+" has started following you");
         notification.put("DateSent", dateSent);
         drNotif.set(notification);
     }
