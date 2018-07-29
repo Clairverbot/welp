@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.example.clair.welp.Firebase.MagicalNames;
 import com.example.clair.welp.Objects.Note;
 import com.example.clair.welp.Objects.Notebook;
+import com.example.clair.welp.Objects.Tag;
 import com.firebase.client.annotations.NotNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -38,6 +39,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -169,10 +171,19 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         holder.tv_Upvote.setText((upvote));
         holder.tv_Downvote.setText(downvote);
 
-        holder.btnSubject.setText((String)(n.getTags().keySet().toArray()[3])); //Math
-        holder.btnYear.setText((String)(n.getTags().keySet().toArray()[0])); //Secondary 1
-        holder.btnCategory.setText((String)(n.getTags().keySet().toArray()[1])); //Notes
-        holder.btnSummary.setText((String)(n.getTags().keySet().toArray()[2])); //Math + Secondary 1
+        for(int i = 0; i < 4; i++){
+            String tagToCheck = (String)(n.getTags().keySet().toArray()[i]); //get string from key array of tags hashmap
+
+            if ((Arrays.asList((Tag.Subjects)).contains(tagToCheck))){ //Get list of all subjects from tag class
+                holder.btnSubject.setText(tagToCheck); //Math
+            } else if ((Arrays.asList((Tag.YearsOfStudy)).contains(tagToCheck))){
+                holder.btnYear.setText(tagToCheck); //Secondary 1
+            } else if ((Arrays.asList((Tag.MaterialTypes)).contains(tagToCheck))){
+                holder.btnCategory.setText(tagToCheck); //Notes
+            } else {
+                holder.btnSummary.setText(tagToCheck); //Math + Secondary 1
+            }
+        }
 
     }
 

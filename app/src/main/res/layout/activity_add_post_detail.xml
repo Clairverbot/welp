@@ -6,13 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".AddPostDetail"
     android:background="@color/nicebg"
-    android:padding="24dp"
+
     android:id="@+id/clAddPostDetail">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent=".999999"
+        >
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scrollbars="vertical">
+        android:scrollbars="vertical"
+        android:padding="24dp"
+        >
 <TextView
     android:id="@+id/tv1"
     android:layout_width="wrap_content"
@@ -22,7 +32,8 @@
     />
 <EditText
     android:id="@+id/etNoteTitle"
-    android:layout_width="match_parent"
+    android:layout_width="0dp"
+    app:layout_constraintWidth_percent="0.87"
     android:layout_height="wrap_content"
     app:layout_constraintTop_toBottomOf="@id/tv1"
     android:hint="Enter Title E.g. Physics Kinetics Notes Sec 3"
@@ -41,7 +52,8 @@
         android:textColor="@color/the4ab5c7"/>
     <EditText
         android:id="@+id/etNoteDesc"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.87"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv2"
         android:hint="Enter topics included in resource"
@@ -78,10 +90,11 @@
     <Spinner
         android:id="@+id/sp_YearOfStudy"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.87"
         android:padding="@dimen/SlightlyBiggerPadding"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/arrow1"
+
+
         app:layout_constraintTop_toBottomOf="@+id/tv4"
         android:backgroundTint="@color/colorAccent"
         style="@style/Base.Widget.AppCompat.Spinner.Underlined"
@@ -105,7 +118,8 @@
     <Spinner
         android:id="@+id/sp_Subject"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.87"
         android:padding="@dimen/SlightlyBiggerPadding"
         app:layout_constraintTop_toBottomOf="@+id/tv5"
         android:backgroundTint="@color/colorAccent"
@@ -129,12 +143,15 @@
         android:textColor="@color/the4ab5c7"/>
     <RadioGroup
         android:id="@+id/rg"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv6"
         android:orientation="horizontal"
         android:weightSum="3"
         android:layout_marginTop="@dimen/BiggerPadding"
+        android:paddingBottom="20dp"
+        app:layout_constraintWidth_percent="0.87"
+        app:layout_constraintBottom_toTopOf="@+id/btnPost"
         >
         <RadioButton
             android:id="@+id/rbNotes"
@@ -164,15 +181,21 @@
             android:textColor="@color/colorPrimary"
             android:buttonTint="@color/colorPrimary"/>
     </RadioGroup>
-    </android.support.constraint.ConstraintLayout>
+
+
+
     <Button
         android:id="@+id/btnPost"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.87"
         android:layout_height="wrap_content"
+
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="@color/the4ab5c7"
         android:textColor="@color/nicebg"
         android:text="Post"
         android:textAllCaps="false"/>
+    </android.support.constraint.ConstraintLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

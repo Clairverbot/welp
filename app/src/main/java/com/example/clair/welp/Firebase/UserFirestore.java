@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,12 @@ public class UserFirestore {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
+    }
+
+    //for Searching, return List of email +username
+    public HashMap<String, String> getUsersList(){
+        HashMap<String, String> usersList  = new HashMap<>();
+        return  usersList;
     }
 
 

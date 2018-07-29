@@ -161,7 +161,7 @@ public class NoteFirestore {
                                     }else{
                                         tvError.setText("");
                                     }
-                                } 
+                                }
                                 Log.d(TAG, "Reached Here: ");
                             }
 
