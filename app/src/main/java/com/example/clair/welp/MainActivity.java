@@ -177,9 +177,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 AuthUI.getInstance().signOut(this);
                 finish();
                 return true;
+            case R.id.filter_menu:
+                startActivity(new Intent(MainActivity.this, SearchFilterActivity.class));
+                return true;
             case R.id.search_menu:
-                //TODO: search page
                 startActivity(new Intent(MainActivity.this, SearchActivity.class));
+                return true;
             case R.id.about_menu:
                 //TODO: create credits page one dayyy
             default:

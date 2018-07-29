@@ -21,4 +21,6 @@
     <color name="nicebg">#F8F9FB</color>
     <color name="Dark_Grey">#303030</color>
     <color name="LightDark_Grey">#737373</color>
+    <color name="yellowishWhite">#f7f6f1</color>
+
 </resources>

@@ -2,6 +2,7 @@ package com.example.clair.welp;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -55,13 +56,6 @@ public class FragmentCurrentUserPosts extends Fragment {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mAdapter = new NoteAdapter(mContext);
-        if (mAdapter != null) {
-            if (mAdapter.getItemCount() > 0){
-                tvLoadingPosts.setText("");
-            } else{
-                tvLoadingPosts.setText("You have not posted anything yet");
-            }
-        }
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
@@ -74,6 +68,18 @@ public class FragmentCurrentUserPosts extends Fragment {
         tvLoadingPosts = (TextView) view.findViewById(R.id.tvLoadingPosts);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         f = new NoteFirestore(r, currentUser.getEmail(), tvLoadingPosts);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mAdapter.getItemCount() > 0){
+                    tvLoadingPosts.setText("");
+                } else{
+                    tvLoadingPosts.setText("You have not posted anything yet");
+                }
+
+            }
+        }, 1700); //set timer for error text to appear, 3s
     }
 
     public void UpdateList(List<Note> n) {

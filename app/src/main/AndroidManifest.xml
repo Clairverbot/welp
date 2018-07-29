@@ -70,6 +70,10 @@
             android:theme="@style/AppTheme"/>
         <activity android:name=".SearchActivity"
             android:theme="@style/SearchTheme"/>
+        <activity android:name=".SearchResultsActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".SearchFilterActivity"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

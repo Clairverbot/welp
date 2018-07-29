@@ -2,6 +2,7 @@ package com.example.clair.welp;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -15,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -51,6 +53,15 @@ public class SearchActivity extends AppCompatActivity{
         lvSearch.setAdapter(adapter);
         lvSearch.setVisibility(View.INVISIBLE);
 
+        lvSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+               ArrayList<String> passedSearchQuery = new ArrayList<>();
+                passedSearchQuery.add((String) lvSearch.getItemAtPosition(position));
+                Intent i = new Intent(SearchActivity.this, SearchResultsActivity.class);
+                i.putExtra("passedSearchQuery", passedSearchQuery);
+                startActivity(i);
+            }
+    });
     }
 
 
@@ -115,10 +126,9 @@ public class SearchActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_back:
-                //TODO: search page
                 InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
                 if (imm.isActive()){
-                    // Hide keyboard
+                    // HIDE keyboard
                     imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 }
                 super.onBackPressed();

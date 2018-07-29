@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchFilterActivity"
+    android:background="@color/nicebg"
+    >
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="24dp"
+        android:scrollbars="vertical">
+
+        <TextView
+            android:id="@+id/tv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/EvenBiggerPadding"
+            android:text="Select Tags"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintTop_toBottomOf="@id/etNoteDesc" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/BiggerPadding"
+            android:background="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="@id/tv3"
+            app:layout_constraintLeft_toRightOf="@id/tv3"
+            app:layout_constraintTop_toTopOf="@id/tv3" />
+
+        <TextView
+            android:id="@+id/tv4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/EvenBiggerPadding"
+            android:text="Grade of Resource"
+            android:textColor="@color/the4ab5c7"
+            app:layout_constraintTop_toBottomOf="@id/tv3" />
+
+        <Spinner
+            android:id="@+id/sp_YearOfStudy"
+            style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"
+            android:drawableRight="@drawable/ic_arrow"
+            android:padding="@dimen/SlightlyBiggerPadding"
+            app:layout_constraintTop_toBottomOf="@+id/tv4"
+            app:layout_constraintWidth_percent="0.78" />
+
+        <View
+            android:id="@+id/emptyView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.05"
+            app:layout_constraintTop_toBottomOf="@id/sp_YearOfStudy" />
+
+        <TextView
+            android:id="@+id/tv5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/BiggerPadding"
+            android:text="Subject"
+            android:textColor="@color/the4ab5c7"
+            app:layout_constraintTop_toBottomOf="@id/emptyView" />
+
+        <Spinner
+            android:id="@+id/sp_Subject"
+            style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"
+            android:drawableRight="@drawable/ic_arrow"
+            android:padding="@dimen/SlightlyBiggerPadding"
+            app:layout_constraintTop_toBottomOf="@+id/tv5"
+            app:layout_constraintWidth_percent="0.78" />
+
+        <View
+            android:id="@+id/emptyView2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.05"
+            app:layout_constraintTop_toBottomOf="@id/sp_Subject" />
+
+        <TextView
+            android:id="@+id/tv6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/BiggerPadding"
+            android:text="Type of Resource"
+            android:textColor="@color/the4ab5c7"
+            app:layout_constraintTop_toBottomOf="@id/emptyView2" />
+
+        <RadioGroup
+            android:id="@+id/rg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/BiggerPadding"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp"
+            android:weightSum="3"
+            app:layout_constraintTop_toBottomOf="@id/tv6"
+            app:layout_constraintWidth_percent="0.78">
+
+            <RadioButton
+                android:id="@+id/rbNotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/colorPrimary"
+                android:checked="true"
+                android:text="Notes"
+                android:textColor="@color/colorPrimary" />
+
+            <RadioButton
+                android:id="@+id/rbPractice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/colorPrimary"
+                android:text="Practice"
+                android:textColor="@color/colorPrimary" />
+
+            <RadioButton
+                android:id="@+id/rbLesson"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/colorPrimary"
+                android:text="Lesson"
+                android:textColor="@color/colorPrimary" />
+        </RadioGroup>
+
+
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/the4ab5c7"
+
+            android:text="Search"
+            android:textAllCaps="false"
+            android:textColor="@color/nicebg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.78" />
+
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

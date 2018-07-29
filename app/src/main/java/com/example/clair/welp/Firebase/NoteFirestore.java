@@ -14,6 +14,7 @@ import com.example.clair.welp.MainActivity;
 import com.example.clair.welp.NotebookActivity;
 import com.example.clair.welp.Objects.Note;
 import com.example.clair.welp.R;
+import com.example.clair.welp.SearchResultsActivity;
 import com.firebase.client.annotations.NotNull;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -74,37 +75,7 @@ public class NoteFirestore {
 
                         if (task.isSuccessful()) {
                             for (final DocumentSnapshot document : task.getResult()) {
-                                email = document.getString(magicalNames.getNotes_Column_Email());
-                                username = document.getString(magicalNames.getNotes_Column_Username());
-                                noteTitle = document.getString(magicalNames.getNotes_Column_NoteTitle());
-                                noteDescription = document.getString(magicalNames.getNotes_Column_NoteDescription());
-                                resourceURL = document.getString(magicalNames.getNotes_Column_ResourceURL());
-
-                                datePosted = document.getString(magicalNames.getNotes_Column_DatePosted());
-                                Date Deleted = document.getDate(magicalNames.getNotes_Column_Deleted());
-                                deleted = Deleted != null ? sdf.format(Deleted) : null;
-
-
-                                tags = (HashMap<String, Boolean>) document.getData().get(magicalNames.getNotes_Column_Tags());
-                                //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
-                                Long Upvote = document.getLong(magicalNames.getNotes_Column_Upvote());
-                                upvote = null == Upvote ? 0 : Upvote.intValue();
-                                Long Downvote = document.getLong(magicalNames.getNotes_Column_Downvote());
-                                downvote = null == Downvote ? 0 : Downvote.intValue();
-                                documentID = document.getId();
-                                //getUserInfo(email,noteTitle,noteDescription,resourceURL,datePosted,deleted,tags,upvote,downvote,reference);
-//                                db.collection("Users").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                                    @Override
-//                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                                        if (task.isSuccessful()) {
-//                                            username = task.getResult().getString(magicalNames.getNotes_Column_Username());
-//                                        }
-//                                        else {
-//                                            Log.d(TAG, "Error getting documents: ", task.getException());
-//                                        }
-
-                                Note n = new Note(email, username, userIMG, noteTitle, noteDescription, resourceURL, datePosted, deleted, tags, upvote, downvote, null, documentID);
-                                notes.add(n);
+                                notes.add(getNoteFromDocumentSnapshot(document));
                                 reference.UpdateList(notes);
                                 //pbSpinner.setVisibility(View.GONE);
                             }
@@ -133,39 +104,20 @@ public class NoteFirestore {
 
                         if (task.isSuccessful()) {
                             for (final DocumentSnapshot document : task.getResult()) {
-                                email = document.getString(magicalNames.getNotes_Column_Email());
-                                username = document.getString(magicalNames.getNotes_Column_Username());
-                                noteTitle = document.getString(magicalNames.getNotes_Column_NoteTitle());
-                                noteDescription = document.getString(magicalNames.getNotes_Column_NoteDescription());
-                                resourceURL = document.getString(magicalNames.getNotes_Column_ResourceURL());
-                                datePosted = document.getString(magicalNames.getNotes_Column_DatePosted());
-                                Date Deleted = document.getDate(magicalNames.getNotes_Column_Deleted());
-                                deleted = Deleted != null ? sdf.format(Deleted) : null;
-
-                                tags = (HashMap<String, Boolean>) document.getData().get(magicalNames.getNotes_Column_Tags());
-                                //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
-                                Long Upvote = document.getLong(magicalNames.getNotes_Column_Upvote());
-                                upvote = null == Upvote ? 0 : Upvote.intValue();
-                                Long Downvote = document.getLong(magicalNames.getNotes_Column_Downvote());
-                                downvote = null == Downvote ? 0 : Downvote.intValue();
-                                //notebooks = document.getData(magicalNames.getNotes_Column_Notebooks());
-                                documentID = document.getId();
-
-                                Note n = new Note(email, username, userIMG, noteTitle, noteDescription, resourceURL, datePosted, deleted, tags, upvote, downvote, null, documentID);
-                                notes.add(n);
+                                notes.add(getNoteFromDocumentSnapshot(document));
                                 reference.UpdateList(notes);
 
-                                if (notes != null){
-                                    if(notes.size()==0){
+                                if (notes != null) {
+                                    if (notes.size() == 0) {
                                         tvError.setText("You have not posted anything yet");
-                                    }else{
+                                    } else {
                                         tvError.setText("");
                                     }
                                 }
                                 Log.d(TAG, "Reached Here: ");
                             }
 
-                        }else {
+                        } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                             tvError.setText("You have not posted anything yet");
 
@@ -189,48 +141,27 @@ public class NoteFirestore {
 
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot document : task.getResult()) {
-                                email = document.getString(magicalNames.getNotes_Column_Email());
-                                username = document.getString(magicalNames.getNotes_Column_Username());
-                                noteTitle = document.getString(magicalNames.getNotes_Column_NoteTitle());
-                                noteDescription = document.getString(magicalNames.getNotes_Column_NoteDescription());
-                                resourceURL = document.getString(magicalNames.getNotes_Column_ResourceURL());
-                                datePosted = document.getString(magicalNames.getNotes_Column_DatePosted());
-                                Date Deleted = document.getDate(magicalNames.getNotes_Column_Deleted());
-                                deleted = Deleted != null ? sdf.format(Deleted) : null;
-
-                                tags = (HashMap<String, Boolean>) document.getData().get(magicalNames.getNotes_Column_Tags());
-                                //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
-                                Long Upvote = document.getLong(magicalNames.getNotes_Column_Upvote());
-                                upvote = null == Upvote ? 0 : Upvote.intValue();
-                                Long Downvote = document.getLong(magicalNames.getNotes_Column_Downvote());
-                                downvote = null == Downvote ? 0 : Downvote.intValue();
-                                //notebooks = document.getData(magicalNames.getNotes_Column_Notebooks());
-                                documentID = document.getId();
-
-                                Note n = new Note(email, username, userIMG, noteTitle, noteDescription, resourceURL, datePosted, deleted, tags, upvote, downvote, null, documentID);
-                                notes.add(n);
+                                notes.add(getNoteFromDocumentSnapshot(document));
                                 reference.UpdateList(notes);
 
-                                if (notes != null){
-                                    if(notes.size()==0){
-                                        tvError.setText(username+ " has no posts yet");
-                                    }else{
+                                if (notes != null) {
+                                    if (notes.size() == 0) {
+                                        tvError.setText(username + " has no posts yet");
+                                    } else {
                                         tvError.setText("");
                                     }
-                                } else{
-                                    tvError.setText(username+ " has no posts yet");
+                                } else {
+                                    tvError.setText(username + " has no posts yet");
                                 }
 
                             }
 
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
-                            tvError.setText(username+ " has no posts yet");
+                            tvError.setText(username + " has no posts yet");
                         }
                     }
                 });
-
-
     }
 
     public NoteFirestore(NotebookActivity r, ArrayList<String> passedList) {
@@ -244,46 +175,95 @@ public class NoteFirestore {
                     addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-
+                            ArrayList<Note> notes = new ArrayList<>();
 
                             if (task.isSuccessful()) {
+
                                 DocumentSnapshot document = task.getResult();
                                 if (document != null) {
-                                    email = document.getString(magicalNames.getNotes_Column_Email());
-                                    username = document.getString(magicalNames.getNotes_Column_Username());
-                                    noteTitle = document.getString(magicalNames.getNotes_Column_NoteTitle());
-                                    noteDescription = document.getString(magicalNames.getNotes_Column_NoteDescription());
-                                    resourceURL = document.getString(magicalNames.getNotes_Column_ResourceURL());
-
-                                    datePosted = document.getString(magicalNames.getNotes_Column_DatePosted());
-                                    Date Deleted = document.getDate(magicalNames.getNotes_Column_Deleted());
-                                    deleted = Deleted != null ? sdf.format(Deleted) : null;
-
-                                    tags = (HashMap<String, Boolean>) document.getData().get(magicalNames.getNotes_Column_Tags());
-                                    //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
-                                    Long Upvote = document.getLong(magicalNames.getNotes_Column_Upvote());
-                                    upvote = null == Upvote ? 0 : Upvote.intValue();
-                                    Long Downvote = document.getLong(magicalNames.getNotes_Column_Downvote());
-                                    downvote = null == Downvote ? 0 : Downvote.intValue();
-                                    documentID = document.getId();
-
-
-                                    Note n = new Note(email, username, userIMG, noteTitle, noteDescription, resourceURL, datePosted, deleted, tags, upvote, downvote, null, documentID);
-                                    notes.add(n);
-                                    Log.d(TAG, "Added note: " + datePosted);
+                                    notes.add(getNoteFromDocumentSnapshot(document));
                                     reference.UpdateList(notes);
                                 }
 
                             } else {
                                 Log.d(TAG, "Error getting documents: ", task.getException());
                             }
-
-
                         }
                     });
         }
+    }
+
+    public NoteFirestore(SearchResultsActivity r, ArrayList<String> passedList) {
+        final SearchResultsActivity reference = r;
+
+        Query colRef = getQueryForSearchResults(passedList);
+
+        notes = new ArrayList<>();
+        colRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot document : task.getResult()) {
+                        notes.add(getNoteFromDocumentSnapshot(document));
+                        reference.UpdateList(notes);
+                    }
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                    reference.UpdateList(notes);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error writing document", e);
+                reference.UpdateList(notes);
+            }
+        });
+
+    }
+
+    public Query getQueryForSearchResults(ArrayList<String> passedList){
+        Query colRef = FirebaseFirestore.getInstance().collection("Notes");
+
+        switch (passedList.size()) {
+            case 1:
+                colRef = FirebaseFirestore.getInstance().collection("Notes")
+                        .whereEqualTo("Tags." + (passedList.get(0)).toString(), true);
+                break;
+            case 2:
+                colRef = FirebaseFirestore.getInstance().collection("Notes")
+                        .whereEqualTo("Tags." + (passedList.get(0)).toString(), true)  //e.g. "Tags.Math + Secondary 4" == true
+                        .whereEqualTo("Tags." + (passedList.get(1)).toString(), true); //e.g. "Tags.Notes" == true
+                break;
+        }
+        return colRef;
+    }
+
+    public Note getNoteFromDocumentSnapshot(DocumentSnapshot document) {
+
+        email = document.getString(magicalNames.getNotes_Column_Email());
+        username = document.getString(magicalNames.getNotes_Column_Username());
+        noteTitle = document.getString(magicalNames.getNotes_Column_NoteTitle());
+        noteDescription = document.getString(magicalNames.getNotes_Column_NoteDescription());
+        resourceURL = document.getString(magicalNames.getNotes_Column_ResourceURL());
+
+        datePosted = document.getString(magicalNames.getNotes_Column_DatePosted());
+        Date Deleted = document.getDate(magicalNames.getNotes_Column_Deleted());
+        deleted = Deleted != null ? sdf.format(Deleted) : null;
+
+        tags = (HashMap<String, Boolean>) document.getData().get(magicalNames.getNotes_Column_Tags());
+        //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
+        Long Upvote = document.getLong(magicalNames.getNotes_Column_Upvote());
+        upvote = null == Upvote ? 0 : Upvote.intValue();
+        Long Downvote = document.getLong(magicalNames.getNotes_Column_Downvote());
+        downvote = null == Downvote ? 0 : Downvote.intValue();
+        documentID = document.getId();
 
 
+        Note n = new Note(email, username, userIMG, noteTitle, noteDescription, resourceURL, datePosted, deleted, tags, upvote, downvote, null, documentID);
+
+        return n;
     }
 
 // REMOVED CUS IT MAKES CALLING THE CORRECT NOTE WITH THE POSITION WRONG
@@ -325,13 +305,13 @@ public class NoteFirestore {
 
     public void add(Note n) {
 //                Date datePosted= Calendar.getInstance().getTime();
-        notas.put(magicalNames.getNotes_Column_Email(),n.getEmail());
-        notas.put(magicalNames.getNotes_Column_NoteTitle(),n.getNoteTitle());
-        notas.put(magicalNames.getNotes_Column_NoteDescription(),n.getNoteDescription());
+        notas.put(magicalNames.getNotes_Column_Email(), n.getEmail());
+        notas.put(magicalNames.getNotes_Column_NoteTitle(), n.getNoteTitle());
+        notas.put(magicalNames.getNotes_Column_NoteDescription(), n.getNoteDescription());
         //notas.put(magicalNames.getNotes_Column_ResourceURL(),storage(n));
-        notas.put(magicalNames.getNotes_Column_DatePosted(),n.getDatePosted());
-        notas.put(magicalNames.getNotes_Column_Tags(),n.getTags());
-        notas.put(magicalNames.getUsers_Column_Username(),n.getUsername());
+        notas.put(magicalNames.getNotes_Column_DatePosted(), n.getDatePosted());
+        notas.put(magicalNames.getNotes_Column_Tags(), n.getTags());
+        notas.put(magicalNames.getUsers_Column_Username(), n.getUsername());
 
         collectionref.document().set(notas).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

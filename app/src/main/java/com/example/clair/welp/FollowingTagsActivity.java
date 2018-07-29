@@ -1,5 +1,6 @@
 package com.example.clair.welp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,6 +50,16 @@ public class FollowingTagsActivity extends AppCompatActivity{
         actionBar.setTitle("Tags You Follow");
 
         populateListView();
+
+        lvTags.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                ArrayList<String> passedSearchQuery = new ArrayList<>();
+                passedSearchQuery.add((String) lvTags.getItemAtPosition(position));
+                Intent i = new Intent(FollowingTagsActivity.this, SearchResultsActivity.class);
+                i.putExtra("passedSearchQuery", passedSearchQuery);
+                startActivity(i);
+            }
+        });
     }
 
     public void populateListView() {

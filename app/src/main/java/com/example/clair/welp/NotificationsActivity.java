@@ -239,6 +239,7 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
                 ivNoNotifs.setVisibility(View.GONE);
             }else{
                 ivNoNotifs.setVisibility(View.VISIBLE);
+                Log.d("DICK","VISIBLE");
                  }
         }
     }
