@@ -26,7 +26,7 @@ public class FragmentCurrentUserPosts extends Fragment {
     View view;
     // Context
     Context mContext;
-
+    TextView tvLoadingPosts;
     // RecyclerView
     RecyclerView mRecyclerView;
     NoteAdapter mAdapter;
@@ -47,6 +47,7 @@ public class FragmentCurrentUserPosts extends Fragment {
 
         // Views
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rvNote);
+        tvLoadingPosts = (TextView) view.findViewById(R.id.tvLoadingPosts);
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -54,6 +55,13 @@ public class FragmentCurrentUserPosts extends Fragment {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mAdapter = new NoteAdapter(mContext);
+        if (mAdapter != null) {
+            if (mAdapter.getItemCount() > 0){
+                tvLoadingPosts.setText("");
+            } else{
+                tvLoadingPosts.setText("You have not posted anything yet");
+            }
+        }
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
@@ -63,9 +71,9 @@ public class FragmentCurrentUserPosts extends Fragment {
     public void onStart() {
         super.onStart();
         FragmentCurrentUserPosts r = this;
-
+        tvLoadingPosts = (TextView) view.findViewById(R.id.tvLoadingPosts);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        f = new NoteFirestore(r, currentUser.getEmail());
+        f = new NoteFirestore(r, currentUser.getEmail(), tvLoadingPosts);
     }
 
     public void UpdateList(List<Note> n) {

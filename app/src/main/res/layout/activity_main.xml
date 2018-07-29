@@ -15,7 +15,7 @@
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbars="vertical"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fabUpload"></android.support.v7.widget.RecyclerView>
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"></android.support.v7.widget.RecyclerView>
     <!--<View-->
         <!--android:id="@+id/emptyView"-->
         <!--android:layout_width="match_parent"-->

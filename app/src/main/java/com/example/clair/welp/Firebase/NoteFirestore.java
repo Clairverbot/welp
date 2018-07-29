@@ -59,7 +59,7 @@ public class NoteFirestore {
     String email, username, userIMG, noteTitle, noteDescription, resourceURL, documentID;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String datePosted, deleted;
-    List<String> tags;
+    HashMap<String, Boolean> tags;
     int upvote, downvote;
 
     public NoteFirestore(MainActivity r) {
@@ -84,7 +84,8 @@ public class NoteFirestore {
                                 Date Deleted = document.getDate(magicalNames.getNotes_Column_Deleted());
                                 deleted = Deleted != null ? sdf.format(Deleted) : null;
 
-                                tags = (List<String>) document.get(magicalNames.getNotes_Column_Tags());
+
+                                tags = (HashMap<String, Boolean>) document.getData().get(magicalNames.getNotes_Column_Tags());
                                 //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
                                 Long Upvote = document.getLong(magicalNames.getNotes_Column_Upvote());
                                 upvote = null == Upvote ? 0 : Upvote.intValue();
@@ -120,9 +121,9 @@ public class NoteFirestore {
     }
 
 
-    public NoteFirestore(FragmentCurrentUserPosts r, String strEmail) {
+    public NoteFirestore(FragmentCurrentUserPosts r, String strEmail, TextView tvLoading) {
         final FragmentCurrentUserPosts reference = r;
-
+        final TextView tvError = tvLoading;
         collectionref.whereEqualTo("Email", strEmail).get().
                 addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -141,7 +142,7 @@ public class NoteFirestore {
                                 Date Deleted = document.getDate(magicalNames.getNotes_Column_Deleted());
                                 deleted = Deleted != null ? sdf.format(Deleted) : null;
 
-                                tags = (List<String>) document.get(magicalNames.getNotes_Column_Tags());
+                                tags = (HashMap<String, Boolean>) document.getData().get(magicalNames.getNotes_Column_Tags());
                                 //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
                                 Long Upvote = document.getLong(magicalNames.getNotes_Column_Upvote());
                                 upvote = null == Upvote ? 0 : Upvote.intValue();
@@ -154,11 +155,19 @@ public class NoteFirestore {
                                 notes.add(n);
                                 reference.UpdateList(notes);
 
+                                if (notes != null){
+                                    if(notes.size()==0){
+                                        tvError.setText("You have not posted anything yet");
+                                    }else{
+                                        tvError.setText("");
+                                    }
+                                } 
                                 Log.d(TAG, "Reached Here: ");
                             }
 
                         }else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
+                            tvError.setText("You have not posted anything yet");
 
                         }
                     }
@@ -189,7 +198,7 @@ public class NoteFirestore {
                                 Date Deleted = document.getDate(magicalNames.getNotes_Column_Deleted());
                                 deleted = Deleted != null ? sdf.format(Deleted) : null;
 
-                                tags = (List<String>) document.get(magicalNames.getNotes_Column_Tags());
+                                tags = (HashMap<String, Boolean>) document.getData().get(magicalNames.getNotes_Column_Tags());
                                 //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
                                 Long Upvote = document.getLong(magicalNames.getNotes_Column_Upvote());
                                 upvote = null == Upvote ? 0 : Upvote.intValue();
@@ -250,7 +259,7 @@ public class NoteFirestore {
                                     Date Deleted = document.getDate(magicalNames.getNotes_Column_Deleted());
                                     deleted = Deleted != null ? sdf.format(Deleted) : null;
 
-                                    tags = (List<String>) document.get(magicalNames.getNotes_Column_Tags());
+                                    tags = (HashMap<String, Boolean>) document.getData().get(magicalNames.getNotes_Column_Tags());
                                     //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
                                     Long Upvote = document.getLong(magicalNames.getNotes_Column_Upvote());
                                     upvote = null == Upvote ? 0 : Upvote.intValue();

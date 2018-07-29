@@ -99,6 +99,7 @@ public class FragmentCurrentUserNotebooks extends Fragment {
             adapter = new FirestoreRecyclerAdapter<Notebook, NotebooksHolder>(notebook) {
                 @Override
                 public void onBindViewHolder(NotebooksHolder holder, int position, Notebook model) {
+                    textLoading.setText("");
                     //progressBar.setVisibility(View.GONE);
                     holder.textName.setText(model.getNotebookName());
 //                holder.textTitle.setText(model.getTitle());
@@ -140,12 +141,7 @@ public class FragmentCurrentUserNotebooks extends Fragment {
             };
 
             adapter.notifyDataSetChanged();
-            textLoading.setText("");
-            if (adapter != null) {
-                if (adapter.getItemCount() == 0){
-                    textLoading.setText("You have no notebooks yet");
-                }
-            }
+
 
             notebookList.setAdapter(adapter);
 
@@ -171,6 +167,13 @@ public class FragmentCurrentUserNotebooks extends Fragment {
     public void onStart() {
         super.onStart();
         adapter.startListening();
+        if (adapter != null) {
+            if (adapter.getItemCount() > 0){
+                textLoading.setText("");
+            } else{
+                textLoading.setText("You have no notebooks yet");
+            }
+        }
 
     }
 

@@ -20,4 +20,61 @@
     <string name="menu_night_mode_night">Night (always)</string>
     <string name="menu_night_mode_auto">Auto</string>
     <string name="about_us">About Us</string>
+    <string-array name="array_search">
+        <item>Math</item>
+        <item>A-Math</item>
+        <item>Chinese</item>
+        <item>English</item>
+        <item>Chemistry</item>
+        <item>Physics</item>
+        <item>Geography</item>
+        <item>History</item>
+        <item>Biology</item>
+        <item>Math + Secondary 1</item>
+        <item>Math + Secondary 2</item>
+        <item>Math + Secondary 3</item>
+        <item>Math + Secondary 4</item>
+        <item>A-Math + Secondary 1</item>
+        <item>A-Math + Secondary 2</item>
+        <item>A-Math + Secondary 3</item>
+        <item>A-Math + Secondary 4</item>
+        <item>Chinese + Secondary 1</item>
+        <item>Chinese + Secondary 2</item>
+        <item>Chinese + Secondary 3</item>
+        <item>Chinese + Secondary 4</item>
+        <item>English + Secondary 1</item>
+        <item>English + Secondary 2</item>
+        <item>English + Secondary 3</item>
+        <item>English + Secondary 4</item>
+        <item>Chemistry + Secondary 1</item>
+        <item>Chemistry + Secondary 2</item>
+        <item>Chemistry + Secondary 3</item>
+        <item>Chemistry + Secondary 4</item>
+        <item>Physics + Secondary 1</item>
+        <item>Physics + Secondary 2</item>
+        <item>Physics + Secondary 3</item>
+        <item>Physics + Secondary 4</item>
+        <item>Geography + Secondary 1</item>
+        <item>Geography + Secondary 2</item>
+        <item>Geography + Secondary 3</item>
+        <item>Geography + Secondary 4</item>
+        <item>History + Secondary 1</item>
+        <item>History + Secondary 2</item>
+        <item>History + Secondary 3</item>
+        <item>History + Secondary 4</item>
+        <item>Biology + Secondary 1</item>
+        <item>Biology + Secondary 2</item>
+        <item>Biology + Secondary 3</item>
+        <item>Biology + Secondary 4</item>
+        <item>Secondary 1</item>
+        <item>Secondary 2</item>
+        <item>Secondary 3</item>
+        <item>Secondary 4</item>
+        <item>JC 1</item>
+        <item>JC 2</item>
+        <item>JC 3</item>
+        <item>Notes</item>
+        <item>Lesson</item>
+        <item>Practice</item>
+    </string-array>
 </resources>

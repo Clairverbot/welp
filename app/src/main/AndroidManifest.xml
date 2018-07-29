@@ -68,6 +68,8 @@
 
         <activity android:name=".NotificationsActivity"
             android:theme="@style/AppTheme"/>
+        <activity android:name=".SearchActivity"
+            android:theme="@style/SearchTheme"/>
     </application>
 
 </manifest>

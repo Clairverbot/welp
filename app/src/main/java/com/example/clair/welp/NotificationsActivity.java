@@ -52,7 +52,8 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
 
     @BindView(R.id.ivNoNotifs)
     ImageView ivNoNotifs;
-
+    @BindView(R.id.tvLoadingNotifs)
+    TextView tvLoading;
     @BindView(R.id.fabUpload)
     FloatingActionButton fab;
     @BindView(R.id.fabPdf)
@@ -171,6 +172,10 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
                 public void onBindViewHolder(NotificationsHolder holder, int position, Notification model) {
                     holder.tvNotification.setText(model.getNotificationString());
                     Log.d("TAG", "Notifications ADAPTER");
+
+                    ivNoNotifs.setVisibility(View.GONE);
+                    tvLoading.setText("");
+
                     long time = Long.valueOf(TimeUtility.getDateFromDateTime(model.getDateSent()));//2016-09-01 15:57:20 pass your date here
                     String timeStr = TimeUtility.timeAgo(time / 1000);
                     holder.tvNotificationTime.setText(timeStr);
@@ -203,14 +208,6 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
             };
 
             adapter.notifyDataSetChanged();
-            if (adapter != null) {
-                if (adapter.getItemCount() > 0) {
-                    ivNoNotifs.setVisibility(View.INVISIBLE);
-                }else{
-                    ivNoNotifs.setVisibility(View.VISIBLE);
-                }
-            }
-
             rvNotifications.setAdapter(adapter);
 
         } else {
@@ -236,12 +233,13 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
     public void onStart() {
         super.onStart();
         adapter.startListening();
+        tvLoading.setText("");
         if (adapter != null) {
             if (adapter.getItemCount() > 0) {
-                ivNoNotifs.setVisibility(View.INVISIBLE);
+                ivNoNotifs.setVisibility(View.GONE);
             }else{
                 ivNoNotifs.setVisibility(View.VISIBLE);
-            }
+                 }
         }
     }
 
@@ -264,6 +262,14 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
     protected void onResume() {
         super.onResume();
         fFirebaseAuth.addAuthStateListener(fAuthStateListener);
+        tvLoading.setText("");
+        if (adapter != null) {
+            if (adapter.getItemCount() > 0) {
+                ivNoNotifs.setVisibility(View.GONE);
+            }else{
+                ivNoNotifs.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
 

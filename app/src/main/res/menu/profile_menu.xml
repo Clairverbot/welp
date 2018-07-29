@@ -6,7 +6,7 @@
         android:title="Edit Profile"
         android:id="@+id/search_menu"
         android:visible="true"
-        android:icon="@drawable/ic_edit_profile"
+        android:icon="@drawable/ic_editprofile"
         app:showAsAction="always"/>
     <item
         android:id="@+id/sign_out_menu"

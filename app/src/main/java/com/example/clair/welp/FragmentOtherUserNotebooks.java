@@ -95,7 +95,7 @@ public class FragmentOtherUserNotebooks extends Fragment {
                 public void onBindViewHolder(FragmentOtherUserNotebooks.NotebooksHolder holder, int position, Notebook model) {
                     //progressBar.setVisibility(View.GONE);
                     holder.textName.setText(model.getNotebookName());
-
+                    textLoading.setText("");
 //                Glide.with(getApplicationContext())
 //                        .load(model.getImage())
 //                        .into(holder.imageView);
@@ -130,12 +130,8 @@ public class FragmentOtherUserNotebooks extends Fragment {
             };
 
             adapter.notifyDataSetChanged();
-            textLoading.setText("");
-            if (adapter != null) {
-                if (adapter.getItemCount() == 0){
-                    textLoading.setText(otheruser.passedUsername+" has no notebooks yet");
-                }
-            }
+
+
 
             notebookList.setAdapter(adapter);
 
@@ -161,6 +157,13 @@ public class FragmentOtherUserNotebooks extends Fragment {
     public void onStart() {
         super.onStart();
         adapter.startListening();
+        if (adapter != null) {
+            if (adapter.getItemCount() == 0){
+                textLoading.setText(otheruser.passedUsername+" has no notebooks yet");
+            } else{
+                textLoading.setText("");
+            }
+        }
 
     }
 

@@ -179,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             case R.id.search_menu:
                 //TODO: search page
+                startActivity(new Intent(MainActivity.this, SearchActivity.class));
             case R.id.about_menu:
                 //TODO: create credits page one dayyy
             default:

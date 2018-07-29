@@ -1,18 +1,20 @@
 package com.example.clair.welp.Objects;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Note {
     private String Email,Username,UserIMG,NoteTitle,NoteDescription,ResourceURL,DatePosted,Deleted,DocumentID  ;
-    private List<String> Tags;
+
+    private HashMap<String, Boolean> Tags;
     private int Upvote,Downvote;
     private String[][] Comments;
     private Map<String, Boolean> Notebooks;
 
     public Note(){}
-    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, List<String> tags, int upvote, int downvote, String[][] comments) {
+    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, int upvote, int downvote, String[][] comments) {
 
         Email = email;
         Username = username;
@@ -29,7 +31,7 @@ public class Note {
         // Notebooks = notebooks;
     }
 
-    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, List<String> tags, int upvote, int downvote, String[][] comments, String documentID) {
+    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, int upvote, int downvote, String[][] comments, String documentID) {
         Email = email;
         Username = username;
         UserIMG = userIMG;
@@ -112,13 +114,7 @@ public class Note {
         Deleted = deleted;
     }
 
-    public List<String> getTags() {
-        return Tags;
-    }
 
-    public void setTags(List<String> tags) {
-        Tags = tags;
-    }
 
     public String[][] getComments() {
         return Comments;
@@ -160,9 +156,11 @@ public class Note {
         DocumentID = documentID;
     }
 
-    public void getShortDateString(String datePosted){
+    public void getShortDateString(String datePosted){ }
 
-    }
+    public HashMap<String, Boolean> getTags() { return Tags; }
+
+    public void setTags(HashMap<String, Boolean> tags) { Tags = tags; }
 
     //endregion
 

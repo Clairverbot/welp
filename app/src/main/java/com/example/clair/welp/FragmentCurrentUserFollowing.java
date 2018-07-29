@@ -149,9 +149,11 @@ public class FragmentCurrentUserFollowing extends Fragment {
     public void resetListView(){
         if (followingUsers != null) {
             followingUsers.clear();
-            adapter.notifyDataSetChanged();
-            lvfollowingUsers.setAdapter(adapter);
-            lvfollowingUsers.setVisibility(View.GONE);
+            if (adapter!= null){
+                adapter.notifyDataSetChanged();
+                lvfollowingUsers.setAdapter(adapter);
+                lvfollowingUsers.setVisibility(View.GONE);
+            }
         }
         populateListView();
     }

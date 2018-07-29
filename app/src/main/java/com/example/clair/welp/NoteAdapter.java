@@ -135,7 +135,109 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         }
     }
 
-    //VERY LONG METHOD TO CREATE NOTEBOOK
+
+
+
+    public NoteAdapter(Context context) {
+        this.context = context;
+        this.mDataset = new ArrayList<>();
+    }
+
+    @NonNull
+    @Override
+    public NoteAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_template, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull NoteAdapter.ViewHolder holder, int position) {
+
+
+        Note n = mDataset.get(position);
+        //Set date format to timeAgo
+        Log.d(TAG, "ERROR " + n.getDatePosted());
+        long time = Long.valueOf(TimeUtility.getDateFromDateTime(n.getDatePosted()));//2016-09-01 15:57:20 pass your date here
+        String timeStr = TimeUtility.timeAgo(time/1000);
+
+        holder.tvUsername.setText(n.getUsername());
+        holder.tvPostTimeDetail.setText("Posted " + timeStr);
+        holder.tvNoteTitle.setText(n.getNoteTitle());
+        holder.tvNoteDesc.setText(n.getNoteDescription());
+        String upvote = n.getUpvote() + "";
+        String downvote = n.getDownvote() + "";
+        holder.tv_Upvote.setText((upvote));
+        holder.tv_Downvote.setText(downvote);
+
+        holder.btnSubject.setText((String)(n.getTags().keySet().toArray()[3])); //Math
+        holder.btnYear.setText((String)(n.getTags().keySet().toArray()[0])); //Secondary 1
+        holder.btnCategory.setText((String)(n.getTags().keySet().toArray()[1])); //Notes
+        holder.btnSummary.setText((String)(n.getTags().keySet().toArray()[2])); //Math + Secondary 1
+
+    }
+
+    //CHECK whether user is current or not, then go to profile page based on that
+    public void checkAndGoToProfile(Note clickedNote) {
+        Note note = clickedNote;
+
+        userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        if (userEmail.equals(note.getEmail())) {
+            goToPage(note, "ProfileActivity");
+            Log.d(TAG, "checkAndGoToProfile: is current " + note.getUsername() + " " + note.getEmail() + " " + userEmail);
+        } else {
+            goToPage(note, "ProfileActivity_otheruser");
+            Log.d(TAG, "checkAndGoToProfile: is not current " + note.getUsername() + " " + note.getEmail() + " " + userEmail);
+        }
+    }
+
+
+
+    @Override
+    public int getItemCount() {
+        if (mDataset == null) return 0;
+        else return mDataset.size();
+    }
+
+    public void addItem(Note t) {
+        mDataset.add(t);
+        notifyItemChanged(mDataset.size() - 1);
+    }
+
+    public void addAllItems(List<Note> notesList) {
+        for (Note note : notesList) {
+            addItem(note);
+        }
+    }
+
+    public void deleteEverything() {
+        if (mDataset != null) mDataset.clear();
+    }
+
+
+    //GOTO current/other user's profile page based on activityname passed in (ONCLICK Username/Img)
+    public void goToPage(Note passedNote, String activityName) {
+        String ActivityName = activityName;
+        Note PassedNote = passedNote;
+        switch (ActivityName) {
+
+            case "ProfileActivity":
+                context.startActivity(new Intent(context, ProfileActivity.class));
+                break;
+
+            case "ProfileActivity_otheruser":
+                Intent i = new Intent(context, ProfileActivity_otheruser.class);
+                i.putExtra("Email", PassedNote.getEmail());
+                i.putExtra("Username", PassedNote.getUsername());
+                context.startActivity(i);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    //VERY LONG METHOD TO CREATE NOTEBOOK/ADD TO EXISTING NOTEBOOK
     private void openAddToOrCreateDialog(String noteDocumentID) {
         userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         Log.d("TAG", "NOTEBOOK: email " + userEmail);
@@ -162,7 +264,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                                 Log.d("TAG", "NOTEBOOK: document " + notebookName);
                             }
 
-                            //Show Add to/Create Notebook Dialog
+                            //SHOW Add to/Create Notebook Dialog
                             AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
                             LayoutInflater inflater = LayoutInflater.from(context);
                             View convertView = (View) inflater.inflate(R.layout.dialog_create_addto_notebook, null);
@@ -211,8 +313,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                                 @Override
                                 public void onClick(View v) {
                                     alert.dismiss();
-                                    //Open create notebook dialog
-                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(context, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+                                    //OPEN create notebook dialog
+                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
                                     LayoutInflater inflater = LayoutInflater.from(context);
                                     View convertView = (View) inflater.inflate(R.layout.dialog_create_notebook, null);
                                     EditText etNotebookName = (EditText) convertView.findViewById(R.id.et_NotebookName);
@@ -290,105 +392,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                         }
                     }
                 });
-    }
-
-
-    public NoteAdapter(Context context) {
-        this.context = context;
-        this.mDataset = new ArrayList<>();
-    }
-
-    @NonNull
-    @Override
-    public NoteAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_template, parent, false);
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull NoteAdapter.ViewHolder holder, int position) {
-
-
-        Note n = mDataset.get(position);
-        //Set date format to timeAgo
-        Log.d(TAG, "ERROR " + n.getDatePosted());
-        long time = Long.valueOf(TimeUtility.getDateFromDateTime(n.getDatePosted()));//2016-09-01 15:57:20 pass your date here
-        String timeStr = TimeUtility.timeAgo(time/1000);
-
-        holder.tvUsername.setText(n.getUsername());
-        holder.tvPostTimeDetail.setText("Posted " + timeStr);
-        holder.tvNoteTitle.setText(n.getNoteTitle());
-        holder.tvNoteDesc.setText(n.getNoteDescription());
-        String upvote = n.getUpvote() + "";
-        String downvote = n.getDownvote() + "";
-        holder.tv_Upvote.setText((upvote));
-        holder.tv_Downvote.setText(downvote);
-        holder.btnSubject.setText(n.getTags().get(0));
-        holder.btnYear.setText(n.getTags().get(1));
-        holder.btnCategory.setText(n.getTags().get(2));
-        holder.btnSummary.setText(n.getTags().get(3));
-
-    }
-
-    //CHECK whether user is current or not, then go to profile page based on that
-    public void checkAndGoToProfile(Note clickedNote) {
-        Note note = clickedNote;
-
-        userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-
-        if (userEmail.equals(note.getEmail())) {
-            goToPage(note, "ProfileActivity");
-            Log.d(TAG, "checkAndGoToProfile: is current " + note.getUsername() + " " + note.getEmail() + " " + userEmail);
-        } else {
-            goToPage(note, "ProfileActivity_otheruser");
-            Log.d(TAG, "checkAndGoToProfile: is not current " + note.getUsername() + " " + note.getEmail() + " " + userEmail);
-        }
-    }
-
-
-    //GOTO page based on activityname passed in
-    public void goToPage(Note passedNote, String activityName) {
-        String ActivityName = activityName;
-        Note PassedNote = passedNote;
-        switch (ActivityName) {
-
-            case "ProfileActivity":
-                Intent i = new Intent(context, ProfileActivity.class);
-                i.putExtra("frgToLoad", 0);
-                context.startActivity(i);
-                break;
-
-            case "ProfileActivity_otheruser":
-                Intent i2 = new Intent(context, ProfileActivity_otheruser.class);
-                i2.putExtra("Email", PassedNote.getEmail());
-                i2.putExtra("Username", PassedNote.getUsername());
-                context.startActivity(i2);
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public int getItemCount() {
-        if (mDataset == null) return 0;
-        else return mDataset.size();
-    }
-
-    public void addItem(Note t) {
-        mDataset.add(t);
-        notifyItemChanged(mDataset.size() - 1);
-    }
-
-    public void addAllItems(List<Note> notesList) {
-        for (Note note : notesList) {
-            addItem(note);
-        }
-    }
-
-    public void deleteEverything() {
-        if (mDataset != null) mDataset.clear();
     }
 }
 

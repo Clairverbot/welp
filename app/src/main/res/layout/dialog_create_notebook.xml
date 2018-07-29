@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:paddingHorizontal="4dp"
     android:layout_marginHorizontal="20dp"
-    android:backgroundTint="@color/profile_DarkBlue"
+    android:backgroundTint="@color/profile_LightBlue"
     android:hint="Enter New Notebook Name"
     android:textColor="#303030"/>
 

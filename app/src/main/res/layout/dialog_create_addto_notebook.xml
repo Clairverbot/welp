@@ -19,7 +19,7 @@
         android:orientation="horizontal"
         android:layout_margin="0dp"
         android:paddingTop="18dp"
-        android:paddingBottom="20dp"
+        android:paddingBottom="18dp"
         android:paddingLeft="10dp"
         android:background="@color/veriWhite">
 
@@ -28,6 +28,8 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:src="@drawable/notebook"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             />
 
         <TextView
@@ -42,6 +44,8 @@
             android:text="Create Notebook"
             android:textColor="#1F2D3D"
             android:textSize="17sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/ivNotebookImg"
             tools:layout_editor_absoluteY="3dp" />
 

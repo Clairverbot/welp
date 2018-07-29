@@ -2,12 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
+    <item android:id="@+id/filter_menu"
+        android:title="Filter"
+        android:icon="@drawable/ic_filter"
+        app:showAsAction="always"/>
     <item
         android:title="Search"
         android:id="@+id/search_menu"
         android:visible="true"
         android:icon="@drawable/ic_search"
         app:showAsAction="always"/>
+
     <item
         android:id="@+id/sign_out_menu"
         android:title="@string/sign_out"
