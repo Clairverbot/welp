@@ -375,6 +375,12 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
             case R.id.sign_out_menu:
                 AuthUI.getInstance().signOut(this);
                 return true;
+            case R.id.filter_menu:
+                startActivity(new Intent(NotificationsActivity.this, SearchFilterActivity.class));
+                return true;
+            case R.id.search_menu:
+                startActivity(new Intent(NotificationsActivity.this, SearchActivity.class));
+                return true;
             case R.id.about_menu:
                 //TODO: create credits page one dayyy
             default:
