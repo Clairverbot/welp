@@ -1,11 +1,13 @@
 package com.example.clair.welp;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -109,12 +111,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             btnSummary.setOnClickListener((View.OnClickListener) this);
             llDownvote.setOnClickListener((View.OnClickListener) this);
             llUpvote.setOnClickListener((View.OnClickListener) this);
+            ib_Upvote.setOnClickListener((View.OnClickListener) this);
+            ib_Downvote.setOnClickListener((View.OnClickListener) this);
         }
 
         //DO something when view is clicked on, based on view's id
         @Override
         public void onClick(View v) {
             String clickedBtnText;
+            int downvotes, upvotes;
             Note clickedNote = new Note();
             int pos = getAdapterPosition();
             if (pos != RecyclerView.NO_POSITION) {
@@ -155,15 +160,20 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                     break;
 
                 case R.id.llUpvote:
-                    clickedBtnText = btnSummary.getText().toString();
-                    goToSearchResultsByTag(clickedBtnText);
+                    checkUpvotesOrDownvotes("Upvotes", clickedNote, ib_Upvote, tv_Upvote, ib_Downvote, tv_Downvote);
+                    break;
+
+                case R.id.ib_Upvote:
+                    checkUpvotesOrDownvotes("Upvotes", clickedNote, ib_Upvote, tv_Upvote, ib_Downvote, tv_Downvote);
                     break;
 
                 case R.id.llDownvote:
-                    clickedBtnText = btnSummary.getText().toString();
-                    goToSearchResultsByTag(clickedBtnText);
+                    checkUpvotesOrDownvotes("Downvotes", clickedNote, ib_Upvote, tv_Upvote, ib_Downvote, tv_Downvote);
                     break;
 
+                case R.id.ib_Downvote:
+                    checkUpvotesOrDownvotes("Downvotes", clickedNote, ib_Upvote, tv_Upvote, ib_Downvote, tv_Downvote);
+                    break;
                 default:
                     break;
             }
@@ -185,6 +195,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull NoteAdapter.ViewHolder holder, int position) {
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
         Note n = mDataset.get(position);
         //Set date format to timeAgo
         Log.d(TAG, "ERROR " + n.getDatePosted());
@@ -195,21 +209,37 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         holder.tvPostTimeDetail.setText("Posted " + timeStr);
         holder.tvNoteTitle.setText(n.getNoteTitle());
         holder.tvNoteDesc.setText(n.getNoteDescription());
-        String upvote, downvote = "";
-        if(n.getUpvote() == null){
+
+
+        //Set colours of upvote/downvote
+        String upvote, downvote;
+        Activity main = new MainActivity();
+        holder.ib_Upvote.setColorFilter(ContextCompat.getColor(context, R.color.post_Grey));
+        if (n.getUpvote() == null) {
             upvote = 0 + "";
-        } else{
+        } else {
             upvote = (n.getUpvote()).size() + "";
-        }
-        if(n.getDownvote() == null){
-            downvote = 0 + "";
-        } else{
-            downvote = (n.getDownvote()).size() + "";
+            if ((n.getUpvote()).containsKey(mFirebaseUser.getEmail())) {
+                holder.ib_Upvote.setColorFilter(ContextCompat.getColor(context, R.color.profile_LightBlue));
+            }
         }
 
+        holder.ib_Downvote.setColorFilter(ContextCompat.getColor(context, R.color.post_Grey));
+        if (n.getDownvote() == null) {
+            downvote = 0 + "";
+        } else {
+            downvote = (n.getDownvote()).size() + "";
+            if ((n.getDownvote()).containsKey(mFirebaseUser.getEmail())) {
+                holder.ib_Downvote.setColorFilter(ContextCompat.getColor(context, R.color.profile_LightBlue));
+            }
+        }
+
+        //Set text of upvote/downvote
         holder.tv_Upvote.setText((upvote));
         holder.tv_Downvote.setText(downvote);
 
+
+        //Set text of tags
         for (int i = 0; i < 4; i++) {
             String tagToCheck = (String) (n.getTags().keySet().toArray()[i]); //get string from key array of tags hashmap
 
@@ -248,6 +278,102 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         if (mDataset != null) mDataset.clear();
     }
 
+    //region upvote/downvote
+    public void checkUpvotesOrDownvotes(String type, Note clickedNote, ImageButton buttonUpvote, TextView countUpvote, ImageButton buttonDownvote, TextView countDownvote) {
+        String email = mFirebaseUser.getEmail();
+        HashMap<String, Boolean> votes, otherVotes;
+        String docId = clickedNote.getDocumentID();
+        String downvote = (clickedNote.getDownvote()).size() + "";
+        String upvote = (clickedNote.getUpvote()).size() + "";
+        switch (type) {
+            case "Upvotes":
+                votes = clickedNote.getUpvote();
+                otherVotes = clickedNote.getDownvote();
+                if (votes == null) {
+                    if (otherVotes.containsKey(email)) {
+                        downvote = (otherVotes.size() - 1) + "";
+                        buttonDownvote.setColorFilter(ContextCompat.getColor(context, R.color.post_Grey));
+                        otherVotes.remove(email);
+                        updateUpvotesOrDownvotes("Downvotes", otherVotes, docId);
+                    }
+                    upvote = 1 + "";
+                    buttonUpvote.setColorFilter(ContextCompat.getColor(context, R.color.profile_LightBlue));
+                    votes.put(email, true);
+                } else {
+                    if (votes.containsKey(email)) {
+                        upvote = (votes.size() - 1) + "";
+                        buttonUpvote.setColorFilter(ContextCompat.getColor(context, R.color.post_Grey));
+                        votes.remove(email);
+                    } else {
+                        if (otherVotes.containsKey(email)) {
+                            downvote = (otherVotes.size() - 1) + "";
+                            buttonDownvote.setColorFilter(ContextCompat.getColor(context, R.color.post_Grey));
+                            otherVotes.remove(email);
+                            updateUpvotesOrDownvotes("Downvotes", otherVotes, docId);
+                        }
+                        upvote = (votes.size() + 1) + "";
+                        buttonUpvote.setColorFilter(ContextCompat.getColor(context, R.color.profile_LightBlue));
+                        votes.put(email, true);
+                    }
+                }
+                countDownvote.setText(downvote);
+                countUpvote.setText(upvote);
+                updateUpvotesOrDownvotes(type, votes, docId);
+                break;
+            case "Downvotes":
+
+                votes = clickedNote.getDownvote();
+                otherVotes = clickedNote.getUpvote();
+                if (votes == null) {
+                    if (otherVotes.containsKey(email)) {
+                        upvote = (otherVotes.size() - 1) + "";
+                        buttonUpvote.setColorFilter(ContextCompat.getColor(context, R.color.post_Grey));
+                        otherVotes.remove(email);
+                        updateUpvotesOrDownvotes("Upvotes", otherVotes, docId);
+                    }
+                    downvote = 1 + "";
+                    buttonDownvote.setColorFilter(ContextCompat.getColor(context, R.color.profile_LightBlue));
+                    votes.put(email, true);
+                } else {
+                    if (votes.containsKey(email)) {
+                        downvote = (votes.size() - 1) + "";
+                        buttonDownvote.setColorFilter(ContextCompat.getColor(context, R.color.post_Grey));
+                        votes.remove(email);
+                    } else {
+                        if (otherVotes.containsKey(email)) {
+                            upvote = (otherVotes.size() - 1) + "";
+                            buttonUpvote.setColorFilter(ContextCompat.getColor(context, R.color.post_Grey));
+                            otherVotes.remove(email);
+                            updateUpvotesOrDownvotes("Upvotes", otherVotes, docId);
+                        }
+                        downvote = (votes.size() + 1) + "";
+                        buttonDownvote.setColorFilter(ContextCompat.getColor(context, R.color.profile_LightBlue));
+                        votes.put(email, true);
+                    }
+                }
+                countDownvote.setText(downvote);
+                countUpvote.setText(upvote);
+                updateUpvotesOrDownvotes(type, votes, docId);
+                break;
+        }
+    }
+
+    public void updateUpvotesOrDownvotes(String type, HashMap<String, Boolean> votes, String docId) {
+        FirebaseFirestore.getInstance().collection("Notes").document(docId).update(type, votes)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "UPVOTED SUCCESS");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NotNull Exception e) {
+                        Log.d(TAG, "UPVOTED FAILED");
+                    }
+                });
+    }
+    //endregion
 
     //region goToSearchResultsByTag
     //GOTO Search Results Page when click on any Tag Button

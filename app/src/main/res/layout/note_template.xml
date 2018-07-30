@@ -183,16 +183,20 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/Padding"
+            android:layout_marginTop="@dimen/Padding"
+            android:layout_marginLeft="@dimen/Padding"
+            android:layout_marginRight="@dimen/Padding"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/llUpvote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/BiggerPadding"
+                android:layout_margin="0dp"
                 android:paddingTop="5dp"
-                android:paddingBottom="1dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="3dp"
                 app:layout_constraintLeft_toLeftOf="parent">
 
                 <ImageButton
@@ -202,6 +206,7 @@
                     android:adjustViewBounds="true"
                     android:background="@color/color_YouCantSeeME"
                     android:maxWidth="23dp"
+                    android:layout_marginBottom="4dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/post_upvote"
                     android:tint="@color/post_Grey" />
@@ -210,7 +215,7 @@
                     android:id="@+id/tv_Upvote"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/BiggerPadding"
+                    android:layout_marginLeft="6dp"
                     android:text="1.2k"
                     android:textColor="@color/post_Grey" />
             </LinearLayout>
@@ -219,9 +224,11 @@
                 android:id="@+id/llDownvote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/BiggerPadding"
+                android:layout_margin="0dp"
                 android:paddingTop="5dp"
-                android:paddingBottom="1dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="3dp"
                 app:layout_constraintLeft_toRightOf="@id/llUpvote">
 
                 <ImageButton
@@ -233,13 +240,14 @@
                     android:maxWidth="23dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/post_downvote"
-                    android:tint="@color/post_Grey" />
+                    android:tint="@color/post_Grey"
+                    android:layout_marginTop="2dp"/>
 
                 <TextView
                     android:id="@+id/tv_Downvote"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/BiggerPadding"
+                    android:layout_marginLeft="6dp"
                     android:text="12"
                     android:textColor="@color/post_Grey" />
 
@@ -251,7 +259,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/BiggerPadding"
                 android:paddingTop="5dp"
-                android:paddingBottom="5dp"
+                android:paddingBottom="8dp"
                 app:layout_constraintRight_toLeftOf="@+id/llComment"
                 >
 
@@ -260,6 +268,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginTop="2dp"
                     android:layout_marginRight="@dimen/BiggerPadding"
                     android:adjustViewBounds="true"
                     android:background="@color/color_YouCantSeeME"
@@ -280,9 +289,11 @@
                 android:id="@+id/llComment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/BiggerPadding"
+                android:layout_margin="0dp"
                 android:paddingTop="5dp"
-                android:paddingBottom="1dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 app:layout_constraintRight_toRightOf="parent">
 
                 <ImageButton
