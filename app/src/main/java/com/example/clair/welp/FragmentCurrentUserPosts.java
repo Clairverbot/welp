@@ -79,7 +79,7 @@ public class FragmentCurrentUserPosts extends Fragment {
                 }
 
             }
-        }, 1700); //set timer for error text to appear, 3s
+        }, 2000); //set timer for error text to appear, 3s
     }
 
     public void UpdateList(List<Note> n) {

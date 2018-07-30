@@ -10,7 +10,7 @@
 
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="24dp"
         android:scrollbars="vertical">
@@ -45,13 +45,12 @@
         <Spinner
             android:id="@+id/sp_YearOfStudy"
             style="@style/Base.Widget.AppCompat.Spinner.Underlined"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorAccent"
             android:drawableRight="@drawable/ic_arrow"
             android:padding="@dimen/SlightlyBiggerPadding"
-            app:layout_constraintTop_toBottomOf="@+id/tv4"
-            app:layout_constraintWidth_percent="0.78" />
+            app:layout_constraintTop_toBottomOf="@+id/tv4"/>
 
         <View
             android:id="@+id/emptyView"
@@ -72,13 +71,12 @@
         <Spinner
             android:id="@+id/sp_Subject"
             style="@style/Base.Widget.AppCompat.Spinner.Underlined"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorAccent"
             android:drawableRight="@drawable/ic_arrow"
             android:padding="@dimen/SlightlyBiggerPadding"
-            app:layout_constraintTop_toBottomOf="@+id/tv5"
-            app:layout_constraintWidth_percent="0.78" />
+            app:layout_constraintTop_toBottomOf="@+id/tv5"/>
 
         <View
             android:id="@+id/emptyView2"
@@ -98,14 +96,13 @@
 
         <RadioGroup
             android:id="@+id/rg"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/BiggerPadding"
             android:orientation="horizontal"
             android:paddingBottom="20dp"
             android:weightSum="3"
-            app:layout_constraintTop_toBottomOf="@id/tv6"
-            app:layout_constraintWidth_percent="0.78">
+            app:layout_constraintTop_toBottomOf="@id/tv6">
 
             <RadioButton
                 android:id="@+id/rbNotes"
@@ -139,15 +136,13 @@
 
         <Button
             android:id="@+id/btnSearch"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/the4ab5c7"
-
             android:text="Search"
             android:textAllCaps="false"
             android:textColor="@color/nicebg"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintWidth_percent="0.78" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 
     </android.support.constraint.ConstraintLayout>

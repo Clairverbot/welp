@@ -382,7 +382,7 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
                 startActivity(new Intent(NotificationsActivity.this, SearchActivity.class));
                 return true;
             case R.id.about_menu:
-                //TODO: create credits page one dayyy
+                startActivity(new Intent(NotificationsActivity.this, AboutUsActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }

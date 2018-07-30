@@ -2,12 +2,14 @@ package com.example.clair.welp;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +24,7 @@ import java.util.List;
 
 public class FragmentOtherUserPosts extends Fragment {
 
-    String email;
+    String email,username;
     View view;
     // Context
     Context mContext;
@@ -32,14 +34,29 @@ public class FragmentOtherUserPosts extends Fragment {
     NoteAdapter mAdapter;
     RecyclerView.LayoutManager mLayoutManager;
     NoteFirestore f;
-
+    TextView tvLoading;
     @Override
     public void onStart() {
         super.onStart();
         email = ProfileActivity_otheruser.passedEmail;
+        username = ProfileActivity_otheruser.passedUsername;
+
         FragmentOtherUserPosts r=this;
-        TextView tvLoading = (TextView) view.findViewById(R.id.tvLoading);
+        tvLoading = (TextView) view.findViewById(R.id.tvLoading);
         f=new NoteFirestore(r, email, tvLoading);
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mAdapter.getItemCount() > 0){
+                    tvLoading.setText("");
+                } else{
+                    tvLoading.setText(username +" has not posted anything yet");
+                }
+
+            }
+        }, 2000); //set timer for error text to appear, 3s
     }
 
     @Nullable
@@ -56,7 +73,6 @@ public class FragmentOtherUserPosts extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
         mAdapter=new NoteAdapter(mContext);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -66,5 +82,12 @@ public class FragmentOtherUserPosts extends Fragment {
     public void UpdateList(List<Note> n){
         mAdapter.deleteEverything();
         mAdapter.addAllItems(n);
+        if (n.size() > 0) {
+            tvLoading.setText("");
+            Log.d("TAG", "No posts");
+        } else {
+            tvLoading.setText(username +" has not posted anything yet");
+            Log.d("TAG", "Yes posts");
+        }
     }
 }

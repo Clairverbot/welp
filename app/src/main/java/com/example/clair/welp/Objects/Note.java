@@ -8,13 +8,13 @@ import java.util.Map;
 public class Note {
     private String Email,Username,UserIMG,NoteTitle,NoteDescription,ResourceURL,DatePosted,Deleted,DocumentID  ;
 
-    private HashMap<String, Boolean> Tags;
-    private int Upvote,Downvote;
+    private HashMap<String, Boolean> Tags, Upvote,Downvote;
+
     private String[][] Comments;
     private Map<String, Boolean> Notebooks;
 
     public Note(){}
-    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, int upvote, int downvote, String[][] comments) {
+    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, HashMap<String, Boolean> upvote, HashMap<String, Boolean> downvote, String[][] comments) {
 
         Email = email;
         Username = username;
@@ -31,7 +31,7 @@ public class Note {
         // Notebooks = notebooks;
     }
 
-    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, int upvote, int downvote, String[][] comments, String documentID) {
+    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, HashMap<String, Boolean> upvote, HashMap<String, Boolean> downvote, String[][] comments, String documentID) {
         Email = email;
         Username = username;
         UserIMG = userIMG;
@@ -124,21 +124,7 @@ public class Note {
         Comments = comments;
     }
 
-    public int getUpvote() {
-        return Upvote;
-    }
 
-    public void setUpvote(int upvote) {
-        Upvote = upvote;
-    }
-
-    public int getDownvote() {
-        return Downvote;
-    }
-
-    public void setDownvote(int downvote) {
-        Downvote = downvote;
-    }
 
     public Map<String, Boolean> getNotebooks() {
         return Notebooks;
@@ -161,6 +147,22 @@ public class Note {
     public HashMap<String, Boolean> getTags() { return Tags; }
 
     public void setTags(HashMap<String, Boolean> tags) { Tags = tags; }
+
+    public HashMap<String, Boolean> getUpvote() {
+        return Upvote;
+    }
+
+    public void setUpvote(HashMap<String, Boolean> upvote) {
+        Upvote = upvote;
+    }
+
+    public HashMap<String, Boolean> getDownvote() {
+        return Downvote;
+    }
+
+    public void setDownvote(HashMap<String, Boolean> downvote) {
+        Downvote = downvote;
+    }
 
     //endregion
 

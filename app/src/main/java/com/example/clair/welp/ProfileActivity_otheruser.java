@@ -129,25 +129,6 @@ public class ProfileActivity_otheruser extends AppCompatActivity {
     }
 
 
-//    //region menu on top
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.main_menu, menu);
-//        return true;
-//    }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.sign_out_menu:
-//                AuthUI.getInstance().signOut(this);
-//                return true;
-//            case R.id.credits_menu:
-//                //TODO: create credits page one dayyy
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
-
 
     public void showInitialFollowStatus() {
 
@@ -269,8 +250,6 @@ public class ProfileActivity_otheruser extends AppCompatActivity {
                                                         Toast.LENGTH_SHORT).show();
                                             }
                                         });
-
-
                                     }
 
 

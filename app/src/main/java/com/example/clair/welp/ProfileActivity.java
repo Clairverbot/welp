@@ -2,10 +2,12 @@ package com.example.clair.welp;
 
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -14,12 +16,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -28,37 +35,42 @@ import com.example.clair.welp.OtherStuff.BottomNavigationViewHelper;
 import com.example.clair.welp.Objects.Note;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
-public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TabLayout tabLayout;
     private TabLayout appBarLayout;
     private ViewPager viewPager;
-
-
+    Boolean hasDescription = false;
+    FirebaseUser mFirebaseUser;
     private FirebaseAuth mFirebaseAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     MagicalNames magicalNames = new MagicalNames();
 
-    boolean isFabOpen=false;
-    FloatingActionButton fab,fabPdf,fabImg,fabVid;
+    boolean isFabOpen = false;
+    FloatingActionButton fab, fabPdf, fabImg, fabVid;
     private FirebaseAuth fFirebaseAuth;
     private FirebaseAuth.AuthStateListener fAuthStateListener;
-
+    AlertDialog alert;
 
 
     @Override
@@ -77,12 +89,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         collapsingToolbar.setCollapsedTitleTextColor(Color.rgb(255, 255, 255)); //Color of your title
 
 
-
         //region auth
         mFirebaseAuth = FirebaseAuth.getInstance();
-        final FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
-        if (mFirebaseUser.getEmail() != null){
+        if (mFirebaseUser.getEmail() != null) {
             String userEmail = mFirebaseUser.getEmail();
 
 
@@ -92,29 +103,31 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     if (task.isSuccessful()) {
                         String username = task.getResult().getString(magicalNames.getUsers_Column_Username());
                         String desc = "";
-                        try{
+                        try {
                             desc = task.getResult().getString(magicalNames.getUsers_Column_ProfileDescription());
-                        }catch (Exception e){
+                        } catch (Exception e) {
 
                         }
 
-                        TextView tvDesc = (TextView)findViewById(R.id.profile_desc);
-                        if(desc != null ){
-                            if (!desc.equals("")){
+                        TextView tvDesc = (TextView) findViewById(R.id.profile_desc);
+                        if (desc != null) {
+                            if (!desc.equals("")) {
                                 tvDesc.setText(desc);
-                            } else{
+                                hasDescription = true;
+                            } else {
                                 tvDesc.setText("You have no description yet");
+                                hasDescription = false;
                             }
 
-                        } else{
+                        } else {
                             tvDesc.setText("You have no description yet");
+                            hasDescription = false;
                         }
 
-                        TextView tvUsername = (TextView)findViewById(R.id.profile_username);
+                        TextView tvUsername = (TextView) findViewById(R.id.profile_username);
                         tvUsername.setText(username);
                         collapsingToolbar.setTitle(username);
-                    }
-                    else {
+                    } else {
                         Log.d(TAG, "Error getting documents: ", task.getException());
                     }
 
@@ -123,15 +136,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             });
 
 
-
-        } else{
-            TextView tvUsername = (TextView)findViewById(R.id.profile_username);
+        } else {
+            TextView tvUsername = (TextView) findViewById(R.id.profile_username);
             tvUsername.setText("ZhenRight");
             collapsingToolbar.setTitle("ZhenRight");
-            TextView tvDesc = (TextView)findViewById(R.id.profile_desc);
+            TextView tvDesc = (TextView) findViewById(R.id.profile_desc);
             tvDesc.setText("You have no description yet");
+            hasDescription = false;
         }
-
 
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -143,29 +155,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
-//        //set current tab
-//        int intentFragment = 100;
-//        intentFragment = getIntent().getExtras().getInt("frgToLoad");
-//
-//        switch (intentFragment) {
-//            case 1:
-//                viewPager.setCurrentItem(1); //notebooks tab
-//                break;
-//            case 2:
-//                viewPager.setCurrentItem(2); //following tab
-//                break;
-//
-//                default: //post tab
-//
-//        }
 
         //region auth
-        fFirebaseAuth=FirebaseAuth.getInstance();
-        fAuthStateListener=new FirebaseAuth.AuthStateListener() {
+        fFirebaseAuth = FirebaseAuth.getInstance();
+        fAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user=firebaseAuth.getCurrentUser();
-                if(user==null){
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user == null) {
                     Intent intent = new Intent(ProfileActivity.this, Login.class);
                     startActivity(intent);
                     finish();
@@ -188,23 +185,22 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onClick(View view) {
                 //todo: make upload
-                if(!isFabOpen){
+                if (!isFabOpen) {
                     showFabMenu();
-                }
-                else {
+                } else {
                     closeFabMenu();
                 }
             }
         });
 
         BottomNavigationView bottomNavigationView;
-        bottomNavigationView=findViewById(R.id.bottomNav);
+        bottomNavigationView = findViewById(R.id.bottomNav);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.action_profile);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.action_home:
                         startActivity(new Intent(ProfileActivity.this, MainActivity.class));
                         finish();
@@ -223,19 +219,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 return true;
             }
         });
-
-//
-//        loadBackdrop();
     }
-
-//    private void loadBackdrop() {
-//        final ImageView imageView = findViewById(R.id.backdrop);
-//
-
-
-//    }
-
-
 
 
     //region menu on top
@@ -244,21 +228,95 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         inflater.inflate(R.menu.profile_menu, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.sign_out_menu:
                 AuthUI.getInstance().signOut(this);
                 return true;
+            case R.id.editprofile_menu:
+                createEditProfileDialog();
+                return true;
             case R.id.about_menu:
-                //TODO: create credits page one dayyy
+                startActivity(new Intent(ProfileActivity.this, AboutUsActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+
+    public void createEditProfileDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View convertView = (View) inflater.inflate(R.layout.dialog_editprofile, null);
+        alertDialog.setView(convertView);
+        ImageView ivBack = (ImageView) convertView.findViewById(R.id.ivBack);
+        EditText etProfileDesc = (EditText) convertView.findViewById(R.id.etProfileDescription);
+        ImageView ivConfirm = (ImageView) convertView.findViewById(R.id.ivTick);
+        TextView tvUsername = (TextView)  convertView.findViewById(R.id.tvUsername);
+        tvUsername.setText(mFirebaseUser.getDisplayName());
+        DocumentReference dr = FirebaseFirestore.getInstance().collection("Users").document(mFirebaseUser.getEmail());
+
+        alertDialog.setCancelable(true);
+        alert = alertDialog.show();
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alert.dismiss();
+            }
+        });
+
+        ivConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String desc = etProfileDesc.getText().toString();
+                try {
+                    desc = desc.trim();
+                } catch (Exception e) {
+                }
+
+                if (desc != null && !desc.equals("")) {
+                    if (hasDescription) {
+                        dr.update(magicalNames.getUsers_Column_ProfileDescription(), desc).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(ProfileActivity.this, "Profile Updated Successfully",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        restartActivity();
+                    } else {
+                        Map<String, Object> newDescription = new HashMap<>();
+                        newDescription.put(magicalNames.getUsers_Column_ProfileDescription(), desc);
+                        dr.set(newDescription, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(ProfileActivity.this, "Profile Updated Successfully!",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        restartActivity();
+                    }
+                } else {
+                    Toast.makeText(ProfileActivity.this, "Please enter a description",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+    }
+
+
+    public void restartActivity() {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
+
     //region fab
-    public void gooeyFab(){
+    public void gooeyFab() {
         ObjectAnimator anim = ObjectAnimator.ofFloat(fab, "scaleY", R.animator.gooey_path_anim);
         anim.setDuration(2000);                  // Duration in milliseconds
         anim.setInterpolator(new TimeInterpolator() {
@@ -269,8 +327,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         });  // E.g. Linear, Accelerate, Decelerate
         anim.start();
     }
-    private void showFabMenu(){
-        isFabOpen=true;
+
+    private void showFabMenu() {
+        isFabOpen = true;
         gooeyFab();
         fabPdf.animate().translationY(-getResources().getDimension(R.dimen.fab));
         fabPdf.animate().translationX(-getResources().getDimension(R.dimen.fabMargin));
@@ -280,8 +339,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    private void closeFabMenu(){
-        isFabOpen=false;
+    private void closeFabMenu() {
+        isFabOpen = false;
         fabPdf.animate().translationY(0);
         fabPdf.animate().translationX(0);
         fabImg.animate().translationY(0);
@@ -293,21 +352,21 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         Intent i;
-        int requestCode=0;
-        if(isFabOpen){
+        int requestCode = 0;
+        if (isFabOpen) {
             i = new Intent(Intent.ACTION_GET_CONTENT);
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.fabImg:
                     i.setType("image/*");
-                    requestCode=0;
+                    requestCode = 0;
                     break;
                 case R.id.fabPdf:
                     i.setType("application/pdf");
-                    requestCode=1;
+                    requestCode = 1;
                     break;
                 case R.id.fabVid:
                     i.setType("video/*");
-                    requestCode=2;
+                    requestCode = 2;
                     break;
             }
             i.addCategory(Intent.CATEGORY_OPENABLE);
@@ -322,6 +381,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -329,13 +389,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             case 0:
             case 1:
             case 2:
-                if(resultCode==RESULT_OK){
-                    File file=new File(data.getData().toString());
-                    String path=file.getAbsolutePath();
-                    Log.d("PATH:",path);
-                    Intent i=new Intent(ProfileActivity.this,AddPostDetail.class);
-                    i.putExtra("path",path);
-                    i.putExtra("email",mFirebaseAuth.getCurrentUser().getEmail());
+                if (resultCode == RESULT_OK) {
+                    File file = new File(data.getData().toString());
+                    String path = file.getAbsolutePath();
+                    Log.d("PATH:", path);
+                    Intent i = new Intent(ProfileActivity.this, AddPostDetail.class);
+                    i.putExtra("path", path);
+                    i.putExtra("email", mFirebaseAuth.getCurrentUser().getEmail());
                     startActivity(i);
                 }
                 break;
@@ -347,7 +407,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onPause() {
         super.onPause();
-        if(fAuthStateListener!=null){
+        if (fAuthStateListener != null) {
             fFirebaseAuth.removeAuthStateListener(fAuthStateListener);
         }
     }

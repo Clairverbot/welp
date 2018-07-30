@@ -4,7 +4,7 @@
     >
     <item
         android:title="Edit Profile"
-        android:id="@+id/search_menu"
+        android:id="@+id/editprofile_menu"
         android:visible="true"
         android:icon="@drawable/ic_editprofile"
         app:showAsAction="always"/>

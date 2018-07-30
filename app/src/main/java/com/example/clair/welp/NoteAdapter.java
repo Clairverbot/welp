@@ -71,7 +71,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvUsername, tvPostTimeDetail, tvNoteTitle, tvNoteDesc, tv_Upvote, tv_Downvote;
         Button btnSubject, btnYear, btnCategory, btnSummary;
-        LinearLayout llUsernameTime, llBookmark;
+        LinearLayout llUsernameTime, llBookmark, llDownvote, llUpvote;
         ConstraintLayout llNoteTopBar;
         ImageButton ib_Upvote, ib_Downvote;
         CircleImageView profile_image;
@@ -95,40 +95,73 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             llUsernameTime = v.findViewById(R.id.llUsernameTime);
             llBookmark = v.findViewById(R.id.llBookmark);
             llNoteTopBar = v.findViewById(R.id.llNoteTopBar);
+            llDownvote = v.findViewById(R.id.llDownvote);
+            llUpvote = v.findViewById(R.id.llUpvote);
+
             //SET onClickListeners for views in note_template here
             llNoteTopBar.setOnClickListener((View.OnClickListener) this);
             //llUsernameTime.setOnClickListener((View.OnClickListener) this);
             //profile_image.setOnClickListener((View.OnClickListener) this);
             llBookmark.setOnClickListener((View.OnClickListener) this);
+            btnSubject.setOnClickListener((View.OnClickListener) this);
+            btnCategory.setOnClickListener((View.OnClickListener) this);
+            btnYear.setOnClickListener((View.OnClickListener) this);
+            btnSummary.setOnClickListener((View.OnClickListener) this);
+            llDownvote.setOnClickListener((View.OnClickListener) this);
+            llUpvote.setOnClickListener((View.OnClickListener) this);
         }
 
         //DO something when view is clicked on, based on view's id
         @Override
         public void onClick(View v) {
+            String clickedBtnText;
+            Note clickedNote = new Note();
             int pos = getAdapterPosition();
+            if (pos != RecyclerView.NO_POSITION) {
+                clickedNote = mDataset.get(pos);
+            }
             switch (v.getId()) {
 
                 case R.id.llNoteTopBar:
-                    if (pos != RecyclerView.NO_POSITION) {
-                        Note clickedNote = mDataset.get(pos);
-                        checkAndGoToProfile(clickedNote);
-                    }
+                    checkAndGoToProfile(clickedNote);
                     break;
 
                 case R.id.profile_image:
-                    if (pos != RecyclerView.NO_POSITION) {
-                        Note clickedNote = mDataset.get(pos);
-                        checkAndGoToProfile(clickedNote);
-                    }
+                    checkAndGoToProfile(clickedNote);
                     break;
 
                 case R.id.llBookmark:
-                    if (pos != RecyclerView.NO_POSITION) {
-                        Note clickedNote = mDataset.get(pos);
-//                        String bookmarkEmail = clickedNote.getEmail();
-                        String clickedNoteDocumentID = clickedNote.getDocumentID();
-                        openAddToOrCreateDialog(clickedNoteDocumentID);
-                    }
+                    String clickedNoteDocumentID = clickedNote.getDocumentID();
+                    openAddToOrCreateDialog(clickedNoteDocumentID);
+                    break;
+
+                case R.id.btn_subject:
+                    clickedBtnText = btnSubject.getText().toString();
+                    goToSearchResultsByTag(clickedBtnText);
+                    break;
+
+                case R.id.btn_category:
+                    clickedBtnText = btnCategory.getText().toString();
+                    goToSearchResultsByTag(clickedBtnText);
+                    break;
+
+                case R.id.btn_year:
+                    clickedBtnText = btnYear.getText().toString();
+                    goToSearchResultsByTag(clickedBtnText);
+                    break;
+                case R.id.btn_summarry:
+                    clickedBtnText = btnSummary.getText().toString();
+                    goToSearchResultsByTag(clickedBtnText);
+                    break;
+
+                case R.id.llUpvote:
+                    clickedBtnText = btnSummary.getText().toString();
+                    goToSearchResultsByTag(clickedBtnText);
+                    break;
+
+                case R.id.llDownvote:
+                    clickedBtnText = btnSummary.getText().toString();
+                    goToSearchResultsByTag(clickedBtnText);
                     break;
 
                 default:
@@ -136,8 +169,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             }
         }
     }
-
-
 
 
     public NoteAdapter(Context context) {
@@ -154,31 +185,39 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull NoteAdapter.ViewHolder holder, int position) {
-
-
         Note n = mDataset.get(position);
         //Set date format to timeAgo
         Log.d(TAG, "ERROR " + n.getDatePosted());
         long time = Long.valueOf(TimeUtility.getDateFromDateTime(n.getDatePosted()));//2016-09-01 15:57:20 pass your date here
-        String timeStr = TimeUtility.timeAgo(time/1000);
+        String timeStr = TimeUtility.timeAgo(time / 1000);
 
         holder.tvUsername.setText(n.getUsername());
         holder.tvPostTimeDetail.setText("Posted " + timeStr);
         holder.tvNoteTitle.setText(n.getNoteTitle());
         holder.tvNoteDesc.setText(n.getNoteDescription());
-        String upvote = n.getUpvote() + "";
-        String downvote = n.getDownvote() + "";
+        String upvote, downvote = "";
+        if(n.getUpvote() == null){
+            upvote = 0 + "";
+        } else{
+            upvote = (n.getUpvote()).size() + "";
+        }
+        if(n.getDownvote() == null){
+            downvote = 0 + "";
+        } else{
+            downvote = (n.getDownvote()).size() + "";
+        }
+
         holder.tv_Upvote.setText((upvote));
         holder.tv_Downvote.setText(downvote);
 
-        for(int i = 0; i < 4; i++){
-            String tagToCheck = (String)(n.getTags().keySet().toArray()[i]); //get string from key array of tags hashmap
+        for (int i = 0; i < 4; i++) {
+            String tagToCheck = (String) (n.getTags().keySet().toArray()[i]); //get string from key array of tags hashmap
 
-            if ((Arrays.asList((Tag.Subjects)).contains(tagToCheck))){ //Get list of all subjects from tag class
+            if ((Arrays.asList((Tag.Subjects)).contains(tagToCheck))) { //Get list of all subjects from tag class
                 holder.btnSubject.setText(tagToCheck); //Math
-            } else if ((Arrays.asList((Tag.YearsOfStudy)).contains(tagToCheck))){
+            } else if ((Arrays.asList((Tag.YearsOfStudy)).contains(tagToCheck))) {
                 holder.btnYear.setText(tagToCheck); //Secondary 1
-            } else if ((Arrays.asList((Tag.MaterialTypes)).contains(tagToCheck))){
+            } else if ((Arrays.asList((Tag.MaterialTypes)).contains(tagToCheck))) {
                 holder.btnCategory.setText(tagToCheck); //Notes
             } else {
                 holder.btnSummary.setText(tagToCheck); //Math + Secondary 1
@@ -186,22 +225,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         }
 
     }
-
-    //CHECK whether user is current or not, then go to profile page based on that
-    public void checkAndGoToProfile(Note clickedNote) {
-        Note note = clickedNote;
-
-        userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-
-        if (userEmail.equals(note.getEmail())) {
-            goToPage(note, "ProfileActivity");
-            Log.d(TAG, "checkAndGoToProfile: is current " + note.getUsername() + " " + note.getEmail() + " " + userEmail);
-        } else {
-            goToPage(note, "ProfileActivity_otheruser");
-            Log.d(TAG, "checkAndGoToProfile: is not current " + note.getUsername() + " " + note.getEmail() + " " + userEmail);
-        }
-    }
-
 
 
     @Override
@@ -226,6 +249,32 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     }
 
 
+    //region goToSearchResultsByTag
+    //GOTO Search Results Page when click on any Tag Button
+    public void goToSearchResultsByTag(String clickedButtonText) {
+        ArrayList<String> passedSearchQuery = new ArrayList<>();
+        passedSearchQuery.add(clickedButtonText);
+        Intent i = new Intent(context, SearchResultsActivity.class);
+        i.putExtra("passedSearchQuery", passedSearchQuery);
+        context.startActivity(i);
+    }
+    //endregion
+
+    //region profile
+    //CHECK whether user is current or not, then go to profile page based on that
+    public void checkAndGoToProfile(Note clickedNote) {
+        Note note = clickedNote;
+        userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        if (userEmail.equals(note.getEmail())) {
+            goToPage(note, "ProfileActivity");
+            Log.d(TAG, "checkAndGoToProfile: is current " + note.getUsername() + " " + note.getEmail() + " " + userEmail);
+        } else {
+            goToPage(note, "ProfileActivity_otheruser");
+            Log.d(TAG, "checkAndGoToProfile: is not current " + note.getUsername() + " " + note.getEmail() + " " + userEmail);
+        }
+    }
+
     //GOTO current/other user's profile page based on activityname passed in (ONCLICK Username/Img)
     public void goToPage(Note passedNote, String activityName) {
         String ActivityName = activityName;
@@ -247,8 +296,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                 break;
         }
     }
+    //endregion
 
-    //VERY LONG METHOD TO CREATE NOTEBOOK/ADD TO EXISTING NOTEBOOK
+    //region createNotebook
+    //VERY LONG METHOD TO CREATE NOTEBOOK/ADD TO EXISTING NOTEBOOK DIALOG
     private void openAddToOrCreateDialog(String noteDocumentID) {
         userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         Log.d("TAG", "NOTEBOOK: email " + userEmail);
@@ -404,5 +455,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                     }
                 });
     }
+    //endregion
 }
 

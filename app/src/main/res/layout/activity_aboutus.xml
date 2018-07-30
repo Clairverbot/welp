@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/Dark_Grey"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    tools:context=".AboutUsActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/bg1">
+    <ImageView
+        android:id="@+id/ivlogo"
+        android:layout_width="260dp"
+        android:layout_height="190dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/logobig"
+        android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvUAboutTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="So, what exactly is Welp?"
+        android:layout_gravity="center"
+        android:paddingTop="8dp"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/notThatWhite"/>
+    <TextView
+        android:id="@+id/tvAbout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welp is a note-sharing application catering to the educational needs of 'O' level and 'A' level students alike."
+        android:gravity="center"
+        android:maxWidth="270dp"
+        android:layout_gravity="center"
+        android:paddingTop="8dp"
+        android:textSize="14dp"
+        android:layout_marginBottom="0dp"
+        android:textColor="@color/notThatWhite"/>
+    <TextView
+        android:id="@+id/tvSlogan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="We Help You Study,"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:maxWidth="270dp"
+        android:layout_gravity="center"
+        android:paddingTop="30dp"
+        android:textSize="13dp"
+        android:layout_marginBottom="0dp"
+        android:textColor="@color/notThatWhite"/>
+    <TextView
+        android:id="@+id/tvSlogan2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="so go out there and get that A!"
+        android:gravity="center"
+        android:textStyle="normal"
+        android:maxWidth="190dp"
+        android:layout_gravity="center"
+        android:paddingTop="0dp"
+        android:textSize="14dp"
+        android:layout_marginBottom="40dp"
+        android:textColor="@color/notThatWhite"/>
+</LinearLayout>
+    </ScrollView>
+</LinearLayout>

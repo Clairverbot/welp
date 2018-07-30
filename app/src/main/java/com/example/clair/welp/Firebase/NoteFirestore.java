@@ -60,8 +60,8 @@ public class NoteFirestore {
     String email, username, userIMG, noteTitle, noteDescription, resourceURL, documentID;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String datePosted, deleted;
-    HashMap<String, Boolean> tags;
-    int upvote, downvote;
+    HashMap<String, Boolean> tags, upvote, downvote;
+
 
     public NoteFirestore(MainActivity r) {
         final MainActivity reference = r;
@@ -233,7 +233,7 @@ public class NoteFirestore {
                 break;
             case 2:
                 colRef = FirebaseFirestore.getInstance().collection("Notes")
-                        .whereEqualTo("Tags." + (passedList.get(0)).toString(), true)  //e.g. "Tags.Math + Secondary 4" == true
+                        .whereEqualTo("Tags." + (passedList.get(0)).toString(), true)  //e.g. "Tags.Math" + Secondary 4" == true
                         .whereEqualTo("Tags." + (passedList.get(1)).toString(), true); //e.g. "Tags.Notes" == true
                 break;
         }
@@ -254,10 +254,12 @@ public class NoteFirestore {
 
         tags = (HashMap<String, Boolean>) document.getData().get(magicalNames.getNotes_Column_Tags());
         //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
-        Long Upvote = document.getLong(magicalNames.getNotes_Column_Upvote());
-        upvote = null == Upvote ? 0 : Upvote.intValue();
-        Long Downvote = document.getLong(magicalNames.getNotes_Column_Downvote());
-        downvote = null == Downvote ? 0 : Downvote.intValue();
+
+        upvote = (HashMap<String, Boolean>) document.getData().get(magicalNames.getNotes_Column_Upvote());
+        downvote = (HashMap<String, Boolean>) document.getData().get(magicalNames.getNotes_Column_Downvote());
+//        upvote = null == Upvote ? 0 : Upvote.intValue();
+//        Long Downvote = document.getLong(magicalNames.getNotes_Column_Downvote());
+//        downvote = null == Downvote ? 0 : Downvote.intValue();
         documentID = document.getId();
 
 
@@ -312,6 +314,8 @@ public class NoteFirestore {
         notas.put(magicalNames.getNotes_Column_DatePosted(), n.getDatePosted());
         notas.put(magicalNames.getNotes_Column_Tags(), n.getTags());
         notas.put(magicalNames.getUsers_Column_Username(), n.getUsername());
+        notas.put(magicalNames.getNotes_Column_Upvote(), n.getUpvote());
+        notas.put(magicalNames.getNotes_Column_Downvote(), n.getDownvote());
 
         collectionref.document().set(notas).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

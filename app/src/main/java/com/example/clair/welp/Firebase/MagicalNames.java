@@ -14,8 +14,8 @@ public class MagicalNames {
     private String Notes_Column_DatePosted="DatePosted";
     private String Notes_Column_Deleted="Deleted";
     private String Notes_Column_Tags="Tags";
-    private String Notes_Column_Upvote="Upvote";
-    private String Notes_Column_Downvote="Downvote";
+    private String Notes_Column_Upvote="Upvotes";
+    private String Notes_Column_Downvote="Downvotes";
     private String Notes_Column_CommentUsername="CommentUsername";
     private String Notes_Column_Comment="Comment";
     private String Notes_Column_Notebooks="Notebooks";

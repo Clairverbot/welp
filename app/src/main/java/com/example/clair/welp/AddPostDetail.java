@@ -76,12 +76,15 @@ public class AddPostDetail extends AppCompatActivity {
                     tags.put((String)rb.getText(), true);
                     tags.put(spSubject.getSelectedItem()+" + "+spGrade.getSelectedItem(), true);
 
+                    HashMap<String, Boolean> upvotes = new HashMap<>();
+                    HashMap<String, Boolean> downvotes = new HashMap<>();
+
                     //CHANGE DATE FORMAT
                     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                     Date date = new Date();
                     String datePosted = dateFormat.format(date);
 
-                    Note note=new Note(email,username,null,etNoteTitle.getText().toString(),etNoteDesc.getText().toString(),path.toString(), datePosted,null,tags,0,0,null);
+                    Note note=new Note(email,username,null,etNoteTitle.getText().toString(),etNoteDesc.getText().toString(),path.toString(), datePosted,null,tags,upvotes,downvotes,null);
 
                     //noteFirestore.storage(note);
                     noteFirestore.add(note);

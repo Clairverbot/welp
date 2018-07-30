@@ -56,8 +56,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="imageAsset" value="D:\Downloads\equalizer.png" />
-                                      <entry key="outputName" value="ic_editprofile" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="D:\Downloads\tick.png" />
+                                      <entry key="outputName" value="ic_tick1" />
                                       <entry key="theme" value="HOLO_DARK" />
                                     </map>
                                   </option>

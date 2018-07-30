@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, SearchActivity.class));
                 return true;
             case R.id.about_menu:
-                //TODO: create credits page one dayyy
+                startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }
