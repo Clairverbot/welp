@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -36,15 +37,19 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 
 import static android.content.ContentValues.TAG;
 
@@ -61,6 +66,17 @@ public class NoteFirestore {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String datePosted, deleted;
     HashMap<String, Boolean> tags, upvote, downvote;
+
+    private List<DocumentSnapshot> reverseListOrder(List<DocumentSnapshot> task)
+    {
+        Iterator<DocumentSnapshot> it = task.iterator();
+        List<DocumentSnapshot> document = new ArrayList<>();
+        while (it.hasNext()) {
+            document.add(0, it.next());
+            it.remove();
+        }
+        return document;
+    }
 
 
     public NoteFirestore(MainActivity r) {
@@ -103,7 +119,9 @@ public class NoteFirestore {
                         notes = new ArrayList<>();
 
                         if (task.isSuccessful()) {
-                            for (final DocumentSnapshot document : task.getResult()) {
+                            //Reverse list so sorted by most recent
+                            List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+                            for (final DocumentSnapshot document : reverseListOrder(myListOfDocuments)) {
                                 notes.add(getNoteFromDocumentSnapshot(document));
                                 reference.UpdateList(notes);
 
@@ -128,6 +146,8 @@ public class NoteFirestore {
 
     }
 
+
+
     public NoteFirestore(FragmentOtherUserPosts r, String strEmail, TextView error) {
         final FragmentOtherUserPosts reference = r;
         final TextView tvError = error;
@@ -140,7 +160,9 @@ public class NoteFirestore {
                         notes = new ArrayList<>();
 
                         if (task.isSuccessful()) {
-                            for (DocumentSnapshot document : task.getResult()) {
+                            //Reverse list so sorted by most recent
+                            List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+                            for (DocumentSnapshot document : reverseListOrder(myListOfDocuments)) {
                                 notes.add(getNoteFromDocumentSnapshot(document));
                                 reference.UpdateList(notes);
 
@@ -204,7 +226,9 @@ public class NoteFirestore {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
                 if (task.isSuccessful()) {
-                    for (DocumentSnapshot document : task.getResult()) {
+                    //Reverse list so sorted by most recent
+                    List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+                    for (DocumentSnapshot document : reverseListOrder(myListOfDocuments)) {
                         notes.add(getNoteFromDocumentSnapshot(document));
                         reference.UpdateList(notes);
                     }
@@ -317,7 +341,15 @@ public class NoteFirestore {
         notas.put(magicalNames.getNotes_Column_Upvote(), n.getUpvote());
         notas.put(magicalNames.getNotes_Column_Downvote(), n.getDownvote());
 
-        collectionref.document().set(notas).addOnSuccessListener(new OnSuccessListener<Void>() {
+        DocumentReference dr = collectionref.document();
+
+        String date = (n.getDatePosted()).replace("/", "");
+        date = date.replace(" ", "");
+        String docID = date + dr.getId();
+
+
+
+        collectionref.document(docID).set(notas).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "DocumentSnapshot added with ID: " + collectionref.document().getId());

@@ -74,7 +74,7 @@ public class AddPostDetail extends AppCompatActivity {
                     tags.put((String) spSubject.getSelectedItem(), true);
                     tags.put((String)spGrade.getSelectedItem(), true);
                     tags.put((String)rb.getText(), true);
-                    tags.put(spSubject.getSelectedItem()+" + "+spGrade.getSelectedItem(), true);
+                    tags.put(spSubject.getSelectedItem() +" + "+ spGrade.getSelectedItem(), true);
 
                     HashMap<String, Boolean> upvotes = new HashMap<>();
                     HashMap<String, Boolean> downvotes = new HashMap<>();
