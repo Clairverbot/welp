@@ -178,7 +178,7 @@ public class SignUpSubject extends AppCompatActivity {
                 }
                 Intent intent=new Intent(SignUpSubject.this,SignUp_Auth.class);
                 intent.putExtra("yrOfStud",yrOfStudy);
-                intent.putExtra("subjec",(ArrayList)subject);
+                intent.putExtra("subjects",(ArrayList)subject);
                 startActivity(intent);
             }
             else if (view.getId()==ibBack.getId()){

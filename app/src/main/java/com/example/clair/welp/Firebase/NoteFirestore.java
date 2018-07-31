@@ -340,6 +340,7 @@ public class NoteFirestore {
         notas.put(magicalNames.getUsers_Column_Username(), n.getUsername());
         notas.put(magicalNames.getNotes_Column_Upvote(), n.getUpvote());
         notas.put(magicalNames.getNotes_Column_Downvote(), n.getDownvote());
+        notas.put(magicalNames.getNotes_Column_ResourceURL(),n.getResourceURL());
 
         DocumentReference dr = collectionref.document();
 

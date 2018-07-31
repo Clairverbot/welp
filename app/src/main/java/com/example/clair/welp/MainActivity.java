@@ -16,16 +16,22 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.example.clair.welp.Firebase.MagicalNames;
 import com.example.clair.welp.Firebase.NoteFirestore;
 import com.example.clair.welp.Objects.Note;
 import com.example.clair.welp.OtherStuff.*;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.List;
 
@@ -35,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DatabaseReference fDatabaseReference;
     private ChildEventListener fChildEventListener;
     NoteFirestore f;
+    //storage
+    private StorageReference storageReference;
     //endregion
 
     //region firebase auth stuff
@@ -79,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //endregion
 
         fFirebaseDatabase=FirebaseDatabase.getInstance();
+        storageReference= FirebaseStorage.getInstance().getReference();
 
         //region bottom nav
         fab = findViewById(R.id.fabUpload);
@@ -275,12 +284,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case 2:
                 if(resultCode==RESULT_OK){
                     Uri file=data.getData();
-                    Intent i=new Intent(MainActivity.this,AddPostDetail.class);
-                    i.putExtra("path",file);
-                    Log.d("Ppath",file.toString());
-                    i.putExtra("email", currentUser.getEmail());
-                    i.putExtra("username",currentUser.getDisplayName());
-                    startActivity(i);
+
+                    StorageReference filepath=storageReference.child("NoteResource").child(file.getLastPathSegment());
+
+                    filepath.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            //Toast.makeText(MainActivity.this,"Upload Done",Toast.LENGTH_LONG).show();
+
+                            Intent i=new Intent(MainActivity.this,AddPostDetail.class);
+                            i.putExtra("path",taskSnapshot.getDownloadUrl());
+                            i.putExtra("email", currentUser.getEmail());
+                            i.putExtra("username",currentUser.getDisplayName());
+                            startActivity(i);
+                        }
+                    });
+
                 }
                 break;
         }
