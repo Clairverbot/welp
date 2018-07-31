@@ -181,10 +181,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                     checkUpvotesOrDownvotes("Downvotes", clickedNote, ib_Upvote, tv_Upvote, ib_Downvote, tv_Downvote);
                     break;
                 case R.id.ib_Comment:
-                    goToComments(clickedNoteDocumentID);
+                    goToComments(clickedNoteDocumentID, Integer.parseInt(tv_Comment.getText().toString()));
                     break;
                 case R.id.llComment:
-                    goToComments(clickedNoteDocumentID);
+                    goToComments(clickedNoteDocumentID, Integer.parseInt(tv_Comment.getText().toString()));
                     break;
                 default:
                     break;
@@ -292,9 +292,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     }
 
     //region comments
-    private void goToComments(String clickedNoteDocumentID) {
+    private void goToComments(String clickedNoteDocumentID, int num) {
         Intent i = new Intent(context, CommentsActivity.class);
         i.putExtra("passedNoteID", clickedNoteDocumentID);
+        i.putExtra("passedCommentsCount", num);
         context.startActivity(i);
     }
     //endregion

@@ -52,6 +52,7 @@ public class CommentsActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     FirebaseUser mFirebaseUser;
     String passedNoteID;
+    int passedCommentsCount;
     CommentFirestore commentFirestore;
 
     @Override
@@ -62,6 +63,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         //Get extra
         passedNoteID = getIntent().getExtras().getString("passedNoteID");
+        passedCommentsCount = getIntent().getExtras().getInt("passedCommentsCount");
 
         //Back button
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -100,7 +102,7 @@ public class CommentsActivity extends AppCompatActivity {
         Date date = new Date();
         String datePosted = dateFormat.format(date);
         Comment comment = new Comment(mFirebaseUser.getEmail(), mFirebaseUser.getDisplayName(), commentString, datePosted, passedNoteID);
-        commentFirestore.add(comment);
+        commentFirestore.add(comment, passedCommentsCount);
     }
 
     private void init() {

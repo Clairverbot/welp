@@ -30,7 +30,7 @@ public class CommentFirestore {
     public CommentFirestore() {
     }
 
-    public void add(Comment n) {
+    public void add(Comment n, int numOfComments) {
         commentas.put(magicalNames.getComments_Column_Email(), n.getEmail());
         commentas.put(magicalNames.getComments_Column_Username(), n.getUsername());
         commentas.put(magicalNames.getComments_Column_Comment(), n.getComment());
@@ -48,6 +48,7 @@ public class CommentFirestore {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "DocumentSnapshot added with ID: " + commentCollectionRef.document().getId());
+                noteCollectionRef.document(n.getNoteID()).update("Comments", (numOfComments + 1));
             }
         })
                 .addOnFailureListener(new OnFailureListener() {
@@ -57,22 +58,8 @@ public class CommentFirestore {
                     }
                 });
 
-        noteCollectionRef.document(n.getNoteID()).get().
-                addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document != null) {
-                                Long Comments = document.getLong(magicalNames.getNotes_Column_Comment());
-                                commentsCount = null == Comments ? 0 : Comments.intValue();
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
 
-        noteCollectionRef.document(n.getNoteID()).update("Comments", (commentsCount + 1));
+
+
     }
 }
