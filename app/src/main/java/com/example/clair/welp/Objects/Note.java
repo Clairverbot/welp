@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Note {
-    private String Email,Username,UserIMG,NoteTitle,NoteDescription,ResourceURL,DatePosted,Deleted,DocumentID  ;
+    private String Email,Username,UserIMG,NoteTitle,NoteDescription,ResourceURL,DatePosted,Deleted,DocumentID,FileType  ;
 
     private HashMap<String, Boolean> Tags, Upvote,Downvote;
 
@@ -14,7 +14,7 @@ public class Note {
     private Map<String, Boolean> Notebooks;
 
     public Note(){}
-    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, HashMap<String, Boolean> upvote, HashMap<String, Boolean> downvote, String[][] comments) {
+    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, HashMap<String, Boolean> upvote, HashMap<String, Boolean> downvote, String[][] comments, String fileType) {
 
         Email = email;
         Username = username;
@@ -28,10 +28,11 @@ public class Note {
         Upvote = upvote;
         Downvote = downvote;
         Comments = comments;
+        FileType=fileType;
         // Notebooks = notebooks;
     }
 
-    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, HashMap<String, Boolean> upvote, HashMap<String, Boolean> downvote, String[][] comments, String documentID) {
+    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, HashMap<String, Boolean> upvote, HashMap<String, Boolean> downvote, String[][] comments, String documentID,String fileType) {
         Email = email;
         Username = username;
         UserIMG = userIMG;
@@ -45,6 +46,7 @@ public class Note {
         Downvote = downvote;
         Comments = comments;
         DocumentID = documentID;
+        FileType=fileType;
        // Notebooks = notebooks;
     }
 
@@ -162,6 +164,14 @@ public class Note {
 
     public void setDownvote(HashMap<String, Boolean> downvote) {
         Downvote = downvote;
+    }
+
+    public String getFileType() {
+        return FileType;
+    }
+
+    public void setFileType(String fileType) {
+        FileType = fileType;
     }
 
     //endregion

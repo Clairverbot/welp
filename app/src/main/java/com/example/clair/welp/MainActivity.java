@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case R.id.action_profile:
                         startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-
+                        finish();
                         break;
                 }
                 return true;
@@ -278,10 +278,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         FirebaseUser currentUser = fFirebaseAuth.getCurrentUser();
-        switch (requestCode) {
-            case 0:
-            case 1:
-                case 2:
+
                 if(resultCode==RESULT_OK){
                     Uri file=data.getData();
 
@@ -293,15 +290,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             //Toast.makeText(MainActivity.this,"Upload Done",Toast.LENGTH_LONG).show();
 
                             Intent i=new Intent(MainActivity.this,AddPostDetail.class);
-                            i.putExtra("path",taskSnapshot.getDownloadUrl());
+                            switch (requestCode){
+                                case 0:
+                                    i.putExtra("fileType","img");
+                                    break;
+                                case 1:
+                                    i.putExtra("fileType","pdf");
+                                    break;
+                                case 2:
+                                    i.putExtra("fileType","vid");
+                                    break;
+                            }
+                            i.putExtra("path",taskSnapshot.getDownloadUrl().toString());
                             i.putExtra("email", currentUser.getEmail());
                             i.putExtra("username",currentUser.getDisplayName());
                             startActivity(i);
                         }
                     });
 
-                }
-                break;
         }
     }
     //endregion

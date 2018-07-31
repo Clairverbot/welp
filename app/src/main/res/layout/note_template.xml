@@ -82,13 +82,12 @@
             android:layout_below="@+id/llNoteTopBar"
             android:background="@color/post_Grey" />
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/llNoteStuff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/BiggerPadding"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="@dimen/BiggerPadding"
+            android:paddingVertical="@dimen/BiggerPadding"
+            android:paddingHorizontal="16dp"
             android:orientation="vertical">
 
             <TextView
@@ -102,12 +101,13 @@
 
             <TextView
                 android:id="@+id/tvNoteDesc"
+                app:layout_constraintTop_toBottomOf="@id/tvNoteTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Some very very meaningful and insightful description"
                 android:textColor="@color/text_anotherSimilarColor" />
             <!--TODO: put a recycler view of buttons here-->
-        </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
 
         <HorizontalScrollView
             android:layout_width="wrap_content"

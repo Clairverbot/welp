@@ -62,7 +62,8 @@
             <!--android:parentActivityName=".ProfileActivity"/>-->
 
         <!-- android:parentActivityName=".ProfileActivity"/> -->
-        <activity android:name=".NoteViewer"></activity>
+        <activity android:name=".NoteViewer"
+            android:label=""></activity>
         <activity android:name=".FollowingTagsActivity"
             android:theme="@style/AppTheme"/>
 

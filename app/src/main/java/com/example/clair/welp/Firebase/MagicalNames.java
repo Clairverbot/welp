@@ -19,6 +19,8 @@ public class MagicalNames {
     private String Notes_Column_CommentUsername="CommentUsername";
     private String Notes_Column_Comment="Comment";
     private String Notes_Column_Notebooks="Notebooks";
+    private String Notes_Column_FileType="FileType";
+
 
     public String getNotes_Column_Email() {
         return Notes_Column_Email;
@@ -73,6 +75,14 @@ public class MagicalNames {
     }
     public String getNotes_Column_Notebooks() {
         return Notes_Column_Notebooks;
+    }
+
+    public String getNotes_Column_FileType() {
+        return Notes_Column_FileType;
+    }
+
+    public void setNotes_Column_FileType(String notes_Column_FileType) {
+        Notes_Column_FileType = notes_Column_FileType;
     }
 
     //endregion

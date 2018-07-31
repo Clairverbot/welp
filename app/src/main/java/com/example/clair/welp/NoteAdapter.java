@@ -2,9 +2,12 @@ package com.example.clair.welp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
@@ -39,6 +42,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,6 +64,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     MagicalNames magicalNames = new MagicalNames();
 
+
+    //storage
+    private StorageReference storageReference;
+
     public NoteAdapter() {
     }
 
@@ -74,7 +83,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         TextView tvUsername, tvPostTimeDetail, tvNoteTitle, tvNoteDesc, tv_Upvote, tv_Downvote;
         Button btnSubject, btnYear, btnCategory, btnSummary;
         LinearLayout llUsernameTime, llBookmark, llDownvote, llUpvote;
-        ConstraintLayout llNoteTopBar;
+        ConstraintLayout llNoteTopBar,llNoteStuff;
         ImageButton ib_Upvote, ib_Downvote;
         CircleImageView profile_image;
 
@@ -99,6 +108,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             llNoteTopBar = v.findViewById(R.id.llNoteTopBar);
             llDownvote = v.findViewById(R.id.llDownvote);
             llUpvote = v.findViewById(R.id.llUpvote);
+            llNoteStuff=v.findViewById(R.id.llNoteStuff);
 
             //SET onClickListeners for views in note_template here
             llNoteTopBar.setOnClickListener((View.OnClickListener) this);
@@ -113,6 +123,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             llUpvote.setOnClickListener((View.OnClickListener) this);
             ib_Upvote.setOnClickListener((View.OnClickListener) this);
             ib_Downvote.setOnClickListener((View.OnClickListener) this);
+            llNoteStuff.setOnClickListener((View.OnClickListener) this);
+            tvNoteTitle.setOnClickListener((View.OnClickListener) this);
         }
 
         //DO something when view is clicked on, based on view's id
@@ -174,7 +186,17 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                 case R.id.ib_Downvote:
                     checkUpvotesOrDownvotes("Downvotes", clickedNote, ib_Upvote, tv_Upvote, ib_Downvote, tv_Downvote);
                     break;
+                case R.id.llNoteStuff:
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+                    Intent i=new Intent(context,NoteViewer.class);
+                        i.putExtra("fileType",clickedNote.getFileType());
+                        i.putExtra("url",clickedNote.getResourceURL());
+                        context.startActivity(i);
+
+                    break;
                 default:
+
                     break;
             }
         }
@@ -198,6 +220,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        storageReference= FirebaseStorage.getInstance().getReference();
 
         Note n = mDataset.get(position);
         //Set date format to timeAgo
