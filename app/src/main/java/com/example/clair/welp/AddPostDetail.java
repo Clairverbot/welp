@@ -83,7 +83,11 @@ public class AddPostDetail extends AppCompatActivity {
                     Date date = new Date();
                     String datePosted = dateFormat.format(date);
 
-                    Note note=new Note(email,username,null,etNoteTitle.getText().toString(),etNoteDesc.getText().toString(),path, datePosted,null,tags,upvotes,downvotes,null);
+//<<<<<<< Updated upstream
+//                    Note note=new Note(email,username,null,etNoteTitle.getText().toString(),etNoteDesc.getText().toString(),path, datePosted,null,tags,upvotes,downvotes,null);
+
+                    Note note=new Note(email,username,null,etNoteTitle.getText().toString(),etNoteDesc.getText().toString(),path, datePosted,null,tags,upvotes,downvotes,0);
+
 
                     //noteFirestore.storage(note);
                     noteFirestore.add(note);

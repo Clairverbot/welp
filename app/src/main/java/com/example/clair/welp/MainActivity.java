@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case R.id.action_profile:
                         startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-
+                        finish();
                         break;
                 }
                 return true;

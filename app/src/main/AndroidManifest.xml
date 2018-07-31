@@ -75,7 +75,10 @@
         <activity android:name=".SearchFilterActivity"
             android:theme="@style/AppTheme"/>
         <activity android:name=".AboutUsActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/Profile"/>
+
+        <activity android:name=".CommentsActivity"
+            android:theme="@style/CommentsTheme"/>
     </application>
 
 </manifest>

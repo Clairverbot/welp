@@ -43,11 +43,5 @@ public class UserFirestore {
                 });
     }
 
-    //for Searching, return List of email +username
-    public HashMap<String, String> getUsersList(){
-        HashMap<String, String> usersList  = new HashMap<>();
-        return  usersList;
-    }
-
 
 }

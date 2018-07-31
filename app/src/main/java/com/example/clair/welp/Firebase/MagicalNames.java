@@ -17,7 +17,7 @@ public class MagicalNames {
     private String Notes_Column_Upvote="Upvotes";
     private String Notes_Column_Downvote="Downvotes";
     private String Notes_Column_CommentUsername="CommentUsername";
-    private String Notes_Column_Comment="Comment";
+    private String Notes_Column_Comment="Comments";
     private String Notes_Column_Notebooks="Notebooks";
 
     public String getNotes_Column_Email() {
@@ -109,6 +109,36 @@ public class MagicalNames {
     public String getUsers_Column_FollowingUsers() {
         return Users_Column_FollowingUsers;
     }
+    //endregion
+
+    //region Comment
+    private String Comments_Column_Email="Email";
+    private String Comments_Column_Username="Username";
+    private String Comments_Column_Comment="Comment";
+    private String Comments_Column_DatePosted="DatePosted";
+    private String Comments_Column_NoteID="NoteID";
+
+    public String getComments_Column_Email() {
+        return Comments_Column_Email;
+    }
+
+    public String getComments_Column_Username() {
+        return Comments_Column_Username;
+    }
+
+    public String getComments_Column_Comment() {
+        return Comments_Column_Comment;
+    }
+
+    public String getComments_Column_DatePosted() {
+        return Comments_Column_DatePosted;
+    }
+
+    public String getComments_Column_NoteID() {
+        return Comments_Column_NoteID;
+    }
+
+
     //endregion
 
 

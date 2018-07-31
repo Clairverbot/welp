@@ -7,14 +7,13 @@ import java.util.Map;
 
 public class Note {
     private String Email,Username,UserIMG,NoteTitle,NoteDescription,ResourceURL,DatePosted,Deleted,DocumentID  ;
-
+    private int Comments;
     private HashMap<String, Boolean> Tags, Upvote,Downvote;
 
-    private String[][] Comments;
-    private Map<String, Boolean> Notebooks;
-
     public Note(){}
-    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, HashMap<String, Boolean> upvote, HashMap<String, Boolean> downvote, String[][] comments) {
+
+    //Storing
+    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, HashMap<String, Boolean> upvote, HashMap<String, Boolean> downvote, int comments) {
 
         Email = email;
         Username = username;
@@ -28,10 +27,10 @@ public class Note {
         Upvote = upvote;
         Downvote = downvote;
         Comments = comments;
-        // Notebooks = notebooks;
     }
 
-    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, HashMap<String, Boolean> upvote, HashMap<String, Boolean> downvote, String[][] comments, String documentID) {
+    //Retrieving
+    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, HashMap<String, Boolean> upvote, HashMap<String, Boolean> downvote, int comments, String documentID) {
         Email = email;
         Username = username;
         UserIMG = userIMG;
@@ -45,7 +44,6 @@ public class Note {
         Downvote = downvote;
         Comments = comments;
         DocumentID = documentID;
-       // Notebooks = notebooks;
     }
 
 //region properties
@@ -114,26 +112,6 @@ public class Note {
         Deleted = deleted;
     }
 
-
-
-    public String[][] getComments() {
-        return Comments;
-    }
-
-    public void setComments(String[][] comments) {
-        Comments = comments;
-    }
-
-
-
-    public Map<String, Boolean> getNotebooks() {
-        return Notebooks;
-    }
-
-    public void setNotebooks(Map<String, Boolean> notebooks) {
-        Notebooks = notebooks;
-    }
-
     public String getDocumentID() {
         return DocumentID;
     }
@@ -162,6 +140,14 @@ public class Note {
 
     public void setDownvote(HashMap<String, Boolean> downvote) {
         Downvote = downvote;
+    }
+
+    public int getComments() {
+        return Comments;
+    }
+
+    public void setComments(int comments) {
+        Comments = comments;
     }
 
     //endregion
