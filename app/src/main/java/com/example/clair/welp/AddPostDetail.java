@@ -86,6 +86,9 @@ public class AddPostDetail extends AppCompatActivity {
 
                     Note note=new Note(email,username,null,etNoteTitle.getText().toString(),etNoteDesc.getText().toString(),path, datePosted,null,tags,upvotes,downvotes,null,fileType);
 
+                    Note note=new Note(email,username,null,etNoteTitle.getText().toString(),etNoteDesc.getText().toString(),path, datePosted,null,tags,upvotes,downvotes,0);
+
+
                     //noteFirestore.storage(note);
                     noteFirestore.add(note);
                     Intent intent=new Intent(AddPostDetail.this,MainActivity.class);

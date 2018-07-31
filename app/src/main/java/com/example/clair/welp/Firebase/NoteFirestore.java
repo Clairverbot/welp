@@ -66,7 +66,7 @@ public class NoteFirestore {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String datePosted, deleted;
     HashMap<String, Boolean> tags, upvote, downvote;
-
+    int comments;
     private List<DocumentSnapshot> reverseListOrder(List<DocumentSnapshot> task)
     {
         Iterator<DocumentSnapshot> it = task.iterator();
@@ -275,7 +275,8 @@ public class NoteFirestore {
         datePosted = document.getString(magicalNames.getNotes_Column_DatePosted());
         Date Deleted = document.getDate(magicalNames.getNotes_Column_Deleted());
         deleted = Deleted != null ? sdf.format(Deleted) : null;
-
+        Long Comments = document.getLong(magicalNames.getNotes_Column_Comment());
+        comments = null == Comments ? 0 : Comments.intValue();
         tags = (HashMap<String, Boolean>) document.getData().get(magicalNames.getNotes_Column_Tags());
         //String[][] comments = {{document.getString(magicalNames.getNotes_Column_CommentUsername())}, {document.getString(magicalNames.getNotes_Column_Comment())}};
 
@@ -287,7 +288,7 @@ public class NoteFirestore {
         documentID = document.getId();
 
 
-        Note n = new Note(email, username, userIMG, noteTitle, noteDescription, resourceURL, datePosted, deleted, tags, upvote, downvote, null, documentID);
+        Note n = new Note(email, username, userIMG, noteTitle, noteDescription, resourceURL, datePosted, deleted, tags, upvote, downvote, comments, documentID);
 
         return n;
     }

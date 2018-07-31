@@ -40,8 +40,6 @@ public class FragmentCurrentUserNotebooks extends Fragment {
     Context mContext;
 
     // RecyclerView
-
-
     RecyclerView.LayoutManager mLayoutManager;
     NoteFirestore f;
     private FirebaseFirestore db;

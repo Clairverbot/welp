@@ -80,9 +80,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     AlertDialog alert;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tvUsername, tvPostTimeDetail, tvNoteTitle, tvNoteDesc, tv_Upvote, tv_Downvote;
+        TextView tvUsername, tvPostTimeDetail, tvNoteTitle, tvNoteDesc, tv_Upvote, tv_Downvote, tv_Comment;
         Button btnSubject, btnYear, btnCategory, btnSummary;
-        LinearLayout llUsernameTime, llBookmark, llDownvote, llUpvote;
+        LinearLayout llUsernameTime, llBookmark, llDownvote, llUpvote,llComment;
         ConstraintLayout llNoteTopBar,llNoteStuff;
         ImageButton ib_Upvote, ib_Downvote;
         CircleImageView profile_image;
@@ -109,6 +109,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             llDownvote = v.findViewById(R.id.llDownvote);
             llUpvote = v.findViewById(R.id.llUpvote);
             llNoteStuff=v.findViewById(R.id.llNoteStuff);
+            tv_Comment = v.findViewById(R.id.tv_Comment);
+            llComment = v.findViewById(R.id.llComment);
+            ib_Comment = v.findViewById(R.id.ib_Comment);
 
             //SET onClickListeners for views in note_template here
             llNoteTopBar.setOnClickListener((View.OnClickListener) this);
@@ -125,18 +128,22 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             ib_Downvote.setOnClickListener((View.OnClickListener) this);
             llNoteStuff.setOnClickListener((View.OnClickListener) this);
             tvNoteTitle.setOnClickListener((View.OnClickListener) this);
+            ib_Comment.setOnClickListener((View.OnClickListener) this);
+            llComment.setOnClickListener((View.OnClickListener) this);
         }
 
         //DO something when view is clicked on, based on view's id
         @Override
         public void onClick(View v) {
             String clickedBtnText;
+
             int downvotes, upvotes;
             Note clickedNote = new Note();
             int pos = getAdapterPosition();
             if (pos != RecyclerView.NO_POSITION) {
                 clickedNote = mDataset.get(pos);
             }
+            String clickedNoteDocumentID = clickedNote.getDocumentID();
             switch (v.getId()) {
 
                 case R.id.llNoteTopBar:
@@ -148,7 +155,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                     break;
 
                 case R.id.llBookmark:
-                    String clickedNoteDocumentID = clickedNote.getDocumentID();
                     openAddToOrCreateDialog(clickedNoteDocumentID);
                     break;
 
@@ -186,6 +192,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                 case R.id.ib_Downvote:
                     checkUpvotesOrDownvotes("Downvotes", clickedNote, ib_Upvote, tv_Upvote, ib_Downvote, tv_Downvote);
                     break;
+                case R.id.ib_Comment:
+                    goToComments(clickedNoteDocumentID, Integer.parseInt(tv_Comment.getText().toString()));
+                    break;
+                case R.id.llComment:
+                    goToComments(clickedNoteDocumentID, Integer.parseInt(tv_Comment.getText().toString()));
+                    break;
                 case R.id.llNoteStuff:
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
@@ -203,6 +215,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     }
 
 
+
+
     public NoteAdapter(Context context) {
         this.context = context;
         this.mDataset = new ArrayList<>();
@@ -217,7 +231,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull NoteAdapter.ViewHolder holder, int position) {
-
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         storageReference= FirebaseStorage.getInstance().getReference();
@@ -232,7 +245,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         holder.tvPostTimeDetail.setText("Posted " + timeStr);
         holder.tvNoteTitle.setText(n.getNoteTitle());
         holder.tvNoteDesc.setText(n.getNoteDescription());
-
+        holder.tv_Comment.setText(n.getComments() + "");
 
         //Set colours of upvote/downvote
         String upvote, downvote;
@@ -301,6 +314,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         if (mDataset != null) mDataset.clear();
     }
 
+    //region comments
+    private void goToComments(String clickedNoteDocumentID, int num) {
+        Intent i = new Intent(context, CommentsActivity.class);
+        i.putExtra("passedNoteID", clickedNoteDocumentID);
+        i.putExtra("passedCommentsCount", num);
+        context.startActivity(i);
+    }
+    //endregion
+
     //region upvote/downvote
     public void checkUpvotesOrDownvotes(String type, Note clickedNote, ImageButton buttonUpvote, TextView countUpvote, ImageButton buttonDownvote, TextView countDownvote) {
         String email = mFirebaseUser.getEmail();
@@ -343,8 +365,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                 countUpvote.setText(upvote);
                 updateUpvotesOrDownvotes(type, votes, docId);
                 break;
-            case "Downvotes":
 
+            case "Downvotes":
                 votes = clickedNote.getDownvote();
                 otherVotes = clickedNote.getUpvote();
                 if (votes == null) {

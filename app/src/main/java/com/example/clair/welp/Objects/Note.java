@@ -6,15 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 public class Note {
+    private int Comments;
     private String Email,Username,UserIMG,NoteTitle,NoteDescription,ResourceURL,DatePosted,Deleted,DocumentID,FileType  ;
-
     private HashMap<String, Boolean> Tags, Upvote,Downvote;
 
-    private String[][] Comments;
-    private Map<String, Boolean> Notebooks;
-
     public Note(){}
-    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, HashMap<String, Boolean> upvote, HashMap<String, Boolean> downvote, String[][] comments, String fileType) {
+
+    //Storing
+    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, HashMap<String, Boolean> upvote, HashMap<String, Boolean> downvote, int comments,String fileType) {
 
         Email = email;
         Username = username;
@@ -32,7 +31,8 @@ public class Note {
         // Notebooks = notebooks;
     }
 
-    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, HashMap<String, Boolean> upvote, HashMap<String, Boolean> downvote, String[][] comments, String documentID,String fileType) {
+    //Retrieving
+    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, HashMap<String, Boolean> upvote, HashMap<String, Boolean> downvote, int comments, String documentID,String FileType) {
         Email = email;
         Username = username;
         UserIMG = userIMG;
@@ -116,26 +116,6 @@ public class Note {
         Deleted = deleted;
     }
 
-
-
-    public String[][] getComments() {
-        return Comments;
-    }
-
-    public void setComments(String[][] comments) {
-        Comments = comments;
-    }
-
-
-
-    public Map<String, Boolean> getNotebooks() {
-        return Notebooks;
-    }
-
-    public void setNotebooks(Map<String, Boolean> notebooks) {
-        Notebooks = notebooks;
-    }
-
     public String getDocumentID() {
         return DocumentID;
     }
@@ -164,6 +144,14 @@ public class Note {
 
     public void setDownvote(HashMap<String, Boolean> downvote) {
         Downvote = downvote;
+    }
+
+    public int getComments() {
+        return Comments;
+    }
+
+    public void setComments(int comments) {
+        Comments = comments;
     }
 
     public String getFileType() {
