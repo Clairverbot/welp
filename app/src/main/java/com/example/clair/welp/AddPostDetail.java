@@ -37,8 +37,7 @@ public class AddPostDetail extends AppCompatActivity {
     RadioButton rbNotes, rbPractice,rbLesson;
     RadioGroup rg;
     Button btnPost;
-    Uri path;
-    String email,username;
+    String email,username,path;
     NoteFirestore noteFirestore;
 
     @Override
@@ -58,7 +57,7 @@ public class AddPostDetail extends AppCompatActivity {
         rg=findViewById(R.id.rg);
         btnPost=findViewById(R.id.btnPost);
 
-        path= (Uri) getIntent().getExtras().get("path");
+        path= getIntent().getExtras().getString("path");
         email=getIntent().getExtras().getString("email");
         username=getIntent().getExtras().getString("username");
 
@@ -84,7 +83,7 @@ public class AddPostDetail extends AppCompatActivity {
                     Date date = new Date();
                     String datePosted = dateFormat.format(date);
 
-                    Note note=new Note(email,username,null,etNoteTitle.getText().toString(),etNoteDesc.getText().toString(),path.toString(), datePosted,null,tags,upvotes,downvotes,null);
+                    Note note=new Note(email,username,null,etNoteTitle.getText().toString(),etNoteDesc.getText().toString(),path, datePosted,null,tags,upvotes,downvotes,null);
 
                     //noteFirestore.storage(note);
                     noteFirestore.add(note);
