@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Note {
     private int Comments;
-    private String Email,Username,UserIMG,NoteTitle,NoteDescription,ResourceURL,DatePosted,Deleted,DocumentID,FileType  ;
+    private String Email,Username,UserIMG,NoteTitle,NoteDescription,ResourceURL,DatePosted,Deleted,DocumentID,FileType;
     private HashMap<String, Boolean> Tags, Upvote,Downvote;
 
     public Note(){}
@@ -32,7 +32,7 @@ public class Note {
     }
 
     //Retrieving
-    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, HashMap<String, Boolean> upvote, HashMap<String, Boolean> downvote, int comments, String documentID,String FileType) {
+    public Note(String email, String username, String userIMG, String noteTitle, String noteDescription, String resourceURL,String  datePosted, String deleted, HashMap<String, Boolean> tags, HashMap<String, Boolean> upvote, HashMap<String, Boolean> downvote, int comments,String fileType, String documentID) {
         Email = email;
         Username = username;
         UserIMG = userIMG;

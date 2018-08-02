@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -13,9 +14,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.squareup.okhttp.ResponseBody;
 
@@ -36,11 +40,11 @@ public class NoteViewer extends AppCompatActivity {
 
 
     PDFView pdfView;
+    ImageView imageView;
     public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
     String url, fileType;
     URL Url;
 
-    /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,10 +54,24 @@ public class NoteViewer extends AppCompatActivity {
         getSupportActionBar().setLogo(R.drawable.logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
-        url=getIntent().getStringExtra("url");
-        fileType=getIntent().getStringExtra("fileType");
-        pdfView=findViewById(R.id.pdfView);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Set this to true if selecting "home" returns up by a single level in your UI rather than back to the top level or front page.
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_arrow_white); // set a custom icon for the default home button
 
+        url = getIntent().getStringExtra("url");
+        fileType = getIntent().getStringExtra("fileType");
+        pdfView = findViewById(R.id.pdfView);
+        imageView=findViewById(R.id.imageView);
+
+        if(fileType.equalsIgnoreCase("pdf")) {
+            pdfView.setVisibility(View.VISIBLE);
+           showPDF();
+        }else if(fileType.equalsIgnoreCase("img")){
+         imageView.setVisibility(View.VISIBLE);
+         showIMG();
+
+        }
+    }
+    public void showPDF(){
         try {
             Url = new URL(url);
             URLConnection conexion = Url.openConnection();
@@ -65,43 +83,15 @@ public class NoteViewer extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-//        try {
-//            openRenderer(this);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
     }
-
-
-//    @TargetApi(21)
-//    private void openRenderer(Context context) throws IOException {
-//
-//        // Since PdfRenderer cannot handle the compressed asset file directly, we copy it into
-//        // the cache directory.
-//        URL Url=new URL(url);
-//        URLConnection conexion = Url.openConnection();
-//        conexion.connect();
-//        InputStream input = new BufferedInputStream(Url.openStream());
-//        OutputStream output = new FileOutputStream(Environment.getExternalStorageDirectory().getPath());
-//        final byte[] data = new byte[1024];
-//        long total = 0;
-//        int count;
-//        while ((count = input.read(data)) != -1) {
-//            total += count;
-//            output.write(data, 0, count);
-//        }
-//
-//        output.flush();
-//        output.close();
-//        input.close();
-//
-//        File file=new File(Environment.getExternalStorageDirectory().getPath());
-//        mFileDescriptor = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY);
-//        // This is the PdfRenderer we use to render the PDF.
-//        if (mFileDescriptor != null) {
-//            mPdfRenderer = new PdfRenderer(mFileDescriptor);
-//        }
-//    }
+    public void showIMG(){
+        Glide.with(imageView.getContext())
+                .load(url)
+                .into(imageView);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        onBackPressed();
+        return true;
+    }
 }

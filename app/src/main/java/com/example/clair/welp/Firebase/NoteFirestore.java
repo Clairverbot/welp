@@ -62,7 +62,7 @@ public class NoteFirestore {
     List<Note> notes;
     Map<String, Object> notas = new HashMap<>();
     MagicalNames magicalNames = new MagicalNames();
-    String email, username, userIMG, noteTitle, noteDescription, resourceURL, documentID;
+    String email, username, userIMG, noteTitle, noteDescription, resourceURL,fileType, documentID;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String datePosted, deleted;
     HashMap<String, Boolean> tags, upvote, downvote;
@@ -285,10 +285,11 @@ public class NoteFirestore {
 //        upvote = null == Upvote ? 0 : Upvote.intValue();
 //        Long Downvote = document.getLong(magicalNames.getNotes_Column_Downvote());
 //        downvote = null == Downvote ? 0 : Downvote.intValue();
+        fileType=document.getString(magicalNames.getNotes_Column_FileType());
         documentID = document.getId();
 
 
-        Note n = new Note(email, username, userIMG, noteTitle, noteDescription, resourceURL, datePosted, deleted, tags, upvote, downvote, comments, documentID);
+        Note n = new Note(email, username, userIMG, noteTitle, noteDescription, resourceURL, datePosted, deleted, tags, upvote, downvote, comments,fileType, documentID);
 
         return n;
     }

@@ -84,7 +84,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         Button btnSubject, btnYear, btnCategory, btnSummary;
         LinearLayout llUsernameTime, llBookmark, llDownvote, llUpvote,llComment;
         ConstraintLayout llNoteTopBar,llNoteStuff;
-        ImageButton ib_Upvote, ib_Downvote;
+        ImageButton ib_Upvote, ib_Downvote,ib_Comment;
         CircleImageView profile_image;
 
 
