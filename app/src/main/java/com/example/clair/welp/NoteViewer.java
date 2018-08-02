@@ -145,6 +145,9 @@ public class NoteViewer extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (videoView.isPlaying()){
+            videoView.stopPlayback();
+        }
         onBackPressed();
         return true;
     }
