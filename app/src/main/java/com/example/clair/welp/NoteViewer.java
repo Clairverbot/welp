@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.pdf.PdfRenderer;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -18,6 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.MediaController;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.github.barteksc.pdfviewer.PDFView;
@@ -41,6 +44,7 @@ public class NoteViewer extends AppCompatActivity {
 
     PDFView pdfView;
     ImageView imageView;
+    VideoView videoView;
     public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
     String url, fileType;
     URL Url;
@@ -61,6 +65,7 @@ public class NoteViewer extends AppCompatActivity {
         fileType = getIntent().getStringExtra("fileType");
         pdfView = findViewById(R.id.pdfView);
         imageView=findViewById(R.id.imageView);
+        videoView=findViewById(R.id.videoView);
 
         if(fileType.equalsIgnoreCase("pdf")) {
             pdfView.setVisibility(View.VISIBLE);
@@ -68,7 +73,10 @@ public class NoteViewer extends AppCompatActivity {
         }else if(fileType.equalsIgnoreCase("img")){
          imageView.setVisibility(View.VISIBLE);
          showIMG();
-
+        }
+        else if (fileType.equalsIgnoreCase("vid")){
+            videoView.setVisibility(View.VISIBLE);
+            showVideo();
         }
     }
     public void showPDF(){
@@ -88,6 +96,52 @@ public class NoteViewer extends AppCompatActivity {
         Glide.with(imageView.getContext())
                 .load(url)
                 .into(imageView);
+    }
+    public void showVideo(){
+        int position = 0;
+        MediaController mediaControls;
+        mediaControls = new MediaController(NoteViewer.this);
+        try
+        {
+
+            // set the media controller in the VideoView
+            videoView.setMediaController(mediaControls);
+
+            // set the uri of the video to be played
+            videoView.setVideoURI(Uri.parse(url));
+
+        } catch (Exception e)
+        {
+            Log.e("Error", e.getMessage());
+            e.printStackTrace();
+        }
+
+        videoView.requestFocus();
+
+        // we also set an setOnPreparedListener in order to know when the video
+        // file is ready for playback
+
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener(){
+
+            public void onPrepared(MediaPlayer mediaPlayer)
+            {
+                // if we have a position on savedInstanceState, the video
+                // playback should start from here
+                videoView.seekTo(position);
+
+
+                if (position == 0)
+                {
+                    videoView.start();
+                } else
+                {
+                    // if we come from a resumed activity, video playback will
+                    // be paused
+                    videoView.pause();
+                }
+            }
+        });
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
