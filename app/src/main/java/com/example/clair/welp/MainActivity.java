@@ -2,6 +2,7 @@ package com.example.clair.welp;
 
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.example.clair.welp.Firebase.NoteFirestore;
 import com.example.clair.welp.Objects.Note;
 import com.example.clair.welp.OtherStuff.*;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +32,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -278,6 +281,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         FirebaseUser currentUser = fFirebaseAuth.getCurrentUser();
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
 
                 if(resultCode==RESULT_OK){
                     Uri file=data.getData();
@@ -285,9 +291,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     StorageReference filepath=storageReference.child("NoteResource").child(file.getLastPathSegment());
 
                     filepath.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //Toast.makeText(MainActivity.this,"Upload Done",Toast.LENGTH_LONG).show();
+                            //Toast.makeText(MainActivity.this,"Upload Done",Toast.LENGTH_LONG).show()
+                            progressDialog.dismiss();
 
                             Intent i=new Intent(MainActivity.this,AddPostDetail.class);
                             switch (requestCode){
@@ -306,8 +314,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             i.putExtra("username",currentUser.getDisplayName());
                             startActivity(i);
                         }
-                    });
 
+                    }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                            progressDialog.setMessage("Loaded " + ((int) progress) + "%...");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG);
+                        }
+                    });
         }
     }
     //endregion
