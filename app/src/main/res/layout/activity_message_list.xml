@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MessageListActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_message_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:stackFromEnd="true"
+        android:layout_marginBottom="48dp"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        >
+    </android.support.v7.widget.RecyclerView>
+
+    <!-- A horizontal line between the chatbox and RecyclerView -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#dfdfdf"/>
+
+    <RelativeLayout
+        android:id="@+id/layout_chatbox"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:minHeight="48dp"
+        android:background="@drawable/border_chatbox"
+        >
+
+        <EditText
+            android:id="@+id/edittext_chatbox"
+            android:hint="Type a message"
+            android:background="@color/color_YouCantSeeME"
+            android:textColorHint="@color/post_Grey"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:maxLines="6"
+            android:layout_toStartOf="@+id/button_chatbox_send"
+            android:layout_toLeftOf="@+id/button_chatbox_send"
+            android:textColor="@color/Dark_Grey"/>
+
+        <ImageButton
+            android:id="@+id/button_chatbox_send"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@color/color_YouCantSeeME"
+            android:src="@drawable/ic_send_black_24dp"
+            android:clickable="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:tint="@color/LightDark_Grey"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
