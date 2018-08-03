@@ -82,9 +82,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvUsername, tvPostTimeDetail, tvNoteTitle, tvNoteDesc, tv_Upvote, tv_Downvote, tv_Comment;
         Button btnSubject, btnYear, btnCategory, btnSummary;
-        LinearLayout llUsernameTime, llBookmark, llDownvote, llUpvote,llComment;
-        ConstraintLayout llNoteTopBar,llNoteStuff;
-        ImageButton ib_Upvote, ib_Downvote,ib_Comment;
+        LinearLayout llUsernameTime, llBookmark, llDownvote, llUpvote, llComment;
+        ConstraintLayout llNoteTopBar, llNoteStuff;
+        ImageButton ib_Upvote, ib_Downvote, ib_Comment;
         CircleImageView profile_image;
 
 
@@ -108,7 +108,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             llNoteTopBar = v.findViewById(R.id.llNoteTopBar);
             llDownvote = v.findViewById(R.id.llDownvote);
             llUpvote = v.findViewById(R.id.llUpvote);
-            llNoteStuff=v.findViewById(R.id.llNoteStuff);
+            llNoteStuff = v.findViewById(R.id.llNoteStuff);
             tv_Comment = v.findViewById(R.id.tv_Comment);
             llComment = v.findViewById(R.id.llComment);
             ib_Comment = v.findViewById(R.id.ib_Comment);
@@ -201,12 +201,19 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                 case R.id.llNoteStuff:
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
+
                     Intent i=new Intent(context,NoteViewer.class);
                         i.putExtra("note",clickedNote);
 //                        i.putExtra("title",clickedNote.getNoteTitle());
 //                        i.putExtra("fileType",clickedNote.getFileType());
 //                        i.putExtra("url",clickedNote.getResourceURL());
                         context.startActivity(i);
+//=======
+//                    Intent i = new Intent(context, NoteViewer.class);
+//                    i.putExtra("fileType", clickedNote.getFileType());
+//                    i.putExtra("url", clickedNote.getResourceURL());
+//                    context.startActivity(i);
+//>>>>>>> Stashed changes
 
                     break;
                 default:
@@ -215,8 +222,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             }
         }
     }
-
-
 
 
     public NoteAdapter(Context context) {
@@ -235,7 +240,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull NoteAdapter.ViewHolder holder, int position) {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        storageReference= FirebaseStorage.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         Note n = mDataset.get(position);
         //Set date format to timeAgo

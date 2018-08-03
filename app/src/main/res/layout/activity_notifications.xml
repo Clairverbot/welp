@@ -109,7 +109,7 @@
             android:padding="0dp"
             android:layout_margin="0dp"
             android:orientation="vertical"
-            app:layout_constraintHeight_percent="0.02"
+            app:layout_constraintHeight_percent="0.043"
             app:layout_constraintTop_toBottomOf="@+id/notificationsTitle"
             />
 
@@ -126,6 +126,7 @@
         app:layout_constraintTop_toBottomOf="@id/emptyView"
         android:dividerHeight="0.5dp"
         android:divider="@color/post_Grey"
+        app:stackFromEnd="true"
         />
         <View
             android:id="@+id/emptyView2"

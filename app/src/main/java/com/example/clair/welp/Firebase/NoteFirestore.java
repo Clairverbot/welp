@@ -257,7 +257,7 @@ public class NoteFirestore {
                 break;
             case 2:
                 colRef = FirebaseFirestore.getInstance().collection("Notes")
-                        .whereEqualTo("Tags." + (passedList.get(0)).toString(), true)  //e.g. "Tags.Math" + Secondary 4" == true
+                        .whereEqualTo("Tags." + (passedList.get(0)).toString(), true)  //e.g. "Tags.Math + Secondary 4" == true
                         .whereEqualTo("Tags." + (passedList.get(1)).toString(), true); //e.g. "Tags.Notes" == true
                 break;
         }

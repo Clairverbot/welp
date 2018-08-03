@@ -154,6 +154,7 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
     //region firestore rv
     private void init(){
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+
         rvNotifications.setLayoutManager(mLayoutManager);
         db = FirebaseFirestore.getInstance();
         Log.d("TAG","Notifications init");
@@ -163,7 +164,7 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
         String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         if (userEmail != null) {
             Log.d("TAG", "Notifications " + userEmail);
-            Query query = db.collection("Notifications").whereEqualTo("ReceivingEmail", userEmail).orderBy("DateSent", com.google.firebase.firestore.Query.Direction.DESCENDING);
+            Query query = db.collection("Notifications").whereEqualTo("ReceivingEmail", userEmail);
 
             FirestoreRecyclerOptions<Notification> notification = new FirestoreRecyclerOptions.Builder<Notification>()
                     .setQuery(query, Notification.class)
@@ -174,8 +175,14 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
                 public void onBindViewHolder(NotificationsHolder holder, int position, Notification model) {
                     holder.tvNotification.setText(model.getNotificationString());
                     Log.d("TAG", "Notifications ADAPTER");
-
-                    ivNoNotifs.setVisibility(View.GONE);
+                    if (adapter != null) {
+                        if (adapter.getItemCount() == 0) {
+                            ivNoNotifs.setVisibility(View.VISIBLE);
+                            Log.d("DICK","VISIBLE");
+                        }else{
+                            ivNoNotifs.setVisibility(View.GONE);
+                        }
+                    }
                     tvLoading.setText("");
 
                     long time = Long.valueOf(TimeUtility.getDateFromDateTime(model.getDateSent()));//2016-09-01 15:57:20 pass your date here
@@ -186,10 +193,18 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
 //                        .into(holder.imageView);
 
                     holder.itemView.setOnClickListener(v -> {
-                                Intent intent = new Intent(NotificationsActivity.this, ProfileActivity_otheruser.class);
-                                intent.putExtra("Email", model.getSendingEmail()); // getText() SHOULD NOT be static!!!
-                                intent.putExtra("Username", model.getSendingUsername());
-                                startActivity(intent);
+
+                                if ((model.getNotificationType()).equals("Follow")) {
+                                    Intent intent = new Intent(NotificationsActivity.this, ProfileActivity_otheruser.class);
+                                    intent.putExtra("Email", model.getSendingEmail()); // getText() SHOULD NOT be static!!!
+                                    intent.putExtra("Username", model.getSendingUsername());
+                                    startActivity(intent);
+                                } else if ((model.getNotificationType()).equals("Discussion")){
+                                    Intent intent = new Intent(NotificationsActivity.this, MessageListActivity.class);
+                                    intent.putExtra("passedSendingEmail", model.getSendingEmail()); // getText() SHOULD NOT be static!!!
+                                    intent.putExtra("passedSendingUsername", model.getSendingUsername());
+                                    startActivity(intent);
+                                }
                             }
                     );
                 }
@@ -236,14 +251,7 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
         super.onStart();
         adapter.startListening();
         tvLoading.setText("");
-        if (adapter != null) {
-            if (adapter.getItemCount() > 0) {
-                ivNoNotifs.setVisibility(View.GONE);
-            }else{
-                ivNoNotifs.setVisibility(View.VISIBLE);
-                Log.d("DICK","VISIBLE");
-                 }
-        }
+
     }
 
     @Override

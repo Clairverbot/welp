@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -92,13 +93,7 @@ public class DiscussionsActivity extends AppCompatActivity implements View.OnCli
 
         ButterKnife.bind(this);
         ivNoDiscussions.setVisibility(View.GONE);
-        if (mAdapter != null) {
-            if (mAdapter.getItemCount() > 0) {
-                ivNoDiscussions.setVisibility(View.GONE);
-            } else {
-                ivNoDiscussions.setVisibility(View.VISIBLE);
-            }
-        }
+
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.logo);
@@ -291,15 +286,24 @@ public class DiscussionsActivity extends AppCompatActivity implements View.OnCli
         ivNoDiscussions.setVisibility(View.GONE);
         tvLoadingDiscussions.setText("");
         f = new ChatFirestore(r);
-        if (mAdapter.getItemCount() > 0) {
-            tvLoadingDiscussions.setText("");
-            ivNoDiscussions.setVisibility(View.GONE);
-        } else {
-            tvLoadingDiscussions.setText("");
-            ivNoDiscussions.setVisibility(View.VISIBLE);
+
+
+
+
+
+
+    }
+
+    public void setErrorImage(){
+        if (mAdapter != null) {
+            if (mAdapter.getItemCount() > 0) {
+                tvLoadingDiscussions.setText("");
+                ivNoDiscussions.setVisibility(View.GONE);
+            } else {
+                tvLoadingDiscussions.setText("");
+                ivNoDiscussions.setVisibility(View.VISIBLE);
+            }
         }
-
-
     }
 
     public void UpdateList(List<Chat> n) {

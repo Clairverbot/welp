@@ -295,14 +295,18 @@ public class ProfileActivity_otheruser extends AppCompatActivity {
         String currentUsername = user.getDisplayName();
 
         DocumentReference drNotif = FirebaseFirestore.getInstance().collection("Notifications").document();
+        String date = (dateSent.replace("/", ""));
+        date = date.replace(" ", "");
+        String docID = date + drNotif.getId();
+
         Map<String, Object> notification = new HashMap<>();
         notification.put("ReceivingEmail", passedEmail);
         notification.put("SendingUsername", currentUsername);
         notification.put("SendingEmail", user.getEmail());
-        notification.put("NotificationType", "Notification");
+        notification.put("NotificationType", "Follow");
         notification.put("NotificationString", currentUsername+" has started following you");
         notification.put("DateSent", dateSent);
-        drNotif.set(notification);
+        FirebaseFirestore.getInstance().collection("Notifications").document(docID).set(notification);
     }
     //endregion
 

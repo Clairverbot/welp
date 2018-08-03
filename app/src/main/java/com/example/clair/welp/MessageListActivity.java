@@ -145,13 +145,18 @@ public class MessageListActivity extends AppCompatActivity {
 
         DocumentReference drNotif = FirebaseFirestore.getInstance().collection("Notifications").document();
         Map<String, Object> notification = new HashMap<>();
+
+        String date = (dateSent.replace("/", ""));
+        date = date.replace(" ", "");
+        String docID = date + drNotif.getId();
+
         notification.put("ReceivingEmail", passedSendingEmail);
         notification.put("SendingUsername", currentUsername);
         notification.put("SendingEmail", mFirebaseUser.getEmail());
         notification.put("NotificationType", "Discussion");
         notification.put("NotificationString", currentUsername+" has sent you a message");
         notification.put("DateSent", dateSent);
-        drNotif.set(notification);
+        FirebaseFirestore.getInstance().collection("Notifications").document(docID).set(notification);
     }
 
 

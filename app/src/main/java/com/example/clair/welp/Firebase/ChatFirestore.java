@@ -77,9 +77,8 @@ public class ChatFirestore {
                                     chats.add(getChatFromDocumentSnapshot(document));
                                 }
 
-
-
                                 reference.UpdateList(chats);
+                                reference.setErrorImage();
                             }
 
                         } else {
