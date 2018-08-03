@@ -23,6 +23,7 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+import com.example.clair.welp.Objects.Note;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.squareup.okhttp.ResponseBody;
 
@@ -46,42 +47,45 @@ public class NoteViewer extends AppCompatActivity {
     ImageView imageView;
     VideoView videoView;
     public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
-    String url, fileType;
+//    String url, fileType;
     URL Url;
+    Note n;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_viewer);
-        //make actionBar logo as welp logo, todo :find better way to do this
+
+        n=(Note)getIntent().getSerializableExtra("note");
+
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.drawable.logo);
+        getSupportActionBar().setTitle(n.getNoteTitle());
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Set this to true if selecting "home" returns up by a single level in your UI rather than back to the top level or front page.
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_arrow_white); // set a custom icon for the default home button
 
-        url = getIntent().getStringExtra("url");
-        fileType = getIntent().getStringExtra("fileType");
+//        url = getIntent().getStringExtra("url");
+//        fileType = getIntent().getStringExtra("fileType");
         pdfView = findViewById(R.id.pdfView);
         imageView=findViewById(R.id.imageView);
         videoView=findViewById(R.id.videoView);
 
-        if(fileType.equalsIgnoreCase("pdf")) {
+        if(n.getFileType().equalsIgnoreCase("pdf")) {
             pdfView.setVisibility(View.VISIBLE);
            showPDF();
-        }else if(fileType.equalsIgnoreCase("img")){
+        }else if(n.getFileType().equalsIgnoreCase("img")){
          imageView.setVisibility(View.VISIBLE);
          showIMG();
         }
-        else if (fileType.equalsIgnoreCase("vid")){
+        else if (n.getFileType().equalsIgnoreCase("vid")){
             videoView.setVisibility(View.VISIBLE);
             showVideo();
         }
     }
     public void showPDF(){
         try {
-            Url = new URL(url);
+            Url = new URL(n.getResourceURL());
             URLConnection conexion = Url.openConnection();
             conexion.connect();
             InputStream input = new BufferedInputStream(Url.openStream());
@@ -94,7 +98,7 @@ public class NoteViewer extends AppCompatActivity {
     }
     public void showIMG(){
         Glide.with(imageView.getContext())
-                .load(url)
+                .load(n.getResourceURL())
                 .into(imageView);
     }
     public void showVideo(){
@@ -108,7 +112,7 @@ public class NoteViewer extends AppCompatActivity {
             videoView.setMediaController(mediaControls);
 
             // set the uri of the video to be played
-            videoView.setVideoURI(Uri.parse(url));
+            videoView.setVideoURI(Uri.parse(n.getResourceURL()));
 
         } catch (Exception e)
         {

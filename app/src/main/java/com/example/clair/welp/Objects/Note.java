@@ -1,11 +1,12 @@
 package com.example.clair.welp.Objects;
 
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Note {
+public class Note implements Serializable{
     private int Comments;
     private String Email,Username,UserIMG,NoteTitle,NoteDescription,ResourceURL,DatePosted,Deleted,DocumentID,FileType;
     private HashMap<String, Boolean> Tags, Upvote,Downvote;

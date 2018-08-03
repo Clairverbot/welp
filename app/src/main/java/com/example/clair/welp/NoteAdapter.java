@@ -202,8 +202,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
                     Intent i=new Intent(context,NoteViewer.class);
-                        i.putExtra("fileType",clickedNote.getFileType());
-                        i.putExtra("url",clickedNote.getResourceURL());
+                        i.putExtra("note",clickedNote);
+//                        i.putExtra("title",clickedNote.getNoteTitle());
+//                        i.putExtra("fileType",clickedNote.getFileType());
+//                        i.putExtra("url",clickedNote.getResourceURL());
                         context.startActivity(i);
 
                     break;
