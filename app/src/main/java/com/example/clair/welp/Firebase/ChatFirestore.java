@@ -52,7 +52,7 @@ public class ChatFirestore {
         final DiscussionsActivity reference = r;
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-
+        chats = new ArrayList<>();
         collectionRef
                 .whereEqualTo("ReceivingEmail", mFirebaseUser.getEmail())
                 .get().
@@ -60,7 +60,7 @@ public class ChatFirestore {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                        chats = new ArrayList<>();
+
                         List<String> sendingEmails = new ArrayList<>();
 
                         if (task.isSuccessful()) {
@@ -86,6 +86,8 @@ public class ChatFirestore {
                         }
                     }
                 });
+
+
     }
 
     private List<DocumentSnapshot> reverseListOrder(List<DocumentSnapshot> task)

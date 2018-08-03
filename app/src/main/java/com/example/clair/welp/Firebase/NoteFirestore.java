@@ -67,6 +67,7 @@ public class NoteFirestore {
     String datePosted, deleted;
     HashMap<String, Boolean> tags, upvote, downvote;
     int comments;
+
     private List<DocumentSnapshot> reverseListOrder(List<DocumentSnapshot> task)
     {
         Iterator<DocumentSnapshot> it = task.iterator();
@@ -77,6 +78,7 @@ public class NoteFirestore {
         }
         return document;
     }
+
 
 
     public NoteFirestore(MainActivity r) {
@@ -189,22 +191,21 @@ public class NoteFirestore {
     public NoteFirestore(NotebookActivity r, ArrayList<String> passedList) {
         final NotebookActivity reference = r;
         final ArrayList<String> listOfNoteIDs = passedList;
-        ArrayList<Note> notes = new ArrayList<>();
-
+        ArrayList<Note> notes2 = new ArrayList<>();
         for (String noteID : listOfNoteIDs) {
             Log.d(TAG, "Note ID1:  " + noteID);
             db.collection("Notes").document(noteID).get().
                     addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            ArrayList<Note> notes = new ArrayList<>();
+
 
                             if (task.isSuccessful()) {
 
                                 DocumentSnapshot document = task.getResult();
                                 if (document != null) {
-                                    notes.add(getNoteFromDocumentSnapshot(document));
-                                    reference.UpdateList(notes);
+                                    notes2.add(getNoteFromDocumentSnapshot(document));
+                                    reference.UpdateList(notes2);
                                 }
 
                             } else {

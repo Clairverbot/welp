@@ -272,7 +272,9 @@ public class DiscussionsActivity extends AppCompatActivity implements View.OnCli
                                     Intent i = new Intent(DiscussionsActivity.this, MessageListActivity.class);
                                     i.putExtra("passedSendingEmail", passedEmail);
                                     i.putExtra("passedSendingUsername", passedUsername);
-                                    startActivity(i);                                }
+                                    startActivity(i);
+                                    alert.dismiss();
+                                }
                             }
                         });
             }
