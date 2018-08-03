@@ -152,4 +152,39 @@ public class MagicalNames {
     //endregion
 
 
+    //region User
+    private String Chats_Column_Message="Message";
+    private String Chats_Column_SendingEmail="SendingEmail";
+    private String Chats_Column_SendingUsername="SendingUsername";
+    private String Chats_Column_ReceivingUsername="ReceivingUsername";
+    private String Chats_Column_ReceivingEmail="ReceivingEmail";
+    private String Chats_Column_DateSent="DateSent";
+
+    public String getChats_Column_Message() {
+        return Chats_Column_Message;
+    }
+
+    public String getChats_Column_SendingEmail() {
+        return Chats_Column_SendingEmail;
+    }
+
+    public String getChats_Column_SendingUsername() {
+        return Chats_Column_SendingUsername;
+    }
+
+    public String getChats_Column_ReceivingUsername() {
+        return Chats_Column_ReceivingUsername;
+    }
+
+    public String getChats_Column_ReceivingEmail() {
+        return Chats_Column_ReceivingEmail;
+    }
+
+    public String getChats_Column_DateSent() {
+        return Chats_Column_DateSent;
+    }
+
+
+    //endregion
+
 }

@@ -125,6 +125,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.action_home:
                         break;
                     case R.id.action_chat:
+                        startActivity(new Intent(MainActivity.this, DiscussionsActivity.class));
+                        finish();
                         break;
                     case R.id.action_upload:
                         break;

@@ -77,6 +77,7 @@ public class ProfileActivity_otheruser extends AppCompatActivity {
         collapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.color_YouCantSeeME)); // transperent color = #00000000
         collapsingToolbar.setCollapsedTitleTextColor(Color.rgb(255, 255, 255)); //Color of your title
 
+        //get Extras
         passedEmail = getIntent().getExtras().getString("Email");
         passedUsername = getIntent().getExtras().getString("Username");
 

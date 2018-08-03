@@ -11,7 +11,7 @@ public class Notification {
         NotificationType = notificationType;
         SendingUsername = sendingUsername;
         SendingEmail = sendingEmail;
-        ReceivingEmail = receivingEmail;
+        ReceivingEmail = receivingEmail; //current user
         DateSent = dateSent;
     }
 

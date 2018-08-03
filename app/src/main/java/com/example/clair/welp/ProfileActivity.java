@@ -92,7 +92,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         //region auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-
+//mFirebaseUser.getDisplayName()
         if (mFirebaseUser.getEmail() != null) {
             String userEmail = mFirebaseUser.getEmail();
 
@@ -206,6 +206,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         finish();
                         break;
                     case R.id.action_chat:
+                        startActivity(new Intent(ProfileActivity.this, DiscussionsActivity.class));
+                        finish();
                         break;
                     case R.id.action_upload:
                         break;

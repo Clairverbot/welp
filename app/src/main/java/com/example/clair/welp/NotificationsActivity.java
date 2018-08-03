@@ -128,6 +128,8 @@ public class NotificationsActivity extends AppCompatActivity implements View.OnC
                         finish();
                         break;
                     case R.id.action_chat:
+                        startActivity(new Intent(NotificationsActivity.this, DiscussionsActivity.class));
+                        finish();
                         break;
                     case R.id.action_upload:
                         break;

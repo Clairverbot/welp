@@ -52,6 +52,8 @@
         <item name="colorAccent">@color/profile_LightBlue</item>
         <item name="android:textColorPrimary">@color/Dark_Grey</item>
         <item name="android:background">@color/veriWhite</item>
+        <item name="android:textColor">@color/profile_LightBlue</item>
+
     </style>
 
     <style name="CommentsTheme" parent="Theme.AppCompat">

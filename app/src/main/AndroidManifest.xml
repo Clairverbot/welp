@@ -82,6 +82,12 @@
 
         <activity android:name=".CommentsActivity"
             android:theme="@style/CommentsTheme"/>
+
+        <activity android:name=".DiscussionsActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".MessageListActivity"
+            android:theme="@style/AppTheme"/>
+
     </application>
 
 </manifest>
