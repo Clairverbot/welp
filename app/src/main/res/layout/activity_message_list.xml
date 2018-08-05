@@ -22,7 +22,7 @@
     <!-- A horizontal line between the chatbox and RecyclerView -->
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="0dp"
         android:background="#dfdfdf"/>
 
     <RelativeLayout
