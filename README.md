@@ -5,3 +5,7 @@ Built with android and firebase.
 
 ## Prototype
 https://marvelapp.com/3f7j7eh/screen/42632231
+
+### Prerequisites
+
+You'll need Android Studio
